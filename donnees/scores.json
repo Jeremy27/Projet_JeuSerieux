@@ -1,0 +1,15 @@
+{
+    "joueur1": {
+        "score": "4000",
+        "difficulte": "facile",
+        "durée": "500h"
+    },
+    "joueur2": {
+        "score": "1000",
+        "difficulte": "difficile",
+        "durée": "1000h"
+    },
+    "...": {
+        
+    }
+}
