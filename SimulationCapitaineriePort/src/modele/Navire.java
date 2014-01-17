@@ -6,15 +6,15 @@ package modele;
  */
 public class Navire extends Forme {
     
-    private int  _type;
-    private int  _typeMachandise;
+    private TypeMarchandise  _typeMachandise;
     private int  _longueur;
     private int  _dateArrivee;
     private int  _tempsPriseEnCharge;
+    private TypeNavire _typeNavire;
     
 
-    public Navire(int type, int typeMarchandise, int longueur, int dateArrivee, int tempsPriseEnCharge) {
-        this._type                  = type;
+    public Navire(TypeNavire type, TypeMarchandise typeMarchandise, int longueur, int dateArrivee, int tempsPriseEnCharge) {
+        this._typeNavire                  = type;
         this._typeMachandise        = typeMarchandise;
         this._longueur              = longueur;
         this._dateArrivee           = dateArrivee;
@@ -24,19 +24,19 @@ public class Navire extends Forme {
     /*
     ##### GETTER & SETTER #####
     */
-    public int getType() {
-        return _type;
+    public TypeNavire getType() {
+        return _typeNavire;
     }
 
-    public void setType(int _type) {
-        this._type = _type;
+    public void setType(TypeNavire type) {
+        this._typeNavire = type;
     }
 
-    public int getTypeMachandise() {
+    public TypeMarchandise getTypeMachandise() {
         return _typeMachandise;
     }
 
-    public void setTypeMachandise(int typeMachandise) {
+    public void setTypeMachandise(TypeMarchandise typeMachandise) {
         this._typeMachandise = typeMachandise;
     }
 
@@ -66,9 +66,6 @@ public class Navire extends Forme {
 
     @Override
     public String toString() {
-        return "Navire{nom" + _nom + "type=" + _type + ", typeChargement=" + _typeMachandise + ", longueur=" + _longueur 
-                + ", dateArrivee=" + _dateArrivee + ", tempsPriseEnCharge=" + _tempsPriseEnCharge + ", coordonnées=" + _coordonnees + '}';
+        return "Navire{" + "_typeMachandise=" + _typeMachandise + ", _longueur=" + _longueur + ", _dateArrivee=" + _dateArrivee + ", _tempsPriseEnCharge=" + _tempsPriseEnCharge + ", _typeNavire=" + _typeNavire + '}';
     }
-    
-    
 }
