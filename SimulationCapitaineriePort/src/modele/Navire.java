@@ -1,26 +1,29 @@
 package modele;
 
+import java.awt.Point;
+
 /**
  *
  * @author Jérémy & Gary
  */
 public class Navire extends Forme {
     
-    private TypeMarchandise  _typeMachandise;
-    private int  _longueur;
-    private int  _dateArrivee;
-    private int  _tempsPriseEnCharge;
-    private TypeNavire _typeNavire;
-    
+    private TypeMarchandise _typeMachandise;
+    private int             _longueur;
+    private int             _dateArrivee;
+    private int             _tempsPriseEnCharge;
+    private TypeNavire      _typeNavire;
+    private Point           _position;
     
 
-    public Navire(String nom, TypeNavire type, TypeMarchandise typeMarchandise, int longueur, int dateArrivee, int tempsPriseEnCharge) {
+    public Navire(String nom, TypeNavire type, TypeMarchandise typeMarchandise, int longueur, int dateArrivee, int tempsPriseEnCharge, Point position) {
         super(nom);
         this._typeNavire            = type;
         this._typeMachandise        = typeMarchandise;
         this._longueur              = longueur;
         this._dateArrivee           = dateArrivee;
         this._tempsPriseEnCharge    = tempsPriseEnCharge;
+        this._position              = position;
     }
     
     /*
@@ -66,8 +69,18 @@ public class Navire extends Forme {
         this._tempsPriseEnCharge = tempsPriseEnCharge;
     }
 
+    public Point getPosition() {
+        return _position;
+    }
+
+    public void setPosition(Point _position) {
+        this._position = _position;
+    }
+
     @Override
     public String toString() {
-        return "Navire{" + "_typeMachandise=" + _typeMachandise + ", _longueur=" + _longueur + ", _dateArrivee=" + _dateArrivee + ", _tempsPriseEnCharge=" + _tempsPriseEnCharge + ", _typeNavire=" + _typeNavire + '}';
+        return "Navire{" + "nom" + _nom + "typeMachandise=" + _typeMachandise + ", longueur=" + _longueur + ", dateArrivee=" 
+                + _dateArrivee + ", tempsPriseEnCharge=" + _tempsPriseEnCharge + ", typeNavire=" + _typeNavire 
+                + "position[" + _position.getX() + ", " + _position.getY() + "]}";
     }
 }
