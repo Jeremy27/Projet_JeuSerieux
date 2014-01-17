@@ -44,18 +44,13 @@ public class Fichier {
     public String lire() {
         try {
             StringBuilder sb = new StringBuilder();
-            FileReader fr = new FileReader(_fichier);
-            BufferedReader br = new BufferedReader(fr);
-            
-            String ligne = br.readLine();
-            while(ligne!=null) {
-                sb.append(ligne);
-                ligne = br.readLine();
+            try (FileReader fr = new FileReader(_fichier); BufferedReader br = new BufferedReader(fr)) {
+                String ligne = br.readLine();
+                while(ligne!=null) {
+                    sb.append(ligne);
+                    ligne = br.readLine();
+                }
             }
-            
-            br.close();
-            fr.close();
-            
             return sb.toString();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Fichier.class.getName()).log(Level.SEVERE, null, ex);
