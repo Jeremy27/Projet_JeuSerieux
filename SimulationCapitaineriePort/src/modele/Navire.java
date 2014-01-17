@@ -12,9 +12,11 @@ public class Navire extends Forme {
     private int  _tempsPriseEnCharge;
     private TypeNavire _typeNavire;
     
+    
 
-    public Navire(TypeNavire type, TypeMarchandise typeMarchandise, int longueur, int dateArrivee, int tempsPriseEnCharge) {
-        this._typeNavire                  = type;
+    public Navire(String nom, TypeNavire type, TypeMarchandise typeMarchandise, int longueur, int dateArrivee, int tempsPriseEnCharge) {
+        super(nom);
+        this._typeNavire            = type;
         this._typeMachandise        = typeMarchandise;
         this._longueur              = longueur;
         this._dateArrivee           = dateArrivee;

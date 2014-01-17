@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class Forme {
     protected String _nom;
     protected ArrayList<Integer []> _coordonnees;
+    
+    public Forme(String nom) {
+        _nom = nom;
+        _coordonnees = new ArrayList<>();
+    }
 
     /*
     ##### GETTER & SETTER #####

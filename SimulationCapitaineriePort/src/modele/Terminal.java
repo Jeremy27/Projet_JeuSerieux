@@ -12,13 +12,15 @@ import java.util.ArrayList;
  *
  * @author jeremy
  */
-public class Terminal {
+public class Terminal extends Forme {
     private int _longueur;
     private ArrayList<TypeMarchandise> _typeChargement;
     
-    public Terminal(int longueur) {
+    public Terminal(String nom, int longueur) {
+        super(nom);
         _typeChargement = new ArrayList<>();
         _longueur = longueur;
+        
     }
 
     public int getLongueur() {

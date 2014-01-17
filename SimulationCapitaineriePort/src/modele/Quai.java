@@ -6,22 +6,12 @@ import java.util.ArrayList;
  *
  * @author Jérémy & Gary
  */
-public class Quai {
+public class Quai extends Forme{
     private ArrayList<Terminal> _terminaux;
-    private String _nom;
     
     public Quai(String nom) {
+        super(nom);
         _terminaux = new ArrayList<>();
-        _nom = nom;
     }
-
-    public String getNom() {
-        return _nom;
-    }
-
-    public void setNom(String _nom) {
-        this._nom = _nom;
-    }
-    
     
 }
