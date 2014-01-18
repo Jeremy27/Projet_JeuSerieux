@@ -2,6 +2,8 @@ package modele;
 
 import java.awt.Color;
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 /**
  *
@@ -9,24 +11,31 @@ import java.awt.geom.Path2D;
  */
 public class Forme {
     protected String _nom;
-    protected Path2D _coordonnees;
+    protected ArrayList<Point2D> _coordonnees;
+    protected Path2D _path;
     protected boolean _fill = false;
     protected Color _couleur = Color.GRAY;
+    protected int _id;
     
     public Forme(String nom) {
         _nom = nom;
     }
     
-    public Forme(String nom, Path2D path, boolean fill, Color couleur) {
+    public Forme(String nom, boolean fill, Color couleur, int id) {
+        _coordonnees = new ArrayList<>();
         _nom = nom;
-        _coordonnees = path;
         _fill = fill;
         _couleur = couleur;
+        _id = id;
     }
 
     /*
     ##### GETTER & SETTER #####
-    */
+     */
+    public int getId() {
+        return _id;
+    }
+    
     public String getNom() {
         return _nom;
     }
@@ -34,13 +43,25 @@ public class Forme {
     public void setNom(String nom) {
         this._nom = nom;
     }
-
-    public Path2D getCoordonnees() {
-        return _coordonnees;
+    
+    public Path2D getPath(int taillePanel, double ajout) {
+        Path2D path = new Path2D.Double();
+        boolean premier = true;
+        for(Point2D p:_coordonnees) {
+            double y = taillePanel - p.getY() - ajout;
+            if(premier) {
+                path.moveTo(p.getX(), y);
+                premier = false;
+            } else {
+                path.lineTo(p.getX(), y);
+            }
+        }
+        _path = path;
+        return path;
     }
-
-    public void setCoordonnees(Path2D coordonnees) {
-        this._coordonnees = coordonnees;
+    
+    public Path2D getPath() {
+        return _path;
     }
 
     public boolean isFill() {
@@ -59,5 +80,7 @@ public class Forme {
         this._couleur = _couleur;
     }
     
-    
+    public void ajoutCoordonnee(Point2D p) {
+        _coordonnees.add(p);
+    }
 }
