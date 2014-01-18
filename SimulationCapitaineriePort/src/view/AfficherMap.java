@@ -2,8 +2,12 @@ package view;
 
 import acces_donnees.FichierJson;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import javax.json.JsonArray;
@@ -11,21 +15,29 @@ import javax.json.JsonObject;
 import javax.json.JsonValue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import modele.Forme;
+import modele.TypeShape;
 
 public class AfficherMap extends JPanel{
-    private String separateur = java.nio.file.FileSystems.getDefault().getSeparator();
+    private static final Color NATURALCOLOR = Color.BLUE;
+    private static final Color TERMINALCOLOR = Color.BLACK;
+    private static final Color QUAICOLOR = Color.WHITE;
+    private static final Color AUTRECOLOR = Color.GRAY;
+    private static final Color FONDCOLOR = Color.CYAN;
+    
+    private static final int COEF_MULT_COORDONEES = 2000;
+    
+    private final String separateur = java.nio.file.FileSystems.getDefault().getSeparator();
     private final double _minX = 0.0532394;
     private final double _minY = 49.3494358;
     private final String _nomFichier = "src" + separateur + "data" + separateur + "map.json";
-    private Path2D _dessinMap;
-    private ArrayList<Object[]> _coordonneesDessin;
-    private double minX = Integer.MAX_VALUE;
-    private double minY = Integer.MAX_VALUE;
-    private double maxX = -1;
-    private double maxY = -1;
+    private final ArrayList<Forme> _coordonneesDessin;
+    private String _toolTip = "";
     
     public AfficherMap() {
         _coordonneesDessin = new ArrayList<>();
+        this.setLayout(null);
     }
     
     public String getNomFichier() {
@@ -33,66 +45,105 @@ public class AfficherMap extends JPanel{
         
     }
     
+    public void eventsMap() {
+        this.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent me) {
+                Point p = me.getPoint();
+                for(Forme forme:_coordonneesDessin) {
+                    if(forme.getCoordonnees().contains(p)) {
+                        String nom = forme.getNom();
+                        if(nom!=null) {
+                            _toolTip = forme.getNom();
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getThis().repaint();
+                                    getThis().revalidate();
+                                }
+                            }); 
+                            
+                        }
+                        
+                        break;
+                    }
+                }
+            }
+        });
+        
+    }
+    
+    public AfficherMap getThis() {
+        return this;
+    }
+    
     public void makePath2D(JsonArray ja) {
         
         for(Object obj:ja.toArray()) {
-            Color c = Color.red;
+            boolean fill = false;
+            Color c;
             JsonObject jo = (JsonObject) obj;
             Path2D path = new Path2D.Double();
             
             JsonValue id = jo.get("_id");
             JsonValue type = jo.get("_type");
-            boolean estPremier = true;
-            JsonArray nodes = (JsonArray)jo.get("_nodes");
-            for(Object coordonnees:nodes.toArray()) {
-                JsonObject node = (JsonObject) coordonnees;
-                double x = Double.parseDouble(node.get("x").toString());
-                double y = Double.parseDouble(node.get("y").toString());
-
-                x-=_minX;
-                y-=_minY;
-                x*=2000;
-                y*=2000;
-
-                if(x<minX) {
-                    minX = x;
-                }
-                if(y<minY) {
-                    minY = y;
-                }
-                if(x>maxX) {
-                    maxX = x;
-                }
-                if(y>maxY) {
-                    maxY = y;
-                }
-                if(estPremier) {
-                    estPremier = false;
-                    path.moveTo(x, y);
+            JsonValue nom = jo.get("_nom");
+            if(!type.toString().equals(TypeShape.HIGHWAY.toString())) {
+                if(type.toString().equals(TypeShape.NATURAL.toString())) {
+                    c = NATURALCOLOR;
+                    fill = true;
+                } else if(type.toString().equals(TypeShape.TERMINAL.toString())) {
+                    c = TERMINALCOLOR;
+                    fill = true;
+                } else if(type.toString().equals(TypeShape.QUAI.toString())) {
+                    c = QUAICOLOR;
+                    fill = true;
                 } else {
-                    path.lineTo(x, y);
+                    c = AUTRECOLOR;
                 }
 
+                boolean estPremier = true;
+                JsonArray nodes = (JsonArray)jo.get("_nodes");
+                for(Object coordonnees:nodes.toArray()) {
+                    JsonObject node = (JsonObject) coordonnees;
+                    double x = Double.parseDouble(node.get("x").toString());
+                    double y = Double.parseDouble(node.get("y").toString());
+                    x-=_minX;
+                    y-=_minY;
+                    x*=COEF_MULT_COORDONEES;
+                    y*=COEF_MULT_COORDONEES;
+
+                    if(estPremier) {
+                        estPremier = false;
+                        path.moveTo(x, y);
+                    } else {
+                        path.lineTo(x, y);
+                    }
+                }
+                _coordonneesDessin.add(new Forme(nom.toString(), path, fill, c));
             }
-            _coordonneesDessin.add(new Object[] {c, path});
-                
         }
-        System.out.println(minX);
-        System.out.println(minY);
-        System.out.println(maxX);
-        System.out.println(maxY);
     }
+    
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
-        for(Object[] o:_coordonneesDessin) {
-            Color couleur = (Color)o[0];
-            Path2D path = (Path2D)o[1];
+        
+        for(Forme forme:_coordonneesDessin) {
+            Color couleur = forme.getCouleur();
+            Path2D path = forme.getCoordonnees();
+            boolean fill = forme.isFill();
             g2.setColor(couleur);
-            g2.draw(path);
+            if(fill) {
+                g2.fill(path);
+            } else {
+                g2.draw(path);
+            }
         }
-        
-        
+        g2.setBackground(FONDCOLOR);
+        g2.setFont(new Font("SansSerif", Font.BOLD, 10));
+        g2.drawString(_toolTip, 400, 50);
     }
     
     public JsonArray getContenu() {
@@ -108,6 +159,7 @@ public class AfficherMap extends JPanel{
         AfficherMap am = new AfficherMap();
         JsonArray ja = am.getContenu();
         am.makePath2D(ja);
+        am.eventsMap();
         
         jf.add(am);
         jf.setSize(780, 500);
