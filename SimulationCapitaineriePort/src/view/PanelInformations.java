@@ -43,17 +43,17 @@ public class PanelInformations extends JPanel {
     }
     
     public void majInformations() {
-        JLabel jl;
+        JLabel label;
         boolean pair = true;
         add(_jlNomPanel);
         for (String info : _informations) {
-            jl = new JLabel(info);
-            jl.setOpaque(true);
+            label = new JLabel(info);
+            label.setOpaque(true);
             if(pair = !pair)
-                jl.setBackground(Color.lightGray);
+                label.setBackground(Color.lightGray);
             else
-                jl.setBackground(Color.gray);
-            add(jl);
+                label.setBackground(Color.gray);
+            add(label);
         }
     }
     
