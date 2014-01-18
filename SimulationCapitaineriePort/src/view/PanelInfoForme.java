@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author Jérémy
  */
-public class PanelInformations extends JPanel {
+public class PanelInfoForme extends JPanel {
     
     private JLabel              _jlNomPanel;
     private ArrayList<String>   _informations;
@@ -29,7 +29,7 @@ public class PanelInformations extends JPanel {
      * @param nomPanel
      * @param informations format de l'ArrayList : {"nom : valeur", "nom : valeur", ...}
      */
-    public PanelInformations(String nomPanel, ArrayList<String> informations) {
+    public PanelInfoForme(String nomPanel, ArrayList<String> informations) {
         _jlNomPanel    = new JLabel(nomPanel, JLabel.CENTER);
         _informations  = informations;
         
@@ -64,7 +64,7 @@ public class PanelInformations extends JPanel {
         for (int i = 0; i < 10; i++)
             informations.add("  Test : " + i + "  ");
         
-        PanelInformations pi = new PanelInformations("TEST", informations);
+        PanelInfoForme pi = new PanelInfoForme("TEST", informations);
         pi.majInformations();
         
         jf.add(pi);
