@@ -1,4 +1,4 @@
-package modele;
+package modele.enumeration;
 public enum TypeShape {
     AMENITY,
     BUILDING,

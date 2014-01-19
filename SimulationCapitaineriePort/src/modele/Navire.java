@@ -1,5 +1,7 @@
 package modele;
 
+import modele.enumeration.TypeMarchandise;
+import modele.enumeration.TypeNavire;
 import java.awt.Point;
 
 /**

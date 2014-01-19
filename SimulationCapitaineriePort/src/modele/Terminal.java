@@ -6,6 +6,7 @@
 
 package modele;
 
+import modele.enumeration.TypeMarchandise;
 import java.util.ArrayList;
 
 /**

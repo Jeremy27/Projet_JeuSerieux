@@ -6,6 +6,7 @@
 
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -30,22 +31,30 @@ public class PanelInfoForme extends JPanel {
      * @param informations format de l'ArrayList : {"nom : valeur", "nom : valeur", ...}
      */
     public PanelInfoForme(String nomPanel, ArrayList<String> informations) {
-        _jlNomPanel    = new JLabel(nomPanel, JLabel.CENTER);
-        _informations  = informations;
+        setPreferredSize(new Dimension(250, 500));
+        setLayout(new BorderLayout());
         
-        setLayout(new GridLayout(informations.size()+1, 1));
+        initialisationLabelNomPanel(nomPanel);
+        _informations  = informations;
+    }
+    
+    private void initialisationLabelNomPanel(String nomPanel) {
+        _jlNomPanel = new JLabel(nomPanel, JLabel.CENTER);
         _jlNomPanel.setOpaque(true);
         _jlNomPanel.setBackground(Color.black);
         _jlNomPanel.setForeground(Color.white);
         _jlNomPanel.setPreferredSize(new Dimension(this.getWidth(), 50));
         _jlNomPanel.setAlignmentX((float) 10.0);
         _jlNomPanel.setFont(new Font(this.getFont().getName(), Font.BOLD, 18));
+        
+        add(_jlNomPanel, BorderLayout.NORTH);
     }
     
     public void majInformations() {
         JLabel label;
+        JPanel panelGrid = new JPanel(new GridLayout(_informations.size(), 1));
         boolean pair = true;
-        add(_jlNomPanel);
+        
         for (String info : _informations) {
             label = new JLabel(info);
             label.setOpaque(true);
@@ -53,24 +62,8 @@ public class PanelInfoForme extends JPanel {
                 label.setBackground(Color.lightGray);
             else
                 label.setBackground(Color.gray);
-            add(label);
+            panelGrid.add(label);
         }
+        add(panelGrid, BorderLayout.CENTER);
     }
-    
-    public static void main(String[] args) {
-        JFrame jf = new JFrame();
-        ArrayList<String> informations = new ArrayList<>();
-        
-        for (int i = 0; i < 10; i++)
-            informations.add("  Test : " + i + "  ");
-        
-        PanelInfoForme pi = new PanelInfoForme("TEST", informations);
-        pi.majInformations();
-        
-        jf.add(pi);
-        jf.pack();
-        jf.setVisible(true);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-    
 }

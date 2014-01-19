@@ -19,7 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import modele.Forme;
-import modele.TypeShape;
+import modele.enumeration.TypeShape;
 
 public class AfficherMap extends JPanel{
     private static final Color NATURALCOLOR = Color.BLUE;
