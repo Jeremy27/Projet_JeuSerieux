@@ -28,6 +28,7 @@ public class IHM extends JFrame {
         setJMenuBar(new Menu());
         creationPanels();
         
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
