@@ -44,16 +44,24 @@ public class Forme {
         this._nom = nom;
     }
     
-    public Path2D getPath(int taillePanel, double ajout) {
+    public void corrigerCoordonnees(double correctionX, double correctionY) {
+        for(Point2D p:_coordonnees) {
+            p.setLocation(p.getX()-correctionX, p.getY()-correctionY);
+        }
+    }
+    
+    public Path2D getPath(int hauteurPanel, double coefX, double coefY) {
         Path2D path = new Path2D.Double();
         boolean premier = true;
         for(Point2D p:_coordonnees) {
-            double y = taillePanel - p.getY() - ajout;
+            double x = (p.getX()*coefX);
+            double y = hauteurPanel - (p.getY()*coefY);
+            //System.out.println(y);
             if(premier) {
-                path.moveTo(p.getX(), y);
+                path.moveTo(x, y);
                 premier = false;
             } else {
-                path.lineTo(p.getX(), y);
+                path.lineTo(x, y);
             }
         }
         _path = path;

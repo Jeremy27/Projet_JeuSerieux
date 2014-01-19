@@ -22,21 +22,28 @@ import modele.Forme;
 import modele.enumeration.TypeShape;
 
 public class AfficherMap extends JPanel{
-    private static final Color NATURALCOLOR = Color.BLUE;
-    private static final Color TERMINALCOLOR = Color.BLACK;
-    private static final Color QUAICOLOR = Color.WHITE;
+    private static final Color NATURALCOLOR = new Color(181, 208, 208);
+    private static final Color TERMINALCOLOR = new Color(222, 208, 213);
+    private static final Color QUAICOLOR = new Color(52, 203, 153);
+    private static final Color ROUTECOLOR = new Color(182, 181, 146);
     private static final Color AUTRECOLOR = Color.GRAY;
-    private static final Color FONDCOLOR = Color.CYAN;
-    
-    private static final int COEF_MULT_COORDONEES = 2000;
     
     private final String separateur = java.nio.file.FileSystems.getDefault().getSeparator();
-    private final double _minX = 0.0532394;
-    private final double _minY = 49.3494358;
-    private double _maxY = 0.0;
-    private final String _nomFichier = "src" + separateur + "data" + separateur + "map.json";
+    private final String _nomFichier = "src" + separateur + "data" + separateur + "map_filtree.json";
+    
+    private final double LIMITE_X = 0.1900875;
+    private final double LIMITE_Y = 49.488;
+    
+    private double _diffMinMaxX;
+    private double _diffMinMaxY;
+    
     private final ArrayList<Forme> _coordonneesDessin;
     private String _toolTip = "";
+    
+    private double _testMinX = Double.MAX_VALUE;
+    private double _testMaxX = 0.0;
+    private double _testMinY = Double.MAX_VALUE;
+    private double _testMaxY = 0.0;
     
     public AfficherMap() {
         _coordonneesDessin = new ArrayList<>();
@@ -91,7 +98,7 @@ public class AfficherMap extends JPanel{
             JsonValue type = jo.get("_type");
             JsonValue nom = jo.get("_nom");
             
-            if(!type.toString().equals(TypeShape.HIGHWAY.toString())) {
+            //if(!type.toString().equals(TypeShape.HIGHWAY.toString())) {
                 if(type.toString().equals(TypeShape.NATURAL.toString())) {
                     c = NATURALCOLOR;
                     fill = true;
@@ -101,50 +108,71 @@ public class AfficherMap extends JPanel{
                 } else if(type.toString().equals(TypeShape.QUAI.toString())) {
                     c = QUAICOLOR;
                     fill = true;
+                } else if(type.toString().equals(TypeShape.HIGHWAY.toString())){
+                    c = ROUTECOLOR;
                 } else {
                     c = AUTRECOLOR;
+                    fill = true;
                 }
                 Forme forme = new Forme(nom.toString(), fill, c, Integer.parseInt(id.toString()));
-                _coordonneesDessin.add(forme);
-
-                boolean estPremier = true;
+                
                 JsonArray nodes = (JsonArray)jo.get("_nodes");
                 for(Object coordonnees:nodes.toArray()) {
                     JsonObject node = (JsonObject) coordonnees;
                     double x = Double.parseDouble(node.get("x").toString());
                     double y = Double.parseDouble(node.get("y").toString());
-                    x-=_minX;
-                    y-=_minY;
-                    x*=COEF_MULT_COORDONEES;
-                    y*=COEF_MULT_COORDONEES;
                     
-                    if(_maxY<y) {
-                        _maxY = y;
+                    if(_testMinX>x) {
+                        _testMinX = x;
+                    }
+                    
+                    if(_testMinY>y) {
+                        _testMinY = y;
+                    }
+                    
+                    if(_testMaxY<y) {
+                        _testMaxY = y;
+                    }
+                    if(_testMaxX<x) {
+                        _testMaxX = x;
                     }
                     forme.ajoutCoordonnee(new Point2D.Double(x, y));
-//                    if(estPremier) {
-//                        estPremier = false;
-//                        path.moveTo(x, y);
-//                    } else {
-//                        path.lineTo(x, y);
-//                    }
                 }
+                _coordonneesDessin.add(forme);
                 
-            }
+            //}
         }
+        
+        for(Forme forme:_coordonneesDessin) {
+            forme.corrigerCoordonnees(_testMinX, _testMinY);
+        }
+        _diffMinMaxX = LIMITE_X - _testMinX;
+        //_diffMinMaxY = LIMITE_Y - _testMinY;
+        _diffMinMaxY = _testMaxY - _testMinY;
+        System.out.println(_coordonneesDessin.size());
+        System.out.println("");
+        System.out.println("min x "+_testMinX);
+        System.out.println("max x "+_testMaxX);
+        System.out.println("min y "+_testMinY);
+        System.out.println("max y "+_testMaxY);
     }
     
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
-        Graphics2D g2 = (Graphics2D)g;
         Insets insets = getInsets();
         int w = getWidth() - insets.left - insets.right;
         int h = getHeight() - insets.top - insets.bottom;
-        double ajout = h/2.0 - _maxY/2.0; //car la minY = 0
+      
+        
+        double coefMultX = w/_diffMinMaxX;
+        double coefMultY = h/_diffMinMaxY;
+        
+        super.paint(g);
+        Graphics2D g2 = (Graphics2D)g;
+        
         for(Forme forme:_coordonneesDessin) {
             Color couleur = forme.getCouleur();
-            Path2D path = forme.getPath(h, ajout);
+            Path2D path = forme.getPath(h, coefMultX, coefMultY);
             boolean fill = forme.isFill();
             g2.setColor(couleur);
             if(fill) {
@@ -153,9 +181,8 @@ public class AfficherMap extends JPanel{
                 g2.draw(path);
             }
         }
-        g2.setBackground(FONDCOLOR);
-        g2.setFont(new Font("SansSerif", Font.BOLD, 10));
-        g2.drawString(_toolTip, 400, 50);
+        g2.setFont(new Font("SansSerif", Font.BOLD, 20));
+        g2.drawString(_toolTip, 50, 50);
     }
     
     public JsonArray getContenu() {
