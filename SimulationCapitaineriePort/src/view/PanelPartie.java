@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,12 +23,26 @@ public class PanelPartie extends Panel {
 
     public PanelPartie() {
         super("Partie en cours");
+        initialisationComposants();
     }
     
     private void initialisationComposants() {
-        JPanel panel    = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel panelGrid = new JPanel(new GridLayout(3, 1, 10, 10));
+        JPanel panelFlow1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel panelFlow2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel panelFlow3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         _jlTempsRestant = new JLabel("Temps restant : " + _tempsRestant);
         _jlNbRetard     = new JLabel("Retard cumulé : " + _nbRetard);
         _jbValider      = new JButton("Valider");
+        
+        panelFlow1.add(_jlTempsRestant);
+        panelFlow2.add(_jlNbRetard);
+        panelFlow3.add(_jbValider);
+        
+        panelGrid.add(panelFlow1);
+        panelGrid.add(panelFlow2);
+        panelGrid.add(panelFlow3);
+        
+        add(panelGrid, BorderLayout.CENTER);
     }
 }

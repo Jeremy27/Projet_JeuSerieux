@@ -3,6 +3,7 @@ package modele;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeNavire;
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  *
@@ -77,6 +78,20 @@ public class Navire extends Forme {
 
     public void setPosition(Point _position) {
         this._position = _position;
+    }
+    
+    public ArrayList<String> getDonneesFormates() {
+        ArrayList<String> tabInfo = new ArrayList<>();
+        
+        tabInfo.add("Nom : " + _nom);
+        tabInfo.add("Longueur : " + _longueur);
+        tabInfo.add("Date d'arrivée : " + _dateArrivee);
+        tabInfo.add("Temps à quai : " + _tempsPriseEnCharge);
+        tabInfo.add("Marchandise : " + _typeMachandise.name());
+        tabInfo.add("Navire : " + _typeNavire.name());
+        tabInfo.add("Coordonnées : [" + _position.getX() + ", " + _position.getY() + ']');
+                
+        return tabInfo;
     }
 
     @Override

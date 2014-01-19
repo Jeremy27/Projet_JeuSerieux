@@ -9,11 +9,15 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Point;
 import java.util.ArrayList;
 import javax.json.JsonArray;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import modele.Navire;
+import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeMessage;
+import modele.enumeration.TypeNavire;
 
 /**
  *
@@ -22,7 +26,7 @@ import modele.enumeration.TypeMessage;
 public class IHM extends JFrame {
 
     public IHM() throws HeadlessException {
-        setSize(1400, 700);
+        setSize(1300, 650);
         setLayout(new BorderLayout());
         
         setJMenuBar(new Menu());
@@ -40,16 +44,14 @@ public class IHM extends JFrame {
         map.eventsMap();
         add(map, BorderLayout.CENTER);
         
-        ArrayList<String> tabTest = new ArrayList<>();
-        for (int i = 0; i < 10; i++)
-            tabTest.add("Test : "+i);
+        Navire n = new Navire("CHANTACO", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.CONTENEURS, 15, 1, 4, new Point(0, 2));
         
         JPanel panelGauche  = new JPanel(new GridLayout(2, 1));
         JPanel panelDroit   = new JPanel(new GridLayout(2, 1));
         
-        PanelInfoForme p1 = new PanelInfoForme("Numero 1", tabTest);
-        PanelInfoForme p2 = new PanelInfoForme("Numero 2", tabTest);
-        PanelInfoForme p3 = new PanelInfoForme("Numero 3", tabTest);
+        PanelInfoForme p1 = new PanelInfoForme("Numero 1", n.getDonneesFormates());
+        PanelPartie    p2 = new PanelPartie();
+        PanelInfoForme p3 = new PanelInfoForme("Navire", n.getDonneesFormates());
         PanelInfoJeu   p4 = new PanelInfoJeu();
         
         p4.ajoutMessage("Message erreur", TypeMessage.ERREUR);
@@ -60,7 +62,6 @@ public class IHM extends JFrame {
         p4.ajoutMessage("Message avertissement", TypeMessage.AVERTISSEMENT);
         
         p1.majInformations();
-        p2.majInformations();
         p3.majInformations();
         
         panelGauche.add(p1);
