@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  */
 public class Panel extends JPanel {
     
-    protected JLabel _jlNomPanel ;
+    protected JLabel _jlNomPanel;
 
     public Panel(String nomPanel) {
         setPreferredSize(new Dimension(200, 500));
@@ -37,5 +37,9 @@ public class Panel extends JPanel {
         _jlNomPanel.setFont(new Font(this.getFont().getName(), Font.BOLD, 18));
         
         add(_jlNomPanel, BorderLayout.NORTH);
+    }
+    
+    protected void setNomPanel(String nom) {
+        _jlNomPanel.setText(nom);
     }
 }

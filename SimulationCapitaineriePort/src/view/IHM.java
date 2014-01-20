@@ -10,7 +10,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Point;
-import java.util.ArrayList;
 import javax.json.JsonArray;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,6 +25,7 @@ import modele.enumeration.TypeNavire;
 public class IHM extends JFrame {
 
     public IHM() throws HeadlessException {
+        setTitle("Simulation port du Havre");
         setSize(1300, 650);
         setLayout(new BorderLayout());
         
@@ -38,11 +38,6 @@ public class IHM extends JFrame {
     }
     
     private void creationPanels() {
-        AfficherMap map = new AfficherMap();
-        JsonArray ja = map.getContenu();
-        map.makePath2D(ja);
-        map.eventsMap();
-        add(map, BorderLayout.CENTER);
         
         Navire n = new Navire("CHANTACO", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.PASSAGER, 12, 1, 4, new Point(0, 2));
         Navire n1 = new Navire("test1", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.CONTENEURS, 18, 1, 4, new Point(0, 2));
@@ -61,6 +56,13 @@ public class IHM extends JFrame {
         PanelPartie    p2 = new PanelPartie();
         PanelInfoForme p3 = new PanelInfoForme("Navire", n.getDonneesFormates());
         PanelInfoJeu   p4 = new PanelInfoJeu();
+        
+        AfficherMap map = new AfficherMap(p3);
+        
+        JsonArray ja = map.getContenu();
+        add(map, BorderLayout.CENTER);
+        map.makePath2D(ja);
+        map.eventsMap();
         
         p4.ajoutMessage("Message erreur", TypeMessage.ERREUR);
         p4.ajoutMessage("Message normal", TypeMessage.NORMAL);

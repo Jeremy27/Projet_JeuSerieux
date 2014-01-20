@@ -26,12 +26,22 @@ public class PanelInfoForme extends Panel {
      * @param nomPanel
      * @param informations format de l'ArrayList : {"nom : valeur", "nom : valeur", ...}
      */
+    public PanelInfoForme(String nomPanel) {
+        super(nomPanel);
+        _informations  = new ArrayList<>();
+    }
+    
     public PanelInfoForme(String nomPanel, ArrayList<String> informations) {
         super(nomPanel);
         _informations  = informations;
     }
     
+    public void setInformations(ArrayList<String> informations) {
+        _informations = informations;
+    }
+    
     public void majInformations() {
+        
         JLabel label;
         JPanel panelGrid = new JPanel(new GridLayout(_informations.size(), 1));
         boolean pair = true;
