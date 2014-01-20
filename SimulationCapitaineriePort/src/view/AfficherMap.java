@@ -65,14 +65,15 @@ public class AfficherMap extends JPanel{
                     if(forme.getPath().contains(p)) {
                         String nom = forme.getNom();
                         if(nom!=null) {
-                            _toolTip = forme.getNom() + "\nId:" + forme.getId();
-                            SwingUtilities.invokeLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    refresh();
-                                }
-                            });
+                            _toolTip = forme.getNom() + " ";
                         }
+                        _toolTip += "Id:" + forme.getId();
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                refresh();
+                            }
+                        });
                         break;
                     }
                 }
@@ -98,49 +99,46 @@ public class AfficherMap extends JPanel{
             JsonValue type = jo.get("_type");
             JsonValue nom = jo.get("_nom");
             
-            //if(!type.toString().equals(TypeShape.HIGHWAY.toString())) {
-                if(type.toString().equals(TypeShape.NATURAL.toString())) {
-                    c = NATURALCOLOR;
-                    fill = true;
-                } else if(type.toString().equals(TypeShape.TERMINAL.toString())) {
-                    c = TERMINALCOLOR;
-                    fill = true;
-                } else if(type.toString().equals(TypeShape.QUAI.toString())) {
-                    c = QUAICOLOR;
-                    fill = true;
-                } else if(type.toString().equals(TypeShape.HIGHWAY.toString())){
-                    c = ROUTECOLOR;
-                } else {
-                    c = AUTRECOLOR;
-                    fill = true;
+            if(type.toString().equals(TypeShape.NATURAL.toString())) {
+                c = NATURALCOLOR;
+                fill = true;
+            } else if(type.toString().equals(TypeShape.TERMINAL.toString())) {
+                c = TERMINALCOLOR;
+                fill = true;
+            } else if(type.toString().equals(TypeShape.QUAI.toString())) {
+                c = QUAICOLOR;
+                fill = true;
+            } else if(type.toString().equals(TypeShape.HIGHWAY.toString())){
+                c = ROUTECOLOR;
+            } else {
+                c = AUTRECOLOR;
+                fill = true;
+            }
+            Forme forme = new Forme(nom.toString(), fill, c, Integer.parseInt(id.toString()));
+
+            JsonArray nodes = (JsonArray)jo.get("_nodes");
+            for(Object coordonnees:nodes.toArray()) {
+                JsonObject node = (JsonObject) coordonnees;
+                double x = Double.parseDouble(node.get("x").toString());
+                double y = Double.parseDouble(node.get("y").toString());
+
+                if(_testMinX>x) {
+                    _testMinX = x;
                 }
-                Forme forme = new Forme(nom.toString(), fill, c, Integer.parseInt(id.toString()));
-                
-                JsonArray nodes = (JsonArray)jo.get("_nodes");
-                for(Object coordonnees:nodes.toArray()) {
-                    JsonObject node = (JsonObject) coordonnees;
-                    double x = Double.parseDouble(node.get("x").toString());
-                    double y = Double.parseDouble(node.get("y").toString());
-                    
-                    if(_testMinX>x) {
-                        _testMinX = x;
-                    }
-                    
-                    if(_testMinY>y) {
-                        _testMinY = y;
-                    }
-                    
-                    if(_testMaxY<y) {
-                        _testMaxY = y;
-                    }
-                    if(_testMaxX<x) {
-                        _testMaxX = x;
-                    }
-                    forme.ajoutCoordonnee(new Point2D.Double(x, y));
+
+                if(_testMinY>y) {
+                    _testMinY = y;
                 }
-                _coordonneesDessin.add(forme);
-                
-            //}
+
+                if(_testMaxY<y) {
+                    _testMaxY = y;
+                }
+                if(_testMaxX<x) {
+                    _testMaxX = x;
+                }
+                forme.ajoutCoordonnee(new Point2D.Double(x, y));
+            }
+            _coordonneesDessin.add(forme);
         }
         
         for(Forme forme:_coordonneesDessin) {
@@ -163,7 +161,6 @@ public class AfficherMap extends JPanel{
         int w = getWidth() - insets.left - insets.right;
         int h = getHeight() - insets.top - insets.bottom;
       
-        
         double coefMultX = w/_diffMinMaxX;
         double coefMultY = h/_diffMinMaxY;
         
