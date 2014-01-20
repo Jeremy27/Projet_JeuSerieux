@@ -44,12 +44,20 @@ public class IHM extends JFrame {
         map.eventsMap();
         add(map, BorderLayout.CENTER);
         
-        Navire n = new Navire("CHANTACO", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.CONTENEURS, 15, 1, 4, new Point(0, 2));
+        Navire n = new Navire("CHANTACO", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.PASSAGER, 12, 1, 4, new Point(0, 2));
+        Navire n1 = new Navire("test1", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.CONTENEURS, 18, 1, 4, new Point(0, 2));
+        Navire n2 = new Navire("test2", TypeNavire.RO_RO, TypeMarchandise.EOLIEN, 10, 1, 4, new Point(0, 2));
+        Navire n3 = new Navire("test3", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.ROULIER, 30, 1, 4, new Point(0, 2));
+        Navire n4 = new Navire("test5", TypeNavire.FERRY, TypeMarchandise.CONTENEURS, 14, 1, 4, new Point(0, 2));
         
         JPanel panelGauche  = new JPanel(new GridLayout(2, 1));
         JPanel panelDroit   = new JPanel(new GridLayout(2, 1));
         
-        PanelInfoForme p1 = new PanelInfoForme("Numero 1", n.getDonneesFormates());
+        PanelNaviresArrives p1 = new PanelNaviresArrives();
+        p1.ajouterNavire(n);
+        p1.ajouterNavire(n1);
+        p1.ajouterNavire(n2);
+        p1.ajouterNavire(n3);
         PanelPartie    p2 = new PanelPartie();
         PanelInfoForme p3 = new PanelInfoForme("Navire", n.getDonneesFormates());
         PanelInfoJeu   p4 = new PanelInfoJeu();
@@ -61,7 +69,6 @@ public class IHM extends JFrame {
         p4.ajoutMessage("Message retard", TypeMessage.RETARD);
         p4.ajoutMessage("Message avertissement", TypeMessage.AVERTISSEMENT);
         
-        p1.majInformations();
         p3.majInformations();
         
         panelGauche.add(p1);

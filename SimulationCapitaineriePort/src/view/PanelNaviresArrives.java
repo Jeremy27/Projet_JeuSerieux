@@ -8,8 +8,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.JTable;
+import modele.Navire;
 
 /**
  *
@@ -17,16 +16,22 @@ import javax.swing.JTable;
  */
 public class PanelNaviresArrives extends Panel {
 
-    private JTable _tableau;
-    private ModeleJTable modele;
+    private Tableau _tableau;
     
     
     public PanelNaviresArrives() {
         super("Navires arrivés");
-       
-        _tableau = new JTable(new ModeleJTable(new ArrayList<>(Arrays.asList("Nom", "Temps d'arrivée", "baz"))));
+        
+        ArrayList<String> test = new ArrayList<>();
+        test.add("Nom");
+        test.add("Temps d'arrivée"); 
+        test.add("baz");
+        
+        _tableau = new Tableau(test);
         add(_tableau, BorderLayout.CENTER);
     }
     
-    
+    public void ajouterNavire(Navire n) {
+        _tableau.ajouterNavire(n);
+    }
 }
