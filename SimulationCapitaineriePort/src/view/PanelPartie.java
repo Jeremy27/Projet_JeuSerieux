@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -28,12 +29,21 @@ public class PanelPartie extends Panel {
     
     private void initialisationComposants() {
         JPanel panelGrid = new JPanel(new GridLayout(3, 1, 10, 10));
+        panelGrid.setBackground(Color.gray);
+        
         JPanel panelFlow1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel panelFlow2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel panelFlow3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelFlow1.setBackground(Color.gray);
+        panelFlow2.setBackground(Color.gray);
+        panelFlow3.setBackground(Color.gray);
+        
         _jlTempsRestant = new JLabel("Temps restant : " + _tempsRestant);
         _jlNbRetard     = new JLabel("Retard cumulé : " + _nbRetard);
         _jbValider      = new JButton("Valider");
+        
+        _jlNbRetard.setBackground(Color.gray);
+        _jlTempsRestant.setBackground(Color.gray);
         
         panelFlow1.add(_jlTempsRestant);
         panelFlow2.add(_jlNbRetard);

@@ -24,7 +24,6 @@ public class Panel extends JPanel {
     public Panel(String nomPanel) {
         setPreferredSize(new Dimension(200, 500));
         setLayout(new BorderLayout());
-        setBackground(new Color(40, 100, 250));
         
         initialisationLabelNomPanel(nomPanel);
     }

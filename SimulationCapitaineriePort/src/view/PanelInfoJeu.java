@@ -17,14 +17,14 @@ public class PanelInfoJeu extends Panel {
     
     public PanelInfoJeu() {
         super("Informations");
-        _log = "<p class=\"blanche\">En attente ...</p>";
+        _log = "<p class=\"gris\">En attente ...</p>";
         initialisationLabelLog();
     }
     
     private void initialisationLabelLog() {
         _jlInformations = new JLabel(_log);
         JScrollPane jsp = new JScrollPane(_jlInformations);
-        _jlInformations.setBackground(new Color(40, 100, 250));
+        _jlInformations.setBackground(Color.gray);
         _jlInformations.setOpaque(true);
         
         add(jsp, BorderLayout.CENTER);
@@ -41,7 +41,7 @@ public class PanelInfoJeu extends Panel {
         if(typeMessage == TypeMessage.ERREUR)
             classeCSS = "rouge";
         else if(typeMessage == TypeMessage.NORMAL)
-            classeCSS = "blanche";
+            classeCSS = "gris";
         else if(typeMessage == TypeMessage.RETARD)
             classeCSS = "orange";
         else if(typeMessage == TypeMessage.AVERTISSEMENT)
@@ -53,8 +53,9 @@ public class PanelInfoJeu extends Panel {
     private String getDebutHTML() {
         String debutHTML  = "";
         debutHTML +="<html><head><style type='text/css'>";
-        debutHTML += ".rouge   {color: red;}";
+        debutHTML += ".rouge   {color: #8B0000;}";
         debutHTML += ".blanche {color: white;}";
+        debutHTML += ".gris    {color: #D3D3D3;}";
         debutHTML += ".orange  {color: orange;}";
         debutHTML += ".jaune   {color: yellow;}";
         debutHTML += "</style></head><body>";
