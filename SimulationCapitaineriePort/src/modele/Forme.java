@@ -44,6 +44,10 @@ public class Forme {
         this._nom = nom;
     }
     
+    public ArrayList<Point2D> getCoordonnees() {
+        return _coordonnees;
+    }
+    
     public void corrigerCoordonnees(double correctionX, double correctionY) {
         for(Point2D p:_coordonnees) {
             p.setLocation(p.getX()-correctionX, p.getY()-correctionY);

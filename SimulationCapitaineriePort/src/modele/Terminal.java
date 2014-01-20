@@ -14,22 +14,20 @@ import java.util.ArrayList;
  * @author jeremy
  */
 public class Terminal extends Forme {
-    private int _longueur;
+    
     private ArrayList<TypeMarchandise> _typeChargement;
     
     public Terminal(String nom, int longueur) {
         super(nom);
         _typeChargement = new ArrayList<>();
-        _longueur = longueur;
         
     }
-
-    public int getLongueur() {
-        return _longueur;
-    }
-
-    public void setLongueur(int _longueur) {
-        this._longueur = _longueur;
+    
+    public void ajoutType(TypeMarchandise t) {
+        _typeChargement.add(t);
     }
     
+    public ArrayList<TypeMarchandise> getTypesChargement() {
+        return _typeChargement;
+    }
 }

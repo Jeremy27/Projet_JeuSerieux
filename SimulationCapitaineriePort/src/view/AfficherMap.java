@@ -7,11 +7,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
@@ -19,6 +24,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import modele.Forme;
+import modele.Navire;
+import modele.Quai;
+import modele.Terminal;
 import modele.enumeration.TypeShape;
 
 public class AfficherMap extends JPanel{
@@ -34,6 +42,8 @@ public class AfficherMap extends JPanel{
     private final double LIMITE_X = 0.1900875;
     private final double LIMITE_Y = 49.488;
     
+    private PanelInfoForme _panelInfoForme;
+    
     private double _diffMinMaxX;
     private double _diffMinMaxY;
     
@@ -45,7 +55,8 @@ public class AfficherMap extends JPanel{
     private double _testMinY = Double.MAX_VALUE;
     private double _testMaxY = 0.0;
     
-    public AfficherMap() {
+    public AfficherMap(PanelInfoForme panelInfo) {
+        _panelInfoForme = panelInfo;
         _coordonneesDessin = new ArrayList<>();
         this.setLayout(null);
     }
@@ -80,6 +91,32 @@ public class AfficherMap extends JPanel{
             }
         });
         
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point p = e.getPoint();
+                System.out.println("entré");
+                for(Forme forme:_coordonneesDessin) {
+                    if(forme.getPath().contains(p)) {
+                        System.out.println(forme.getClass().toString());
+                        if(forme instanceof Quai) {
+                            System.out.println("quai");
+                            Quai q = (Quai) forme;
+                            _panelInfoForme.setNomPanel("QUAI");
+                            _panelInfoForme.setInformations(q.getDonneesFormates());
+                            _panelInfoForme.majInformations();
+                        } else if(forme instanceof Navire) {
+                            Navire n = (Navire) forme;
+                            _panelInfoForme.setNomPanel("NAVIRE");
+                            _panelInfoForme.setInformations(n.getDonneesFormates());
+                        }
+                        
+                    }
+                }
+                
+            }
+        });
+        
     }
     
     public void refresh() {
@@ -98,23 +135,26 @@ public class AfficherMap extends JPanel{
             JsonValue id = jo.get("_id");
             JsonValue type = jo.get("_type");
             JsonValue nom = jo.get("_nom");
-            
+            Forme forme;
             if(type.toString().equals(TypeShape.NATURAL.toString())) {
                 c = NATURALCOLOR;
                 fill = true;
+                forme = new Forme(nom.toString(), fill, c, Integer.parseInt(id.toString()));
             } else if(type.toString().equals(TypeShape.TERMINAL.toString())) {
                 c = TERMINALCOLOR;
                 fill = true;
+                forme = new Forme(nom.toString(), fill, c, Integer.parseInt(id.toString()));
             } else if(type.toString().equals(TypeShape.QUAI.toString())) {
                 c = QUAICOLOR;
                 fill = true;
+                forme = new Quai(nom.toString(), fill, c, Integer.parseInt(id.toString()), new Random(System.currentTimeMillis()).nextInt(100));
             } else if(type.toString().equals(TypeShape.HIGHWAY.toString())){
                 c = ROUTECOLOR;
+                forme = new Forme(nom.toString(), fill, c, Integer.parseInt(id.toString()));
             } else {
                 c = AUTRECOLOR;
-                fill = true;
+                forme = new Forme(nom.toString(), fill, c, Integer.parseInt(id.toString()));
             }
-            Forme forme = new Forme(nom.toString(), fill, c, Integer.parseInt(id.toString()));
 
             JsonArray nodes = (JsonArray)jo.get("_nodes");
             for(Object coordonnees:nodes.toArray()) {
@@ -125,17 +165,16 @@ public class AfficherMap extends JPanel{
                 if(_testMinX>x) {
                     _testMinX = x;
                 }
-
                 if(_testMinY>y) {
                     _testMinY = y;
                 }
-
                 if(_testMaxY<y) {
                     _testMaxY = y;
                 }
                 if(_testMaxX<x) {
                     _testMaxX = x;
                 }
+                
                 forme.ajoutCoordonnee(new Point2D.Double(x, y));
             }
             _coordonneesDessin.add(forme);
@@ -157,6 +196,7 @@ public class AfficherMap extends JPanel{
     
     @Override
     public void paint(Graphics g) {
+        
         Insets insets = getInsets();
         int w = getWidth() - insets.left - insets.right;
         int h = getHeight() - insets.top - insets.bottom;
@@ -166,20 +206,29 @@ public class AfficherMap extends JPanel{
         
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
-        
         for(Forme forme:_coordonneesDessin) {
+            
             Color couleur = forme.getCouleur();
             Path2D path = forme.getPath(h, coefMultX, coefMultY);
             boolean fill = forme.isFill();
             g2.setColor(couleur);
             if(fill) {
                 g2.fill(path);
+//                g2.setColor(Color.red);
+//                for(Point2D p:forme.getCoordonnees()) {
+//                    int x = (int)(p.getX()*coefMultX);
+//                    int y = (int)(h - (p.getY()*coefMultY));
+//                    g2.drawRect(x, y, 1, 1);
+//                }
             } else {
                 g2.draw(path);
+//                g2.setColor(Color.WHITE);
+//                g2.fill(path);
             }
         }
         g2.setFont(new Font("SansSerif", Font.BOLD, 20));
         g2.drawString(_toolTip, 50, 50);
+//        setBackground(Color.CYAN);
     }
     
     public JsonArray getContenu() {
@@ -191,7 +240,7 @@ public class AfficherMap extends JPanel{
     public static void main(String[] args) {
         JFrame jf = new JFrame();
         
-        AfficherMap am = new AfficherMap();
+        AfficherMap am = new AfficherMap(new PanelInfoForme(""));
         JsonArray ja = am.getContenu();
         am.makePath2D(ja);
         am.eventsMap();
