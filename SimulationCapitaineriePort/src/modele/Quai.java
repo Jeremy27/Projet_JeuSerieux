@@ -25,6 +25,7 @@ public class Quai extends Forme{
         _nom            = nom;
         _fill           = fill;
         _couleur        = couleur;
+        
         _id             = id;
         _longueur       = longueur;
         _terminaux      = new ArrayList<>();

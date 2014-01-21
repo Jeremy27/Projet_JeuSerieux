@@ -17,6 +17,7 @@ public class Navire extends Forme {
     private int             _tempsPriseEnCharge;
     private TypeNavire      _typeNavire;
     private Point           _position;
+    private int             _heurePriseEnCharge;
     
 
     public Navire(String nom, TypeNavire type, TypeMarchandise typeMarchandise, int longueur, int dateArrivee, int tempsPriseEnCharge, Point position) {
@@ -29,9 +30,6 @@ public class Navire extends Forme {
         this._position              = position;
     }
     
-    /*
-    ##### GETTER & SETTER #####
-    */
     public TypeNavire getType() {
         return _typeNavire;
     }
@@ -78,6 +76,14 @@ public class Navire extends Forme {
 
     public void setPosition(Point _position) {
         this._position = _position;
+    }
+
+    public int getHeurePriseEnCharge() {
+        return _heurePriseEnCharge;
+    }
+
+    public void setHeurePriseEnCharge(int _heurePriseEnCharge) {
+        this._heurePriseEnCharge = _heurePriseEnCharge;
     }
     
     public ArrayList<String> getDonneesFormates() {
