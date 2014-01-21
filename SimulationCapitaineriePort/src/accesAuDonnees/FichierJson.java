@@ -1,4 +1,4 @@
-package acces_donnees;
+package accesAuDonnees;
 
 import java.io.StringReader;
 import javax.json.Json;

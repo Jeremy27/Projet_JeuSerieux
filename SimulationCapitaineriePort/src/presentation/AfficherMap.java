@@ -1,6 +1,6 @@
-package view;
+package presentation;
 
-import acces_donnees.FichierJson;
+import accesAuDonnees.FichierJson;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
