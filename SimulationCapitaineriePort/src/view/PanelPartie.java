@@ -19,16 +19,17 @@ public class PanelPartie extends Panel {
     
     private JButton _jbValider;
     
-    public static int _tempsRestant;
+    public static int _temps;
     public static int _nbRetard;
 
     public PanelPartie() {
         super("Partie en cours");
+        _temps = 1;
         initialisationComposants();
     }
     
     private void initialisationComposants() {
-        JPanel panelGrid = new JPanel(new GridLayout(3, 1, 10, 10));
+        JPanel panelGrid = new JPanel(new GridLayout(3, 1));
         panelGrid.setBackground(Color.gray);
         
         JPanel panelFlow1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -38,7 +39,7 @@ public class PanelPartie extends Panel {
         panelFlow2.setBackground(Color.gray);
         panelFlow3.setBackground(Color.gray);
         
-        _jlTempsRestant = new JLabel("Temps restant : " + _tempsRestant);
+        _jlTempsRestant = new JLabel("Temps : " + _temps);
         _jlNbRetard     = new JLabel("Retard cumulé : " + _nbRetard);
         _jbValider      = new JButton("Valider");
         

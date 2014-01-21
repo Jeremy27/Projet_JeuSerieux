@@ -5,10 +5,17 @@
  */
 package view;
 
-import java.awt.event.MouseListener;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import modele.ModeleJTable;
 import modele.Navire;
 
 /**
@@ -17,97 +24,85 @@ import modele.Navire;
  */
 public class Tableau extends JTable {
 
-    private ModeleJTable modele;
+    private ModeleJTable    _modele;
+    private int             _ligneSelectionnee;
+    private PanelInfoForme  _panelInfo;
+    
 
-    public Tableau(ArrayList<String> titres) {
-        modele = new ModeleJTable(titres);
-        setModel(modele);
+    public Tableau(String[] titres, PanelInfoForme panelInfo) {
+        _panelInfo          = panelInfo;
+        _modele             = new ModeleJTable(titres, new ArrayList<Navire>());
+        _ligneSelectionnee  = -1;
+        setModel(_modele);
+        initialiserEvent();
     }
     
     public void setNavires(ArrayList<Navire> _navires) {
         for(Navire navire : _navires)
-            modele.ajouterNavire(navire);
+            _modele.ajouterNavire(navire);
     }
     
     public void ajouterNavire(Navire n) {
-        modele.ajouterNavire(n);
+        _modele.ajouterNavire(n);
     }
-
     
+    public Navire getNavireSelectionne() {
+        return _modele.getNavire(this.getSelectedRow());
+    }
     
-    public class ModeleJTable extends AbstractTableModel {
+    private void initialiserEvent() {
+        this.addMouseListener(new MouseAdapter() {
 
-        private ArrayList<String> _titres;
-        private ArrayList<Navire> _navires;
-
-        public ModeleJTable(ArrayList<String> titres) {
-            _titres = titres;
-            _navires = new ArrayList<>();
-        }
-
-        public ModeleJTable(ArrayList<String> titres, ArrayList<Navire> navires) {
-            this._titres = titres;
-            this._navires = navires;
-        }
-
-        public ArrayList<String> getTitres() {
-            return _titres;
-        }
-
-        public void setTitres(ArrayList<String> _titres) {
-            this._titres = _titres;
-        }
-
-        public ArrayList<Navire> getNavires() {
-            return _navires;
-        }
-
-        public void setNavires(ArrayList<Navire> _navires) {
-            this._navires = _navires;
-        }
-
-        @Override
-        public int getColumnCount() {
-            return _titres.size();
-        }
-
-        @Override
-        public int getRowCount() {
-            return _navires.size();
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            switch (columnIndex) {
-                case 0:
-                    return _navires.get(rowIndex).getNom();
-                case 1:
-                    return _navires.get(rowIndex).getDateArrivee();
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(_ligneSelectionnee != getSelectedRow()) {
+                    _ligneSelectionnee = getSelectedRow();
+                    _panelInfo.setNomPanel("Navire");
+                    _panelInfo.setInformations(_modele.getNavire(_ligneSelectionnee).getDonneesFormates());
+                    _panelInfo.majInformations();
+                }
             }
-            return _navires.get(rowIndex);
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            return _titres.get(column);
-        }
-
-        public void ajouterNavire(Navire n) {
-            _navires.add(n);
-            fireTableRowsInserted(_navires.size(), _navires.size());
-        }
-
-        public void supprimerNavire(int rowIndex) {
-            _navires.remove(rowIndex);
-            fireTableRowsDeleted(rowIndex, rowIndex);
-        }
-
+        });
     }
 
+    @Override
+    public Component prepareRenderer(TableCellRenderer renderer, int ligne, int colonne) {
+        Component c = super.prepareRenderer(renderer, ligne, colonne);
+        if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._temps)
+            c.setBackground(new Color(235, 50, 0));
+        c.setForeground(Color.black);
+        
+        // Colorer d'une autre facon les lignes sélectionnées
+        if(getSelectedRow() == ligne) {
+            c.setBackground(Color.BLACK);
+            c.setForeground(Color.WHITE);
+        } else {
+            c.setBackground(Color.WHITE);
+            c.setForeground(Color.BLACK);
+        }
+        return c;
+    }
+    
+    /**
+     * Méthode gérant l'affichage des titres du tableau
+     * @return JTableHeader modifié
+     */
+    @Override
+    public JTableHeader getTableHeader()
+    {
+        JTableHeader titresTableau = super.getTableHeader();
+        titresTableau.setDefaultRenderer(new DefaultTableCellRenderer()
+        {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+            {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setBackground(Color.BLACK);
+                c.setForeground(Color.WHITE);
+                c.setFont(new Font("TimesRoman", Font.BOLD, 13));
+                return c;
+            }
+        });
+        return titresTableau;
+    }
 }

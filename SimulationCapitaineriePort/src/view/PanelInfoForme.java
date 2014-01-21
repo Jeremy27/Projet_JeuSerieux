@@ -20,17 +20,17 @@ import javax.swing.JPanel;
 public class PanelInfoForme extends Panel {
     
     private ArrayList<String> _informations;
-
-    /**
-     * 
-     * @param nomPanel
-     * @param informations format de l'ArrayList : {"nom : valeur", "nom : valeur", ...}
-     */
+    
     public PanelInfoForme(String nomPanel) {
         super(nomPanel);
         _informations  = new ArrayList<>();
     }
     
+    /**
+     * 
+     * @param nomPanel
+     * @param informations format de l'ArrayList : {"nom : valeur", "nom : valeur", ...}
+     */
     public PanelInfoForme(String nomPanel, ArrayList<String> informations) {
         super(nomPanel);
         _informations  = informations;
@@ -56,5 +56,6 @@ public class PanelInfoForme extends Panel {
             panelGrid.add(label);
         }
         add(panelGrid, BorderLayout.CENTER);
+        this.validate();
     }
 }

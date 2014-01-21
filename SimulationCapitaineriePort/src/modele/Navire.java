@@ -88,7 +88,7 @@ public class Navire extends Forme {
         tabInfo.add("Date d'arrivée : " + _dateArrivee);
         tabInfo.add("Temps à quai : " + _tempsPriseEnCharge);
         tabInfo.add("Marchandise : " + _typeMachandise.name());
-        tabInfo.add("Navire : " + _typeNavire.name());
+        tabInfo.add("Type : " + _typeNavire.name());
         tabInfo.add("Coordonnées : [" + _position.getX() + ", " + _position.getY() + ']');
                 
         return tabInfo;

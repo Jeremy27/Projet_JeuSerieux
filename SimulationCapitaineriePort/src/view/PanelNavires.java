@@ -14,20 +14,14 @@ import modele.Navire;
  *
  * @author jeremy
  */
-public class PanelNaviresArrives extends Panel {
+public class PanelNavires extends Panel {
 
     private Tableau _tableau;
     
-    
-    public PanelNaviresArrives() {
-        super("Navires arrivés");
+    public PanelNavires(String nomPanel, String[] titres, PanelInfoForme panelInfo) {
+        super(nomPanel);
         
-        ArrayList<String> test = new ArrayList<>();
-        test.add("Nom");
-        test.add("Temps d'arrivée"); 
-        test.add("baz");
-        
-        _tableau = new Tableau(test);
+        _tableau = new Tableau(titres, panelInfo);
         add(_tableau, BorderLayout.CENTER);
     }
     

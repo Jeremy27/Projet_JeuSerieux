@@ -22,7 +22,7 @@ public class Panel extends JPanel {
     protected JLabel _jlNomPanel;
 
     public Panel(String nomPanel) {
-        setPreferredSize(new Dimension(200, 500));
+        setPreferredSize(new Dimension(200, this.getHeight()));
         setLayout(new BorderLayout());
         
         initialisationLabelNomPanel(nomPanel);
