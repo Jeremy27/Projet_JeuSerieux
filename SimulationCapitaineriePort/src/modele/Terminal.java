@@ -6,6 +6,7 @@
 
 package modele;
 
+import java.awt.Color;
 import modele.enumeration.TypeMarchandise;
 import java.util.ArrayList;
 
@@ -15,12 +16,19 @@ import java.util.ArrayList;
  */
 public class Terminal extends Forme {
     
+    private int _longueur;
     private ArrayList<TypeMarchandise> _typeChargement;
     
     public Terminal(String nom, int longueur) {
         super(nom);
         _typeChargement = new ArrayList<>();
         
+    }
+    
+    public Terminal(String nom, boolean fill, Color couleur, long id, int longueur) {
+        super(nom, fill, couleur, id);
+        _longueur = longueur;
+        _typeChargement = new ArrayList<>();
     }
     
     public void ajoutType(TypeMarchandise t) {

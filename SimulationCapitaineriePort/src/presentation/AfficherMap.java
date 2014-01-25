@@ -61,11 +61,6 @@ public class AfficherMap extends JPanel{
         this.setLayout(null);
     }
     
-    public String getNomFichier() {
-        return _nomFichier;
-        
-    }
-    
     public void eventsMap() {
         this.addMouseMotionListener(new MouseMotionAdapter() {
             @Override

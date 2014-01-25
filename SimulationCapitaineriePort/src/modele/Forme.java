@@ -15,13 +15,13 @@ public class Forme {
     protected Path2D _path;
     protected boolean _fill = false;
     protected Color _couleur = Color.GRAY;
-    protected int _id;
+    protected long _id;
     
     public Forme(String nom) {
         _nom = nom;
     }
     
-    public Forme(String nom, boolean fill, Color couleur, int id) {
+    public Forme(String nom, boolean fill, Color couleur, long id) {
         _coordonnees = new ArrayList<>();
         _nom = nom;
         _fill = fill;
@@ -32,7 +32,7 @@ public class Forme {
     /*
     ##### GETTER & SETTER #####
      */
-    public int getId() {
+    public long getId() {
         return _id;
     }
     
