@@ -204,7 +204,8 @@ public class AfficherMap extends JPanel{
         for(Forme forme:_coordonneesDessin) {
             
             Color couleur = forme.getCouleur();
-            Path2D path = forme.getPath(h, coefMultX, coefMultY);
+            //Path2D path = forme.getPath(h, coefMultX, coefMultY);
+            Path2D path = null;
             boolean fill = forme.isFill();
             g2.setColor(couleur);
             if(fill) {
