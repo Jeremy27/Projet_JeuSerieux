@@ -20,7 +20,7 @@ public class Quai extends Forme{
         _naviresAQuai   = new ArrayList<>();
     }
     
-    public Quai(String nom, boolean fill, Color couleur, int id, int longueur) {
+    public Quai(String nom, boolean fill, Color couleur, long id, int longueur) {
         super(nom);
         _nom            = nom;
         _fill           = fill;

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -15,13 +16,13 @@ public class Forme {
     protected Path2D _path;
     protected boolean _fill = false;
     protected Color _couleur = Color.GRAY;
-    protected int _id;
+    protected long _id;
     
     public Forme(String nom) {
         _nom = nom;
     }
     
-    public Forme(String nom, boolean fill, Color couleur, int id) {
+    public Forme(String nom, boolean fill, Color couleur, long id) {
         _coordonnees = new ArrayList<>();
         _nom = nom;
         _fill = fill;
@@ -32,7 +33,7 @@ public class Forme {
     /*
     ##### GETTER & SETTER #####
      */
-    public int getId() {
+    public long getId() {
         return _id;
     }
     
@@ -54,22 +55,71 @@ public class Forme {
         }
     }
     
-    public Path2D getPath(int hauteurPanel, double coefX, double coefY) {
-        Path2D path = new Path2D.Double();
-        boolean premier = true;
+    public Path2D getPath(HashMap<String, Double> map) {
+        if(contenuDansMap(map)) {
+            double coefX = map.get("coefX");
+            double coefY = map.get("coefY");
+            double hauteurPanel = map.get("hauteurPanel");
+            double gauche, droite, bas, haut;
+            gauche = map.get("gauche");
+            droite = map.get("droite");
+            bas = map.get("bas");
+            haut = map.get("haut");
+
+            Path2D path = new Path2D.Double();
+            boolean premier = true;
+            for(Point2D p:_coordonnees) {
+                double x = p.getX();
+                double y = p.getY();
+                if(p.getX()<gauche) {
+                    x = gauche;
+                }
+                if(p.getX()>droite) {
+                    x = droite;
+                }
+                if(p.getY()<haut) {
+                    y = haut;
+                }
+                if(p.getY()>bas) {
+                    y = bas;
+                }
+                x = x-gauche;
+                y = y-haut;
+                //vérifie si le point est à dessiner
+                x = (x*coefX);
+                y = hauteurPanel - (y*coefY);
+//                System.out.println("x: " + x);
+//                System.out.println("y: " + y);
+                //System.out.println(y);
+                if(premier) {
+                    path.moveTo(x, y);
+                    premier = false;
+                } else {
+                    path.lineTo(x, y);
+                }
+            }
+            _path = path;
+            return path;
+        } else {
+            return null;
+        }
+            
+    }
+    
+    public boolean contenuDansMap(HashMap<String, Double> map) {
+        double gauche, droite, bas, haut;
+        gauche = map.get("gauche");
+        droite = map.get("droite");
+        bas = map.get("bas");
+        haut = map.get("haut");
         for(Point2D p:_coordonnees) {
-            double x = (p.getX()*coefX);
-            double y = hauteurPanel - (p.getY()*coefY);
-            //System.out.println(y);
-            if(premier) {
-                path.moveTo(x, y);
-                premier = false;
-            } else {
-                path.lineTo(x, y);
+            double x = p.getX();
+            double y = p.getY();
+            if((x>=gauche || x<=droite) && (y>=haut || y<=bas)) {
+                return true;
             }
         }
-        _path = path;
-        return path;
+        return false;
     }
     
     public Path2D getPath() {
