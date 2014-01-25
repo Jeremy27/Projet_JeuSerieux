@@ -23,7 +23,7 @@ public class Menu extends JMenuBar {
     private JMenuItem _partieResoudre;
     private JMenuItem _partieScores;
     
-    private JMenuItem _aideDidactitiel;
+    private JMenuItem _aideDidacticiel;
     private JMenuItem _aideDocumentation;
     private JMenuItem _aideAPropos;
 
@@ -49,7 +49,7 @@ public class Menu extends JMenuBar {
         _partieResoudre = new JMenuItem("Résoudre");
         _partieScores   = new JMenuItem("Scores");
         
-        _aideDidactitiel    = new JMenuItem("Didactitiel");
+        _aideDidacticiel    = new JMenuItem("Didacticiel");
         _aideDocumentation  = new JMenuItem("Documentation");
         _aideAPropos        = new JMenuItem("A propos");
         
@@ -62,7 +62,7 @@ public class Menu extends JMenuBar {
         _menuPartie.add(_partieResoudre);
         _menuPartie.add(_partieScores);
         
-        _menuAide.add(_aideDidactitiel);
+        _menuAide.add(_aideDidacticiel);
         _menuAide.add(_aideDocumentation);
         _menuAide.add(_aideAPropos);
     }
