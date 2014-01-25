@@ -242,7 +242,7 @@ public class AfficherMapBis extends JPanel{
     public void dragCurseur(double directionX, double directionY) {
         Insets insets = getInsets();
         double h = getHeight() - insets.top - insets.bottom;
-        _curseur.setLocation(_curseur.getX()+(0.0001*directionX), _curseur.getY()+(0.0001*directionY));
+        _curseur.setLocation(_curseur.getX()+(0.0001*directionX/_zoomEtat), _curseur.getY()+(0.0001*directionY/_zoomEtat));
         refresh();
     }
     
