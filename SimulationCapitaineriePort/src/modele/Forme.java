@@ -71,26 +71,11 @@ public class Forme {
             for(Point2D p:_coordonnees) {
                 double x = p.getX();
                 double y = p.getY();
-                if(p.getX()<gauche) {
-                    x = gauche;
-                }
-                if(p.getX()>droite) {
-                    x = droite;
-                }
-                if(p.getY()<haut) {
-                    y = haut;
-                }
-                if(p.getY()>bas) {
-                    y = bas;
-                }
                 x = x-gauche;
                 y = y-haut;
                 //vérifie si le point est à dessiner
                 x = (x*coefX);
                 y = hauteurPanel - (y*coefY);
-//                System.out.println("x: " + x);
-//                System.out.println("y: " + y);
-                //System.out.println(y);
                 if(premier) {
                     path.moveTo(x, y);
                     premier = false;
