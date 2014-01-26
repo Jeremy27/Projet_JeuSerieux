@@ -38,7 +38,9 @@ public class AfficherMapBis extends JPanel{
     private final String _nomFichier = "src" + separateur + "data" + separateur + "map_filtree.json";
     
     /**************** MAP *******************/
-    private Point2D _curseur;
+    private Point2D _coordCurseurModif;
+    private double _pourcentGauche=0.5;
+    private double _pourcentHaut=0.5;
     //dezoom max
     private final double MAX_DEPART_X=0.1900875;
     private final double MAX_DEPART_Y=49.488;
@@ -53,10 +55,10 @@ public class AfficherMapBis extends JPanel{
     private double _zoomEtat = ZOOMMIN;
     
     //limites affichage map
-    private double _mapHaut;
-    private double _mapBas;
-    private double _mapGauche;
-    private double _mapDroite;
+    private double _mapHaut=49.448;
+    private double _mapBas=49.488;
+    private double _mapGauche=0.10;
+    private double _mapDroite=0.1900875;
     
     private final PanelInfoForme _panelInfoForme;
     private final ArrayList<Forme> _coordonneesDessin;
@@ -145,16 +147,25 @@ public class AfficherMapBis extends JPanel{
         double diffY = MAX_DEPART_Y - MIN_DEPART_Y;
         double diffX = MAX_DEPART_X - MIN_DEPART_X;
         
+        
         double hauteur = diffY / _zoomEtat;
         double largeur = diffX / _zoomEtat;
         
-        if(_curseur==null) {
-            _curseur = new Point2D.Double(largeur/2.0, hauteur/2.0);
+        if(_coordCurseurModif==null) {
+            _coordCurseurModif = new Point2D.Double(largeur/2.0, hauteur/2.0);
         }
-        
+//        double calculGauche = _coordCurseurModif.getX()-largeur/2.0;
+//        double calculDroite = _coordCurseurModif.getX()+largeur/2.0;
+//        double calculHaut = _coordCurseurModif.getY()-hauteur/2.0;
+//        double calculBas = _coordCurseurModif.getY()+hauteur/2.0;
+//        
+//        _mapGauche = calculGauche;
+//        _mapDroite = calculDroite;
+//        _mapHaut = calculHaut;
+//        _mapBas = calculBas;
         double ajoutDroite, ajoutBas;
         ajoutDroite = ajoutBas = 0.0;
-        double calculGauche = _curseur.getX()-largeur/2.0;
+        double calculGauche = _coordCurseurModif.getX()-largeur*_pourcentGauche;
         if(calculGauche>=MIN_DEPART_X) {
             _mapGauche = calculGauche;
         } else {
@@ -162,7 +173,7 @@ public class AfficherMapBis extends JPanel{
             _mapGauche = MIN_DEPART_X;
         }
         
-        double calculDroite = _curseur.getX()+largeur/2.0;
+        double calculDroite = _coordCurseurModif.getX()+largeur*(1-_pourcentGauche);
         if(calculDroite<=MAX_DEPART_X) {
             _mapDroite = calculDroite;
             _mapDroite += ajoutDroite;
@@ -172,7 +183,7 @@ public class AfficherMapBis extends JPanel{
             _mapGauche -= diff;
         }
         
-        double calculHaut = _curseur.getY()-hauteur/2.0;
+        double calculHaut = _coordCurseurModif.getY()-hauteur*(1-_pourcentHaut);
         if(calculHaut>=MIN_DEPART_Y) {
             _mapHaut = calculHaut;
         } else {
@@ -180,7 +191,7 @@ public class AfficherMapBis extends JPanel{
             _mapHaut = MIN_DEPART_Y;
         }
         
-        double calculBas = _curseur.getY()+hauteur/2.0;
+        double calculBas = _coordCurseurModif.getY()+hauteur*_pourcentHaut;
         if(calculBas<=MAX_DEPART_Y) {
             _mapBas = calculBas;
             _mapBas += ajoutBas;
@@ -189,7 +200,6 @@ public class AfficherMapBis extends JPanel{
             _mapBas = MAX_DEPART_Y;
             _mapHaut += diff;
         }
-        
         //recalcul diff
         diffY = _mapBas - _mapHaut;
         diffX = _mapDroite - _mapGauche;
@@ -205,7 +215,7 @@ public class AfficherMapBis extends JPanel{
         m.put("gauche", _mapGauche);
         m.put("droite", _mapDroite);
         //trie les formes puis les paint
-        System.out.println(m);
+        //System.out.println(m);
         for(Forme forme:_coordonneesDessin) {
             
             Color couleur = forme.getCouleur();
@@ -242,15 +252,18 @@ public class AfficherMapBis extends JPanel{
     public void dragCurseur(double directionX, double directionY) {
         Insets insets = getInsets();
         double h = getHeight() - insets.top - insets.bottom;
-        _curseur.setLocation(_curseur.getX()+(0.0001*directionX/_zoomEtat), _curseur.getY()+(0.0001*directionY/_zoomEtat));
+        _coordCurseurModif.setLocation(_coordCurseurModif.getX()+(0.0001*directionX/_zoomEtat), _coordCurseurModif.getY()+(0.0001*directionY/_zoomEtat));
         refresh();
     }
     
     public void setCurseur(Point p) {
         Insets insets = getInsets();
+        double w = getWidth() - insets.left - insets.right;
         double h = getHeight() - insets.top - insets.bottom;
-        _curseur.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
-        System.out.println("curseur x: " + _curseur.getX() + " y: " + _curseur.getY());
+        _pourcentGauche = p.getX()/w;
+        _pourcentHaut = p.getY()/h;
+        _coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
+        //System.out.println("curseur x: " + _coordCurseurModif.getX() + " y: " + _coordCurseurModif.getY());
     }
     
     public void affPositionSouris(Point p) {
