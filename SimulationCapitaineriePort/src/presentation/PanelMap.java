@@ -12,10 +12,15 @@ import java.util.HashMap;
 import javax.swing.JPanel;
 import metier.MetierMap;
 import modele.Forme;
+import modele.Navire;
+import modele.Quai;
+import modele.enumeration.TypeMarchandise;
 
 public class PanelMap extends JPanel{
     private static final double ZOOMMIN = 1.0;
     private static final double ZOOMMAX = 10.0;
+    
+    private final Color COULEUR_QUAI_DISPONIBLE = new Color(255, 0, 0);
     
     /**************** MAP *******************/
     private Point2D _coordCurseurModif;
@@ -41,6 +46,8 @@ public class PanelMap extends JPanel{
     private double _mapDroite=0.1900875;
     
     private final MetierMap _metier;
+    
+    private TypeMarchandise _typeMarchandiseNavire=null;
     
     public PanelMap(PanelInfoForme panelInfo) {
         _metier = new MetierMap(this, panelInfo);
@@ -134,13 +141,22 @@ public class PanelMap extends JPanel{
         //trie les formes puis les paint
         for(Forme forme:_metier.getCoordonneesDessin()) {
             Color couleur = forme.getCouleur();
-            g2.setColor(couleur);
+            
             
             Path2D path = forme.getPath(m);
+            g2.setColor(couleur);
             if(path!=null) {
                 boolean fill = forme.isFill();
                 if(fill) {
+                    if(_typeMarchandiseNavire != null && forme instanceof Quai) {
+                        Quai q = (Quai) forme;
+                        if(q.prendEnCharge(_typeMarchandiseNavire)) {
+                            g2.setColor(COULEUR_QUAI_DISPONIBLE);
+                        }
+                    }
+                    
                     g2.fill(path);
+                    
                 } else {
                     g2.draw(path);
                 }
@@ -179,5 +195,9 @@ public class PanelMap extends JPanel{
         _pourcentHaut = p.getY()/h;
         _coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
         //System.out.println("curseur x: " + _coordCurseurModif.getX() + " y: " + _coordCurseurModif.getY());
+    }
+    
+    public void setTypeColorer(TypeMarchandise type) {
+        _typeMarchandiseNavire = type;
     }
 }

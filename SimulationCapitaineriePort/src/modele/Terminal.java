@@ -38,4 +38,13 @@ public class Terminal extends Forme {
     public ArrayList<TypeMarchandise> getTypesChargement() {
         return _typeChargement;
     }
+    
+    public boolean prendEnCharge(TypeMarchandise type) {
+        for(TypeMarchandise t:_typeChargement) {
+            if(type==t) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

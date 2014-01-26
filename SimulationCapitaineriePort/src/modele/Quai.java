@@ -79,4 +79,13 @@ public class Quai extends Forme{
     public Navire supprimerNavireAQuai(int indiceNavire) {
         return _naviresAQuai.remove(indiceNavire);
     }
+    
+    public boolean prendEnCharge(TypeMarchandise type) {
+        for(Terminal terminal:_terminaux) {
+            if(terminal.prendEnCharge(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

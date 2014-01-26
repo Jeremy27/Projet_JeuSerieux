@@ -8,8 +8,10 @@ package metier;
 
 import accesAuDonnees.ADMap;
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -19,8 +21,10 @@ import java.util.Random;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import modele.Forme;
+import modele.Navire;
 import modele.Quai;
 import modele.Terminal;
+import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeShape;
 import presentation.PanelMap;
 import presentation.PanelInfoForme;
@@ -158,6 +162,32 @@ public class MetierMap {
     }
     
     public void click() {
+        _map.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Forme forme = getForme(e.getPoint());
+                if(forme!=null) {
+                    if(forme instanceof Navire) {
+                        Navire n = (Navire) forme;
+                        colorerQuai(n.getTypeMachandise());
+                    } else if(forme instanceof Quai) {
+                        
+                    }
+                }
+            }
+        });
+    }
+    
+    private void colorerQuai(TypeMarchandise type) {
         
+    }
+    
+    private Forme getForme(Point p) {
+        for(Forme forme:_coordonneesDessin) {
+            if(forme.getPath().contains(p)) {
+                return forme;
+            }
+        }
+        return null;
     }
 }
