@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import metier.MetierMap;
 import modele.Forme;
@@ -41,7 +40,7 @@ public class PanelMap extends JPanel{
     private double _mapGauche=0.10;
     private double _mapDroite=0.1900875;
     
-    private MetierMap _metier;
+    private final MetierMap _metier;
     
     public PanelMap(PanelInfoForme panelInfo) {
         _metier = new MetierMap(this, panelInfo);
@@ -80,15 +79,7 @@ public class PanelMap extends JPanel{
         if(_coordCurseurModif==null) {
             _coordCurseurModif = new Point2D.Double(largeur/2.0, hauteur/2.0);
         }
-//        double calculGauche = _coordCurseurModif.getX()-largeur/2.0;
-//        double calculDroite = _coordCurseurModif.getX()+largeur/2.0;
-//        double calculHaut = _coordCurseurModif.getY()-hauteur/2.0;
-//        double calculBas = _coordCurseurModif.getY()+hauteur/2.0;
-//        
-//        _mapGauche = calculGauche;
-//        _mapDroite = calculDroite;
-//        _mapHaut = calculHaut;
-//        _mapBas = calculBas;
+        
         double ajoutDroite, ajoutBas;
         ajoutDroite = ajoutBas = 0.0;
         double calculGauche = _coordCurseurModif.getX()-largeur*_pourcentGauche;
@@ -141,7 +132,6 @@ public class PanelMap extends JPanel{
         m.put("gauche", _mapGauche);
         m.put("droite", _mapDroite);
         //trie les formes puis les paint
-        //System.out.println(m);
         for(Forme forme:_metier.getCoordonneesDessin()) {
             Color couleur = forme.getCouleur();
             g2.setColor(couleur);
@@ -189,23 +179,5 @@ public class PanelMap extends JPanel{
         _pourcentHaut = p.getY()/h;
         _coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
         //System.out.println("curseur x: " + _coordCurseurModif.getX() + " y: " + _coordCurseurModif.getY());
-    }
-    
-    public static void main(String[] args) {
-        JFrame jf = new JFrame();
-        
-        
-        PanelMap am = new PanelMap(new PanelInfoForme(""));
-//        JsonArray ja = am.getContenu();
-//        am.makePath2D(ja);
-//        
-//        EvenementsMap e = new EvenementsMap(am);
-//        e.wheel();
-//        e.move();
-        
-        jf.add(am);
-        jf.setSize(780, 500);
-        jf.setVisible(true);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

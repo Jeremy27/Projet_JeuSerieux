@@ -7,7 +7,6 @@
 package metier;
 
 import accesAuDonnees.ADMap;
-import accesAuDonnees.FichierJson;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,7 +30,7 @@ import presentation.PanelInfoForme;
  * @author brokep
  */
 public class MetierMap {
-    private PanelMap _map;
+    private final PanelMap _map;
     private Point2D _pointClick;
     
     private final PanelInfoForme _panelInfoForme;
@@ -45,7 +44,7 @@ public class MetierMap {
     private static final Color BATIMENTCOLOR = Color.GRAY;
     private static final Color AUTRECOLOR = Color.GRAY;
     
-    private ADMap _accesDonneesMap;
+    private final ADMap _accesDonneesMap;
     
     public MetierMap(PanelMap map, PanelInfoForme panelInfo) {
         _panelInfoForme = panelInfo;
