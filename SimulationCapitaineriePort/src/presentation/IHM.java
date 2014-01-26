@@ -59,12 +59,8 @@ public class IHM extends JFrame {
         p5.ajouterNavire(n3);
         PanelInfoJeu   p4 = new PanelInfoJeu();
         
-        AfficherMap map = new AfficherMap(p3);
-        
-        JsonArray ja = map.getContenu();
+        PanelMap map = new PanelMap(p3);
         add(map, BorderLayout.CENTER);
-        map.makePath2D(ja);
-        map.eventsMap();
         
         p4.ajoutMessage("Message erreur", TypeMessage.ERREUR);
         
