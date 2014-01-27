@@ -14,8 +14,8 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeleJTable extends AbstractTableModel {
 
-    private String[] _titres;
-    private ArrayList<Navire> _navires;
+    private String[]            _titres;
+    private ArrayList<Navire>   _navires;
 
     public ModeleJTable(String[] titres) {
         _titres = titres;

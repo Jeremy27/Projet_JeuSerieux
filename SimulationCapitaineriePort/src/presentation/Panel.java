@@ -39,7 +39,7 @@ public class Panel extends JPanel {
         add(_jlNomPanel, BorderLayout.NORTH);
     }
     
-    protected void setNomPanel(String nom) {
+    public void setNomPanel(String nom) {
         _jlNomPanel.setText(nom);
     }
 }

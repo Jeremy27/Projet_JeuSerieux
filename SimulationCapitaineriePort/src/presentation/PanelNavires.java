@@ -7,7 +7,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
+import javax.swing.JScrollPane;
 import modele.Navire;
 
 /**
@@ -22,7 +22,7 @@ public class PanelNavires extends Panel {
         super(nomPanel);
         
         _tableau = new Tableau(titres, panelInfo);
-        add(_tableau, BorderLayout.CENTER);
+        add(new JScrollPane(_tableau), BorderLayout.CENTER);
     }
     
     public void ajouterNavire(Navire n) {
