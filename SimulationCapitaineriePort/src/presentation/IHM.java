@@ -55,8 +55,21 @@ public class IHM extends JFrame {
         PanelNavires p5 = new PanelNavires("Navires arrivant", titres2, p3);
         p1.ajouterNavire(n);
         p1.ajouterNavire(n1);
+        p1.ajouterNavire(n1);
+        p1.ajouterNavire(n1);
+        p1.ajouterNavire(n1);
+        p1.ajouterNavire(n1);
+        p1.ajouterNavire(n1);
+        p1.ajouterNavire(n1);
+        p1.ajouterNavire(n1);
         p5.ajouterNavire(n2);
         p5.ajouterNavire(n3);
+        p5.ajouterNavire(n4);
+        p5.ajouterNavire(n4);
+        p5.ajouterNavire(n4);
+        p5.ajouterNavire(n4);
+        p5.ajouterNavire(n4);
+        p5.ajouterNavire(n4);
         PanelInfoJeu   p4 = new PanelInfoJeu();
         
         PanelMap map = new PanelMap(p3);

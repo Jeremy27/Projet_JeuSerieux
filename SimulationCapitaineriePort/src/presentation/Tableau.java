@@ -8,6 +8,9 @@ package presentation;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -37,8 +40,8 @@ public class Tableau extends JTable {
         initialiserEvent();
     }
     
-    public void setNavires(ArrayList<Navire> _navires) {
-        for(Navire navire : _navires)
+    public void setNavires(ArrayList<Navire> navires) {
+        for(Navire navire : navires)
             _modele.ajouterNavire(navire);
     }
     
@@ -50,17 +53,32 @@ public class Tableau extends JTable {
         return _modele.getNavire(this.getSelectedRow());
     }
     
+    private void majPanelNavire() {
+        if(_ligneSelectionnee != getSelectedRow()) {
+            _ligneSelectionnee = getSelectedRow();
+            _panelInfo.setNomPanel("Navire");
+            _panelInfo.setInformations(_modele.getNavire(_ligneSelectionnee).getDonneesFormates());
+            _panelInfo.majInformations();
+        }
+    }
+    
     private void initialiserEvent() {
         this.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(_ligneSelectionnee != getSelectedRow()) {
-                    _ligneSelectionnee = getSelectedRow();
-                    _panelInfo.setNomPanel("Navire");
-                    _panelInfo.setInformations(_modele.getNavire(_ligneSelectionnee).getDonneesFormates());
-                    _panelInfo.majInformations();
-                }
+                majPanelNavire();
+            }
+        });
+        
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                majPanelNavire();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                majPanelNavire();
             }
         });
     }
@@ -68,25 +86,23 @@ public class Tableau extends JTable {
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int ligne, int colonne) {
         Component c = super.prepareRenderer(renderer, ligne, colonne);
-        if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._temps)
-            c.setBackground(new Color(235, 50, 0));
-        c.setForeground(Color.black);
         
-        // Colorer d'une autre facon les lignes sélectionnées
         if(getSelectedRow() == ligne) {
             c.setBackground(Color.BLACK);
             c.setForeground(Color.WHITE);
         } else {
-            c.setBackground(Color.WHITE);
+            if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._temps)
+                c.setBackground(new Color(235, 20, 0));
+            else
+                if(ligne%2 == 0)
+                    c.setBackground(Color.GRAY);
+                else
+                    c.setBackground(Color.LIGHT_GRAY);
             c.setForeground(Color.BLACK);
         }
         return c;
     }
-    
-    /**
-     * Méthode gérant l'affichage des titres du tableau
-     * @return JTableHeader modifié
-     */
+
     @Override
     public JTableHeader getTableHeader()
     {
@@ -98,8 +114,8 @@ public class Tableau extends JTable {
             {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 c.setBackground(Color.BLACK);
-                c.setForeground(Color.WHITE);
-                c.setFont(new Font("TimesRoman", Font.BOLD, 13));
+                c.setForeground(Color.LIGHT_GRAY);
+                c.setFont(new Font(this.getFont().getName(), Font.BOLD, 13));
                 return c;
             }
         });
