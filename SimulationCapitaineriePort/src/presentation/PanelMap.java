@@ -6,6 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
@@ -41,19 +46,29 @@ public class PanelMap extends JPanel{
     private double _zoomEtat = ZOOMMIN;
     
     //limites affichage map
-    private double _mapHaut=MIN_DEPART_Y;
-    private double _mapBas=MAX_DEPART_Y;
-    private double _mapGauche=MIN_DEPART_X;
-    private double _mapDroite=MAX_DEPART_X;
+    private double thisHaut=MIN_DEPART_Y;
+    private double thisBas=MAX_DEPART_Y;
+    private double thisGauche=MIN_DEPART_X;
+    private double thisDroite=MAX_DEPART_X;
     
     private final MetierMap _metier;
     
     private TypeMarchandise _typeMarchandiseNavire=null;
     
+    private Point2D _pointClick;
+    
+    private final PanelInfoForme _panelInfoForme;
+    
     public PanelMap(PanelInfoForme panelInfo) {
         _metier = new MetierMap(this, panelInfo);
         _metier.construireFormes();
-        _metier.initEvents();
+        _panelInfoForme = panelInfo;
+    }
+    
+    public void initEvents() {
+        move();
+        wheel();
+        click();
     }
     
     public void refresh() {
@@ -64,10 +79,10 @@ public class PanelMap extends JPanel{
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        _mapBas = MIN_DEPART_Y;
-        _mapHaut = MAX_DEPART_Y;
-        _mapDroite = MAX_DEPART_X;
-        _mapGauche = MIN_DEPART_X;
+        thisBas = MIN_DEPART_Y;
+        thisHaut = MAX_DEPART_Y;
+        thisDroite = MAX_DEPART_X;
+        thisGauche = MIN_DEPART_X;
         
         Graphics2D g2 = (Graphics2D)g;
         
@@ -92,42 +107,42 @@ public class PanelMap extends JPanel{
         ajoutDroite = ajoutBas = 0.0;
         double calculGauche = _coordCurseurModif.getX()-largeur*_pourcentGauche;
         if(calculGauche>=MIN_DEPART_X) {
-            _mapGauche = calculGauche;
+            thisGauche = calculGauche;
         } else {
             ajoutDroite = MIN_DEPART_X - calculGauche;
-            _mapGauche = MIN_DEPART_X;
+            thisGauche = MIN_DEPART_X;
         }
         
         double calculDroite = _coordCurseurModif.getX()+largeur*(1-_pourcentGauche);
         if(calculDroite<=MAX_DEPART_X) {
-            _mapDroite = calculDroite;
-            _mapDroite += ajoutDroite;
+            thisDroite = calculDroite;
+            thisDroite += ajoutDroite;
         } else {
             double diff = calculDroite-MAX_DEPART_X; //négatif
-            _mapDroite = MAX_DEPART_X;
-            _mapGauche -= diff;
+            thisDroite = MAX_DEPART_X;
+            thisGauche -= diff;
         }
         
         double calculHaut = _coordCurseurModif.getY()-hauteur*(1-_pourcentHaut);
         if(calculHaut>=MIN_DEPART_Y) {
-            _mapHaut = calculHaut;
+            thisHaut = calculHaut;
         } else {
             ajoutBas = MIN_DEPART_Y-calculHaut;
-            _mapHaut = MIN_DEPART_Y;
+            thisHaut = MIN_DEPART_Y;
         }
         
         double calculBas = _coordCurseurModif.getY()+hauteur*_pourcentHaut;
         if(calculBas<=MAX_DEPART_Y) {
-            _mapBas = calculBas;
-            _mapBas += ajoutBas;
+            thisBas = calculBas;
+            thisBas += ajoutBas;
         } else {
             double diff = MAX_DEPART_Y-calculBas; //négatif
-            _mapBas = MAX_DEPART_Y;
-            _mapHaut += diff;
+            thisBas = MAX_DEPART_Y;
+            thisHaut += diff;
         }
         //recalcul diff
-        diffY = _mapBas - _mapHaut;
-        diffX = _mapDroite - _mapGauche;
+        diffY = thisBas - thisHaut;
+        diffX = thisDroite - thisGauche;
         _coefX = w/diffX;
         _coefY = h/diffY;
         
@@ -135,10 +150,10 @@ public class PanelMap extends JPanel{
         m.put("coefX", _coefX);
         m.put("coefY", _coefY);
         m.put("hauteurPanel", h);
-        m.put("bas", _mapBas);
-        m.put("haut", _mapHaut);
-        m.put("gauche", _mapGauche);
-        m.put("droite", _mapDroite);
+        m.put("bas", thisBas);
+        m.put("haut", thisHaut);
+        m.put("gauche", thisGauche);
+        m.put("droite", thisDroite);
         //trie les formes puis les paint
         for(Forme forme:_metier.getCoordonneesDessin()) {
             Color couleur = forme.getCouleur();
@@ -194,11 +209,70 @@ public class PanelMap extends JPanel{
         double h = getHeight() - insets.top - insets.bottom;
         _pourcentGauche = p.getX()/w;
         _pourcentHaut = p.getY()/h;
-        _coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
+        _coordCurseurModif.setLocation(p.getX()/_coefX+thisGauche, (h-p.getY())/_coefY+thisHaut);
         //System.out.println("curseur x: " + _coordCurseurModif.getX() + " y: " + _coordCurseurModif.getY());
     }
     
     public void setTypeColorer(TypeMarchandise type) {
         _typeMarchandiseNavire = type;
+    }
+    
+    public void wheel() {
+        this.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                //le curseur doit correspondre au zoom déjà fait et pas situation de départ
+                //il faut jouer avec les coef pour faire la correspondance
+                setCurseur(e.getPoint());
+                if(e.getWheelRotation()<0) {
+                    //vers le haut -> zoom
+                    augmenterZoom();
+                    
+                } else {
+                    //dezoom
+                    baisserZoom();
+                }
+            }
+        });
+    }
+    
+    public void move() {
+        this.addMouseMotionListener(new MouseMotionAdapter() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                
+                dragCurseur(_pointClick.getX()-e.getPoint().getX(), e.getPoint().getY()-_pointClick.getY());
+                _pointClick = e.getPoint();
+            }
+        });
+        
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                _pointClick = e.getPoint();
+            }
+        });
+    }
+    
+    public void click() {
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Forme forme = _metier.getForme(e.getPoint());
+                if(forme!=null) {
+                    if(forme instanceof Navire) {
+                        Navire n = (Navire) forme;
+                        colorerQuai(n.getTypeMachandise());
+                    } else if(forme instanceof Quai) {
+                        
+                    }
+                }
+            }
+        });
+    }
+    
+    private void colorerQuai(TypeMarchandise type) {
+        
     }
 }
