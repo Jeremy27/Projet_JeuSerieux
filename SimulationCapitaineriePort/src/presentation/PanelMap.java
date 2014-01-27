@@ -29,7 +29,8 @@ public class PanelMap extends JPanel{
     //dezoom max
     private final double MAX_DEPART_X=0.1900875;
     private final double MAX_DEPART_Y=49.488;
-    private final double MIN_DEPART_X=0.10;
+//    private final double MIN_DEPART_X=0.10;
+    private final double MIN_DEPART_X=0.09;
     private final double MIN_DEPART_Y=49.448;
     
     //coefs
@@ -40,10 +41,10 @@ public class PanelMap extends JPanel{
     private double _zoomEtat = ZOOMMIN;
     
     //limites affichage map
-    private double _mapHaut=49.448;
-    private double _mapBas=49.488;
-    private double _mapGauche=0.10;
-    private double _mapDroite=0.1900875;
+    private double _mapHaut=MIN_DEPART_Y;
+    private double _mapBas=MAX_DEPART_Y;
+    private double _mapGauche=MIN_DEPART_X;
+    private double _mapDroite=MAX_DEPART_X;
     
     private final MetierMap _metier;
     
