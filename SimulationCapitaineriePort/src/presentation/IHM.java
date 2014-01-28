@@ -10,7 +10,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Point;
-import javax.json.JsonArray;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import modele.Navire;
@@ -73,6 +72,7 @@ public class IHM extends JFrame {
         PanelInfoJeu   p4 = new PanelInfoJeu();
         
         PanelMap map = new PanelMap(p3);
+        map.initEvents();
         add(map, BorderLayout.CENTER);
         
         p4.ajoutMessage("Message erreur", TypeMessage.ERREUR);

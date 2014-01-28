@@ -34,10 +34,9 @@ import presentation.PanelInfoForme;
  * @author brokep
  */
 public class MetierMap {
-    private final PanelMap _map;
-    private Point2D _pointClick;
     
-    private final PanelInfoForme _panelInfoForme;
+    
+    
     private final ArrayList<Forme> _coordonneesDessin;
     
     //couleurs des différentes formes
@@ -51,21 +50,13 @@ public class MetierMap {
     private final ADMap _accesDonneesMap;
     
     public MetierMap(PanelMap map, PanelInfoForme panelInfo) {
-        _panelInfoForme = panelInfo;
         _coordonneesDessin = new ArrayList<>();
-        _map = map;
         _accesDonneesMap = new ADMap();
         
     }
     
     public void construireFormes() {
         makePath2D(_accesDonneesMap.getContenu());
-    }
-    
-    public void initEvents() {
-        wheel();
-        click();
-        move();
     }
 
     public ArrayList<Forme> getCoordonneesDessin() {
@@ -121,68 +112,7 @@ public class MetierMap {
         
     }
     
-    
-    
-    public void wheel() {
-        _map.addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                //le curseur doit correspondre au zoom déjà fait et pas situation de départ
-                //il faut jouer avec les coef pour faire la correspondance
-                _map.setCurseur(e.getPoint());
-                if(e.getWheelRotation()<0) {
-                    //vers le haut -> zoom
-                    _map.augmenterZoom();
-                    
-                } else {
-                    //dezoom
-                    _map.baisserZoom();
-                }
-            }
-        });
-    }
-    
-    public void move() {
-        _map.addMouseMotionListener(new MouseMotionAdapter() {
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                
-                _map.dragCurseur(_pointClick.getX()-e.getPoint().getX(), e.getPoint().getY()-_pointClick.getY());
-                _pointClick = e.getPoint();
-            }
-        });
-        
-        _map.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                _pointClick = e.getPoint();
-            }
-        });
-    }
-    
-    public void click() {
-        _map.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Forme forme = getForme(e.getPoint());
-                if(forme!=null) {
-                    if(forme instanceof Navire) {
-                        Navire n = (Navire) forme;
-                        colorerQuai(n.getTypeMachandise());
-                    } else if(forme instanceof Quai) {
-                        
-                    }
-                }
-            }
-        });
-    }
-    
-    private void colorerQuai(TypeMarchandise type) {
-        
-    }
-    
-    private Forme getForme(Point p) {
+    public Forme getForme(Point p) {
         for(Forme forme:_coordonneesDessin) {
             if(forme.getPath().contains(p)) {
                 return forme;
