@@ -280,9 +280,6 @@ public class PanelMap extends JPanel{
                 Forme forme = _metier.getForme(_pointClick);
                 
                 if(forme != null) {
-                    System.out.println("==============");
-                    System.out.println(forme.getId());
-                    System.out.println(forme.getNom());
                     _infosMouseOver = forme.toString();
                     refresh();
                 }
