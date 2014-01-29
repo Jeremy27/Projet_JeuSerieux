@@ -20,6 +20,18 @@ public class Forme {
     protected long _id;
     protected TypeShape _typeForme;
     
+    @Override
+    public String toString() {
+        String s = "";
+        s += "nom " + _nom;
+        s += " id " + _id;
+        if(_typeForme==null) {
+            System.out.println("FORME NULLE ID " + _id + " NOM " + _nom);
+        }
+        s += " type " + _typeForme.name();
+        return s;
+    }
+    
     public Forme(String nom) {
         _nom = nom;
         _coordonnees = new ArrayList<>();

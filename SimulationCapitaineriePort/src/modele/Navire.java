@@ -129,7 +129,7 @@ public class Navire extends Forme {
     public String toString() {
         return "Navire{" + "nom" + _nom + "typeMachandise=" + _typeMachandise + ", longueur=" + _longueur + ", dateArrivee=" 
                 + _dateArrivee + ", tempsPriseEnCharge=" + _tempsPriseEnCharge + ", typeNavire=" + _typeNavire 
-                + "position[" + _position.getX() + ", " + _position.getY() + "]}";
+                + ", position[" + _position.getX() + ", " + _position.getY() + "]}";
     }
 
     /**
