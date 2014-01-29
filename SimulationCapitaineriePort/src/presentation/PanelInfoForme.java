@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  *
  * @author Jérémy
  */
-public class PanelInfoForme extends Panel {
+public class PanelInfoForme extends PanelPerso {
     
     private ArrayList<String> _informations;
     

@@ -7,6 +7,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import modele.Navire;
 
@@ -14,7 +15,7 @@ import modele.Navire;
  *
  * @author jeremy
  */
-public class PanelNavires extends Panel {
+public class PanelNavires extends PanelPerso {
 
     private Tableau _tableau;
     
@@ -25,7 +26,12 @@ public class PanelNavires extends Panel {
         add(new JScrollPane(_tableau), BorderLayout.CENTER);
     }
     
-    public void ajouterNavire(Navire n) {
-        _tableau.ajouterNavire(n);
+    public void ajouterNavires(ArrayList<Navire> listeNavires) {
+        for(Navire n : listeNavires)
+            _tableau.ajouterNavire(n);
+    }
+    
+    public void supprimerNavires(int temps) {
+        _tableau.supprimerNavireArrives(temps);
     }
 }

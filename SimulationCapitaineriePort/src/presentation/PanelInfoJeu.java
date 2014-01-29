@@ -10,7 +10,7 @@ import modele.enumeration.TypeMessage;
  *
  * @author Jérémy 
  */
-public class PanelInfoJeu extends Panel {
+public class PanelInfoJeu extends PanelPerso {
 
     private JLabel _jlInformations;
     private String _log;

@@ -12,19 +12,21 @@ import javax.swing.JPanel;
  *
  * @author Jérémy
  */
-public class PanelPartie extends Panel {
+public class PanelPartie extends PanelPerso {
     
     private JLabel _jlTempsRestant;
     private JLabel _jlNbRetard;
     
     private JButton _jbValider;
     
-    public static int _temps;
+    public static int _tempsCourant;
+    public static int _tempsFin;
     public static int _nbRetard;
 
     public PanelPartie() {
         super("Partie en cours");
-        _temps = 10;
+        _tempsCourant   = 0;
+        _tempsFin       = 100;
         initialisationComposants();
     }
     
@@ -39,7 +41,7 @@ public class PanelPartie extends Panel {
         panelFlow2.setBackground(Color.gray);
         panelFlow3.setBackground(Color.gray);
         
-        _jlTempsRestant = new JLabel("Temps : " + _temps);
+        _jlTempsRestant = new JLabel("Temps : " + _tempsCourant);
         _jlNbRetard     = new JLabel("Retard cumulé : " + _nbRetard);
         _jbValider      = new JButton("Valider");
         
