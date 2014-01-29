@@ -1,6 +1,7 @@
 package modele.outils;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeNavire;
 
@@ -10,10 +11,10 @@ public class ParamsNavire {
     private TypeMarchandise _typeMarchandise;
     private int _dateArrivee;
     private int _tempsPriseEnCharge;
-    private Point _position;
+    private Point2D _position;
     private int _datePriseEnCharge;
-    private int _longueur;
-    private int _largeur;
+    private double _longueur;
+    private double _largeur;
     
     public ParamsNavire() {}
 
@@ -90,14 +91,14 @@ public class ParamsNavire {
     /**
      * @return the _position
      */
-    public Point getPosition() {
+    public Point2D getPosition() {
         return _position;
     }
 
     /**
      * @param _position the _position to set
      */
-    public void setPosition(Point _position) {
+    public void setPosition(Point2D _position) {
         this._position = _position;
     }
 
@@ -118,28 +119,28 @@ public class ParamsNavire {
     /**
      * @return the _longueur
      */
-    public int getLongueur() {
+    public double getLongueur() {
         return _longueur;
     }
 
     /**
      * @param _longueur the _longueur to set
      */
-    public void setLongueur(int _longueur) {
+    public void setLongueur(double _longueur) {
         this._longueur = _longueur;
     }
 
     /**
      * @return the _largeur
      */
-    public int getLargeur() {
+    public double getLargeur() {
         return _largeur;
     }
 
     /**
      * @param _largeur the _largeur to set
      */
-    public void setLargeur(int _largeur) {
+    public void setLargeur(double _largeur) {
         this._largeur = _largeur;
     }
 }

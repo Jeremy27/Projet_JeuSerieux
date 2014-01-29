@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package metier;
 
 import java.awt.geom.Point2D;
@@ -14,12 +8,8 @@ import modele.Navire;
 import modele.enumeration.TypeShape;
 import modele.outils.PointPathFinding;
 
-/**
- *
- * @author brokep
- */
 public class DeplacementBateaux {
-    public ArrayList<PointPathFinding> deplacer(Navire bateau, Point2D destination, ArrayList<Forme> formes) {
+    public static ArrayList<PointPathFinding> deplacer(Navire bateau, Point2D destination, ArrayList<Forme> formes) {
         PointPathFinding pointEnCours = new PointPathFinding(bateau.getPosition(), 0);
         ArrayList<PointPathFinding> pile = new ArrayList<>();
         ArrayList<PointPathFinding> pointsVisites = new ArrayList<>();
@@ -54,7 +44,7 @@ public class DeplacementBateaux {
         return null;
     }
     
-    public PointPathFinding trierVoisins(PointPathFinding pointEnCours, ArrayList<PointPathFinding> pointsVisites) {
+    public static PointPathFinding trierVoisins(PointPathFinding pointEnCours, ArrayList<PointPathFinding> pointsVisites) {
         for(PointPathFinding p:pointsVisites) {
             if(p.estVoisin(pointEnCours)) {
                 if(p.getCout()+1==pointEnCours.getCout()) {
@@ -65,7 +55,7 @@ public class DeplacementBateaux {
         return null;
     }
     
-    public TreeSet<PointPathFinding> trierVoisins(PointPathFinding pointEnCours, Point2D destination, ArrayList<Forme> formes, ArrayList<PointPathFinding> visites) {
+    public static TreeSet<PointPathFinding> trierVoisins(PointPathFinding pointEnCours, Point2D destination, ArrayList<Forme> formes, ArrayList<PointPathFinding> visites) {
         TreeSet<PointPathFinding> voisinsPriorises = new TreeSet<>();
         double x = pointEnCours.getPoint().getX();
         double y = pointEnCours.getPoint().getY();
@@ -104,7 +94,7 @@ public class DeplacementBateaux {
         return voisinsPriorises;
     }
     
-    public boolean arrayContient(ArrayList<PointPathFinding> pointsVisites, PointPathFinding pointEnCours) {
+    public static boolean arrayContient(ArrayList<PointPathFinding> pointsVisites, PointPathFinding pointEnCours) {
         for(PointPathFinding p:pointsVisites) {
             if(p.getPoint().equals(pointEnCours.getPoint())) {
                 return true;
@@ -113,7 +103,7 @@ public class DeplacementBateaux {
         return false;
     }
     
-    public boolean deplacementPossible(Point2D p, ArrayList<Forme> formes) {
+    public static boolean deplacementPossible(Point2D p, ArrayList<Forme> formes) {
         for(Forme forme:formes) {
             if(forme.getPath().contains(p) && forme.getTypeForme()!=TypeShape.NATURAL) {
                 return false;

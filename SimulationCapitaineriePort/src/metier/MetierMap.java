@@ -15,6 +15,7 @@ import java.util.Random;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import modele.Forme;
+import modele.Navire;
 import modele.Quai;
 import modele.Terminal;
 import modele.enumeration.TypeShape;
@@ -104,12 +105,25 @@ public class MetierMap {
         
     }
     
+    public void ajoutForme(Forme f) {
+        _coordonneesDessin.add(f);
+    }
+    
     public Forme getForme(Point p) {
+        Forme selectionnee = null;
         for(Forme forme:_coordonneesDessin) {
             if(forme.getPath().contains(p)) {
-                return forme;
-            }
+                if(selectionnee == null) {
+                selectionnee = forme;
+                } else {
+                    if(forme instanceof Quai ||
+                        forme instanceof Terminal ||
+                        forme instanceof Navire) {
+                        selectionnee = forme;
+                    }
+                }
+            }    
         }
-        return null;
+        return selectionnee;
     }
 }

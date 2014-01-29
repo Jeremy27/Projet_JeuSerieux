@@ -9,9 +9,10 @@ package presentation;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import modele.Navire;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeMessage;
@@ -34,17 +35,22 @@ public class IHM extends JFrame {
         
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                setVisible(true);
+            }
+        });
     }
     
     private ParamsNavire getParamsNavire() {
         ParamsNavire params = new ParamsNavire();
         params.setDateArrivee(10);
         params.setDatePriseEnCharge(11);
-        params.setLargeur(2);
-        params.setLongueur(10);
+        params.setLargeur(0.00040);
+        params.setLongueur(0.0020);
         params.setNom("Navire 1");
-        params.setPosition(new Point(2, 10));
+        params.setPosition(new Point2D.Double(0.093, 49.486));
         params.setTempsPriseEnCharge(5);
         params.setTypeMarchandise(TypeMarchandise.PASSAGER);
         params.setTypeNavire(TypeNavire.FERRY);
@@ -69,6 +75,12 @@ public class IHM extends JFrame {
         params.setDateArrivee(7);
         params.setNom("Navire 5");
         Navire n4 = new Navire(params);
+        
+        n.constructionNavire();
+        n1.constructionNavire();
+        n2.constructionNavire();
+        n3.constructionNavire();
+        n4.constructionNavire();
         
         JPanel panelGauche  = new JPanel(new GridLayout(3, 1));
         JPanel panelDroit   = new JPanel(new GridLayout(2, 1));
@@ -97,6 +109,7 @@ public class IHM extends JFrame {
         PanelInfoJeu   p4 = new PanelInfoJeu();
         
         PanelMap map = new PanelMap(p3);
+        map.setNavires(new Navire[]{n1, n2, n3, n4});
         map.initEvents();
         add(map, BorderLayout.CENTER);
         

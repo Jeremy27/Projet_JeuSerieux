@@ -35,15 +35,28 @@ public class Quai extends Forme{
         _coordonnees    = new ArrayList<>();
     }
     
+//    public ArrayList<String> getDonneesFormates() {
+//        ArrayList<String> tabInfo = new ArrayList<>();
+//        
+//        tabInfo.add("Nom : " + _nom);
+//        tabInfo.add("Longueur : " + _longueur);
+//        String typesMarchandise = "";
+//        for(Terminal t:_terminaux) {
+//            for(TypeMarchandise type:t.getTypesChargement()) {
+//                typesMarchandise += " " + type.name();
+//            }
+//        }
+//                
+//        return tabInfo;
+//    }
     public ArrayList<String> getDonneesFormates() {
         ArrayList<String> tabInfo = new ArrayList<>();
         
         tabInfo.add("Nom : " + _nom);
         tabInfo.add("Longueur : " + _longueur);
-        String typesMarchandise = "";
         for(Terminal t:_terminaux) {
             for(TypeMarchandise type:t.getTypesChargement()) {
-                typesMarchandise += " " + type.name();
+                tabInfo.add(type.name());
             }
         }
                 

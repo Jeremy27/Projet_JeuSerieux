@@ -52,4 +52,17 @@ public class Terminal extends Forme {
         }
         return false;
     }
+    
+    public ArrayList<String> getDonneesFormates() {
+        ArrayList<String> tabInfo = new ArrayList<>();
+        
+        tabInfo.add("Nom : " + _nom);
+        tabInfo.add("Longueur : " + _longueur);
+        for(TypeMarchandise t:_typeChargement) {
+            tabInfo.add("Type de marchandise: " + t.name());
+        }
+        
+                
+        return tabInfo;
+    }
 }
