@@ -24,7 +24,7 @@ public class PanelPartie extends Panel {
 
     public PanelPartie() {
         super("Partie en cours");
-        _temps = 10;
+        _temps = 5;
         initialisationComposants();
     }
     
