@@ -22,6 +22,7 @@ public class Forme {
     
     public Forme(String nom) {
         _nom = nom;
+        _coordonnees = new ArrayList<>();
     }
     
     public Forme(String nom, boolean fill, Color couleur, long id, TypeShape typeForme) {
