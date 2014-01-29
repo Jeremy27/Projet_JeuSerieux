@@ -180,13 +180,11 @@ public class PanelMap extends JPanel{
                 }
             } 
         }
-        System.out.println("================ NAVIRES ================");
         g2.setColor(Color.RED);
         for(Navire navire:_navires) {
             
             Path2D p = navire.getPath(m);
             if(p!=null) {
-                System.out.println("navire créé");
                 g2.fill(p);
             }
             
