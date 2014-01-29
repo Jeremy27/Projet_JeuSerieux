@@ -59,6 +59,8 @@ public class PanelMap extends JPanel{
     
     private final PanelInfoForme _panelInfoForme;
     
+    private Navire[] _navires;
+    
     public PanelMap(PanelInfoForme panelInfo) {
         _metier = new MetierMap(this, panelInfo);
         _metier.construireFormes();
@@ -178,9 +180,24 @@ public class PanelMap extends JPanel{
                 }
             } 
         }
+        System.out.println("================ NAVIRES ================");
+        g2.setColor(Color.RED);
+        for(Navire navire:_navires) {
+            
+            Path2D p = navire.getPath(m);
+            if(p!=null) {
+                System.out.println("navire créé");
+                g2.fill(p);
+            }
+            
+        }
         
         g2.setFont(new Font("SansSerif", Font.BOLD, 20));
         g2.drawString("", 50, 50);
+    }
+    
+    public void setNavires(Navire[] navires) {
+        _navires = navires;
     }
     
     public void augmenterZoom() {

@@ -60,6 +60,7 @@ public class Forme {
     }
     
     public Path2D getPath(HashMap<String, Double> map) {
+        
         if(contenuDansMap(map)) {
             double coefX = map.get("coefX");
             double coefY = map.get("coefY");
@@ -87,6 +88,7 @@ public class Forme {
                     path.lineTo(x, y);
                 }
             }
+            path.closePath();
             _path = path;
             return path;
         } else {

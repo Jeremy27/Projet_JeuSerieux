@@ -15,12 +15,12 @@ import modele.outils.ParamsNavire;
 public class Navire extends Forme {
     
     private TypeMarchandise _typeMachandise;
-    private final int       _longueur;
-    private final int       _largeur;
+    private final double       _longueur;
+    private final double       _largeur;
     private int             _dateArrivee;
     private int             _tempsPriseEnCharge;
     private TypeNavire      _typeNavire;
-    private Point           _position;
+    private Point2D           _position;
     private int             _heurePriseEnCharge;
     
 
@@ -38,21 +38,25 @@ public class Navire extends Forme {
     
     public void constructionNavire() {
         double moitieLongueur = _longueur * 0.50;
-        double moitielargeur = _largeur * 0.50;
+        double moitielargeur = getLargeur() * 0.50;
         double x = _position.getX();
         double y = _position.getY();
-        double longueurTete = _longueur * 0.10;
+        double longueurTete = _longueur * 0.20;
+        
+        double haut = y-moitielargeur;
+        double bas = y+moitielargeur;
         
         //point arrière gauche
-        _coordonnees.add(new Point2D.Double(x-moitieLongueur, y-moitielargeur));
+        _coordonnees.add(new Point2D.Double(x-moitieLongueur, haut));
         //avant gauche
-        _coordonnees.add(new Point2D.Double(x+moitieLongueur-longueurTete, y-moitielargeur));
+        _coordonnees.add(new Point2D.Double(x+moitieLongueur-longueurTete, haut));
         //tête
         _coordonnees.add(new Point2D.Double(x+moitieLongueur, y));
         //avant droit
-        _coordonnees.add(new Point2D.Double(x+moitieLongueur-longueurTete, y+moitielargeur));
+        _coordonnees.add(new Point2D.Double(x+moitieLongueur-longueurTete, bas));
         //arrière droit
-        _coordonnees.add(new Point2D.Double(x-moitieLongueur, y-moitielargeur));
+        _coordonnees.add(new Point2D.Double(x-moitieLongueur, bas));
+        
     }
     
     public TypeNavire getType() {
@@ -71,7 +75,7 @@ public class Navire extends Forme {
         this._typeMachandise = typeMachandise;
     }
 
-    public int getLongueur() {
+    public double getLongueur() {
         return _longueur;
     }
 
@@ -91,7 +95,7 @@ public class Navire extends Forme {
         this._tempsPriseEnCharge = tempsPriseEnCharge;
     }
 
-    public Point getPosition() {
+    public Point2D getPosition() {
         return _position;
     }
 
@@ -126,5 +130,12 @@ public class Navire extends Forme {
         return "Navire{" + "nom" + _nom + "typeMachandise=" + _typeMachandise + ", longueur=" + _longueur + ", dateArrivee=" 
                 + _dateArrivee + ", tempsPriseEnCharge=" + _tempsPriseEnCharge + ", typeNavire=" + _typeNavire 
                 + "position[" + _position.getX() + ", " + _position.getY() + "]}";
+    }
+
+    /**
+     * @return the _largeur
+     */
+    public double getLargeur() {
+        return _largeur;
     }
 }
