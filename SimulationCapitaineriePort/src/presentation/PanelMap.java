@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -232,10 +233,9 @@ public class PanelMap extends JPanel{
         Insets insets = getInsets();
         double w = getWidth() - insets.left - insets.right;
         double h = getHeight() - insets.top - insets.bottom;
-//        _pourcentGauche = p.getX()/w;
-//        _pourcentHaut = p.getY()/h;
+        _pourcentGauche = p.getX()/w;
+        _pourcentHaut = p.getY()/h;
         _coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
-        //System.out.println("curseur x: " + _coordCurseurModif.getX() + " y: " + _coordCurseurModif.getY());
     }
     
     public void setTypeColorer(TypeMarchandise type) {
@@ -280,9 +280,14 @@ public class PanelMap extends JPanel{
                 Forme forme = _metier.getForme(_pointClick);
                 
                 if(forme != null) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     _infosMouseOver = forme.toString();
-                    refresh();
+                    
+                } else {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                    _infosMouseOver = "";
                 }
+                refresh();
             }
         });
         
