@@ -33,22 +33,9 @@ public class Quai extends Forme{
         _terminaux      = new ArrayList<>();
         _naviresAQuai   = new ArrayList<>();
         _coordonnees    = new ArrayList<>();
+        _typeForme      = TypeShape.QUAI;
     }
     
-//    public ArrayList<String> getDonneesFormates() {
-//        ArrayList<String> tabInfo = new ArrayList<>();
-//        
-//        tabInfo.add("Nom : " + _nom);
-//        tabInfo.add("Longueur : " + _longueur);
-//        String typesMarchandise = "";
-//        for(Terminal t:_terminaux) {
-//            for(TypeMarchandise type:t.getTypesChargement()) {
-//                typesMarchandise += " " + type.name();
-//            }
-//        }
-//                
-//        return tabInfo;
-//    }
     public ArrayList<String> getDonneesFormates() {
         ArrayList<String> tabInfo = new ArrayList<>();
         
@@ -61,6 +48,10 @@ public class Quai extends Forme{
         }
                 
         return tabInfo;
+    }
+    
+    public void ajoutTerminal(Terminal t) {
+        _terminaux.add(t);
     }
     
     public int getLongueur() {

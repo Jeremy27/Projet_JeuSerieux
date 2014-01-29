@@ -18,6 +18,7 @@ import modele.Forme;
 import modele.Navire;
 import modele.Quai;
 import modele.Terminal;
+import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeShape;
 import presentation.PanelMap;
 import presentation.PanelInfoForme;
@@ -68,22 +69,24 @@ public class MetierMap {
             Forme forme;
 
             //construction de l'objet
-            if(type.equals(TypeShape.NATURAL.toString())) {
+            if(type.equals(TypeShape.NATURAL.name())) {
                 c = NATURALCOLOR;
                 fill = true;
                 forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
-            } else if(type.equals(TypeShape.QUAI.toString())) {
+            } else if(type.equals(TypeShape.QUAI.name())) {
+                
                 c = QUAICOLOR;
                 fill = true;
                 forme = new Quai(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
-            } else if(type.equals(TypeShape.TERMINAL.toString())) {
+                System.out.println("nom " + nom + " " + forme.getTypeForme().name());
+            } else if(type.equals(TypeShape.TERMINAL.name())) {
                 c = TERMINALCOLOR;
                 fill = true;
                 forme = new Terminal(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
-            } else if(type.equals(TypeShape.HIGHWAY.toString())) {
+            } else if(type.equals(TypeShape.HIGHWAY.name())) {
                 c = ROUTECOLOR;
                 forme = new Forme(nom, fill, c, id, TypeShape.HIGHWAY);
-            } else if(type.equals(TypeShape.BUILDING.toString())) {
+            } else if(type.equals(TypeShape.BUILDING.name())) {
                 c = BATIMENTCOLOR;
                 fill = true;
                 forme = new Forme(nom, fill, c, id, TypeShape.BUILDING);
@@ -109,7 +112,16 @@ public class MetierMap {
         _coordonneesDessin.add(f);
     }
     
-    public Forme getForme(Point p) {
+    public Forme getForme(String nom) {
+        for(Forme forme:_coordonneesDessin) {
+            if(forme.getNom().equals(nom)) {
+                return forme;
+            }
+        }
+        return null;
+    }
+    
+    public Forme getForme(Point2D p) {
         Forme selectionnee = null;
         for(Forme forme:_coordonneesDessin) {
             if(forme.getPath().contains(p)) {
@@ -125,5 +137,23 @@ public class MetierMap {
             }    
         }
         return selectionnee;
+    }
+    
+    public void lierQuaisTerminaux() {
+        Quai quaiAmeriques = (Quai)getForme("Quai des Amériques");
+        Terminal terminalAtlantique = (Terminal)getForme("Terminal de l'Atlantique");
+        quaiAmeriques.ajoutTerminal(terminalAtlantique);
+        terminalAtlantique.ajoutType(TypeMarchandise.CONTENEURS);
+        
+        Quai quaiEurope = (Quai)getForme("Quai de l'Europe");
+        Terminal terminalEurope = (Terminal)getForme("Terminal de l'Europe");
+        quaiEurope.ajoutTerminal(terminalEurope);
+        terminalEurope.ajoutType(TypeMarchandise.CONTENEURS);
+        
+        Terminal terminalNormandie = (Terminal)getForme("Terminal de Normandie");
+        terminalNormandie.ajoutType(TypeMarchandise.CONTENEURS);
+        
+        Terminal terminalCruise = (Terminal)getForme("Cruise Terminal");
+        terminalCruise.ajoutType(TypeMarchandise.PASSAGER);
     }
 }

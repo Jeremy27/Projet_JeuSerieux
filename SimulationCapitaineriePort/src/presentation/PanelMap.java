@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,6 +10,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Path2D;
@@ -47,10 +49,10 @@ public class PanelMap extends JPanel{
     private double _zoomEtat = ZOOMMIN;
     
     //limites affichage map
-    private double thisHaut=MIN_DEPART_Y;
-    private double thisBas=MAX_DEPART_Y;
-    private double thisGauche=MIN_DEPART_X;
-    private double thisDroite=MAX_DEPART_X;
+    private double _mapHaut=MIN_DEPART_Y;
+    private double _mapBas=MAX_DEPART_Y;
+    private double _mapGauche=MIN_DEPART_X;
+    private double _mapDroite=MAX_DEPART_X;
     
     private final MetierMap _metier;
     
@@ -61,6 +63,9 @@ public class PanelMap extends JPanel{
     private final PanelInfoForme _panelInfoForme;
     
     private Navire[] _navires;
+    
+    private String _infosMouseOver="";
+    private String _coordonneesMouseOver="";
     
     public PanelMap(PanelInfoForme panelInfo) {
         _metier = new MetierMap(this, panelInfo);
@@ -82,10 +87,10 @@ public class PanelMap extends JPanel{
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        thisBas = MIN_DEPART_Y;
-        thisHaut = MAX_DEPART_Y;
-        thisDroite = MAX_DEPART_X;
-        thisGauche = MIN_DEPART_X;
+        _mapBas = MIN_DEPART_Y;
+        _mapHaut = MAX_DEPART_Y;
+        _mapDroite = MAX_DEPART_X;
+        _mapGauche = MIN_DEPART_X;
         
         Graphics2D g2 = (Graphics2D)g;
         
@@ -110,43 +115,43 @@ public class PanelMap extends JPanel{
         ajoutDroite = ajoutBas = 0.0;
         double calculGauche = _coordCurseurModif.getX()-largeur*_pourcentGauche;
         if(calculGauche>=MIN_DEPART_X) {
-            thisGauche = calculGauche;
+            _mapGauche = calculGauche;
         } else {
             ajoutDroite = MIN_DEPART_X - calculGauche;
-            thisGauche = MIN_DEPART_X;
+            _mapGauche = MIN_DEPART_X;
         }
         
         double calculDroite = _coordCurseurModif.getX()+largeur*(1-_pourcentGauche);
         if(calculDroite<=MAX_DEPART_X) {
-            thisDroite = calculDroite;
-            thisDroite += ajoutDroite;
+            _mapDroite = calculDroite;
+            _mapDroite += ajoutDroite;
         } else {
             double diff = calculDroite-MAX_DEPART_X; //négatif
-            thisDroite = MAX_DEPART_X;
-            thisGauche -= diff;
+            _mapDroite = MAX_DEPART_X;
+            _mapGauche -= diff;
         }
         
         double calculHaut = _coordCurseurModif.getY()-hauteur*(1-_pourcentHaut);
         if(calculHaut>=MIN_DEPART_Y) {
-            thisHaut = calculHaut;
+            _mapHaut = calculHaut;
         } else {
             ajoutBas = MIN_DEPART_Y-calculHaut;
-            thisHaut = MIN_DEPART_Y;
+            _mapHaut = MIN_DEPART_Y;
         }
         
         double calculBas = _coordCurseurModif.getY()+hauteur*_pourcentHaut;
         if(calculBas<=MAX_DEPART_Y) {
-            thisBas = calculBas;
-            thisBas += ajoutBas;
+            _mapBas = calculBas;
+            _mapBas += ajoutBas;
         } else {
             double diff = MAX_DEPART_Y-calculBas; //négatif
-            thisBas = MAX_DEPART_Y;
-            thisHaut += diff;
+            _mapBas = MAX_DEPART_Y;
+            _mapHaut += diff;
         }
         
         //recalcul diff
-        diffY = thisBas - thisHaut;
-        diffX = thisDroite - thisGauche;
+        diffY = _mapBas - _mapHaut;
+        diffX = _mapDroite - _mapGauche;
         _coefX = w/diffX;
         _coefY = h/diffY;
         
@@ -154,10 +159,10 @@ public class PanelMap extends JPanel{
         m.put("coefX", _coefX);
         m.put("coefY", _coefY);
         m.put("hauteurPanel", h);
-        m.put("bas", thisBas);
-        m.put("haut", thisHaut);
-        m.put("gauche", thisGauche);
-        m.put("droite", thisDroite);
+        m.put("bas", _mapBas);
+        m.put("haut", _mapHaut);
+        m.put("gauche", _mapGauche);
+        m.put("droite", _mapDroite);
         //trie les formes puis les paint
         for(Forme forme:_metier.getCoordonneesDessin()) {
             Color couleur = forme.getCouleur();
@@ -191,8 +196,9 @@ public class PanelMap extends JPanel{
             
         }
         
-        g2.setFont(new Font("SansSerif", Font.BOLD, 20));
-        g2.drawString("", 50, 50);
+        g2.setFont(new Font("SansSerif", Font.BOLD, 10));
+        g2.drawString(_infosMouseOver, 50, (int)(h-30));
+        g2.drawString(_coordonneesMouseOver, (int)(w-300), (int)(h-10));
     }
     
     public void setNavires(Navire[] navires) {
@@ -229,8 +235,7 @@ public class PanelMap extends JPanel{
         double h = getHeight() - insets.top - insets.bottom;
         _pourcentGauche = p.getX()/w;
         _pourcentHaut = p.getY()/h;
-        _coordCurseurModif.setLocation(p.getX()/_coefX+thisGauche, (h-p.getY())/_coefY+thisHaut);
-        //System.out.println("curseur x: " + _coordCurseurModif.getX() + " y: " + _coordCurseurModif.getY());
+        _coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
     }
     
     public void setTypeColorer(TypeMarchandise type) {
@@ -257,13 +262,32 @@ public class PanelMap extends JPanel{
     }
     
     public void move() {
-        this.addMouseMotionListener(new MouseMotionAdapter() {
+        this.addMouseMotionListener(new MouseMotionListener() {
 
             @Override
             public void mouseDragged(MouseEvent e) {
                 
                 dragCurseur(_pointClick.getX()-e.getPoint().getX(), e.getPoint().getY()-_pointClick.getY());
                 _pointClick = e.getPoint();
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Insets insets = getInsets();
+                double h = getHeight() - insets.top - insets.bottom;
+                _pointClick = e.getPoint();
+                _coordonneesMouseOver = (_pointClick.getX()/_coefX+_mapGauche) + ", " + (_pointClick.getY()/_coefY+_mapHaut);
+                Forme forme = _metier.getForme(_pointClick);
+                
+                if(forme != null) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    _infosMouseOver = forme.toString();
+                    
+                } else {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                    _infosMouseOver = "";
+                }
+                refresh();
             }
         });
         
@@ -280,7 +304,6 @@ public class PanelMap extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 Forme forme = _metier.getForme(e.getPoint());
-                System.out.println(forme);
                 if(forme!=null) {
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
