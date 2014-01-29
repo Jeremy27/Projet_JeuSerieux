@@ -19,6 +19,7 @@ import metier.MetierMap;
 import modele.Forme;
 import modele.Navire;
 import modele.Quai;
+import modele.Terminal;
 import modele.enumeration.TypeMarchandise;
 
 public class PanelMap extends JPanel{
@@ -196,6 +197,9 @@ public class PanelMap extends JPanel{
     
     public void setNavires(Navire[] navires) {
         _navires = navires;
+        for(Navire n:_navires) {
+            _metier.ajoutForme(n);
+        }
     }
     
     public void augmenterZoom() {
@@ -276,19 +280,27 @@ public class PanelMap extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 Forme forme = _metier.getForme(e.getPoint());
+                System.out.println(forme);
                 if(forme!=null) {
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
-                        colorerQuai(n.getTypeMachandise());
-                    } else if(forme instanceof Quai) {
-                        
+                        setTypeColorer(n.getTypeMachandise());
+                    } else  {
+                        setTypeColorer(null);
+                        if(forme instanceof Quai) {
+                            System.out.println("QUAI");
+                            Quai q = (Quai) forme;
+                            _panelInfoForme.setInformations(q.getDonneesFormates());
+                            _panelInfoForme.majInformations();
+                        } else if(forme instanceof Terminal) {
+                            System.out.println("TERMINAL");
+                            Terminal t = (Terminal) forme;
+                            _panelInfoForme.setInformations(t.getDonneesFormates());
+                            _panelInfoForme.majInformations();
+                        }
                     }
                 }
             }
         });
-    }
-    
-    private void colorerQuai(TypeMarchandise type) {
-        
     }
 }
