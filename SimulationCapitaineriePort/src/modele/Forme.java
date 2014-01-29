@@ -133,4 +133,11 @@ public class Forme {
     public void ajoutCoordonnee(Point2D p) {
         _coordonnees.add(p);
     }
+
+    /**
+     * @return the _typeForme
+     */
+    public TypeShape getTypeForme() {
+        return _typeForme;
+    }
 }

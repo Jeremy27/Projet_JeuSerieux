@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 import modele.Forme;
 import modele.Navire;
+import modele.enumeration.TypeShape;
 import modele.outils.PointPathFinding;
 
 /**
@@ -114,7 +115,7 @@ public class DeplacementBateaux {
     
     public boolean deplacementPossible(Point2D p, ArrayList<Forme> formes) {
         for(Forme forme:formes) {
-            if(forme.getPath().contains(p) && forme.get) {
+            if(forme.getPath().contains(p) && forme.getTypeForme()!=TypeShape.NATURAL) {
                 return false;
             }
         }
