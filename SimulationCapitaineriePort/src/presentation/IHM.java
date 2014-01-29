@@ -16,6 +16,7 @@ import modele.Navire;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeMessage;
 import modele.enumeration.TypeNavire;
+import modele.outils.ParamsNavire;
 
 /**
  *
@@ -36,15 +37,38 @@ public class IHM extends JFrame {
         setVisible(true);
     }
     
+    private ParamsNavire getParamsNavire() {
+        ParamsNavire params = new ParamsNavire();
+        params.setDateArrivee(10);
+        params.setDatePriseEnCharge(11);
+        params.setLargeur(2);
+        params.setLongueur(10);
+        params.setNom("Navire 1");
+        params.setPosition(new Point(2, 10));
+        params.setTempsPriseEnCharge(5);
+        params.setTypeMarchandise(TypeMarchandise.PASSAGER);
+        params.setTypeNavire(TypeNavire.FERRY);
+        return params;
+    }
+    
     private void creationPanels() {
         String[] titres1 = {"Nom", "Arrivé le"};
         String[] titres2 = {"Nom", "Arrive le"};
         
-        Navire n = new Navire("CHANTACO", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.PASSAGER, 12, 1, 4, new Point(0, 2));
-        Navire n1 = new Navire("test1", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.CONTENEURS, 18, 10, 4, new Point(0, 2));
-        Navire n2 = new Navire("test2", TypeNavire.RO_RO, TypeMarchandise.EOLIEN, 10, 15, 4, new Point(0, 2));
-        Navire n3 = new Navire("test3", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.ROULIER, 30, 1, 4, new Point(0, 2));
-        Navire n4 = new Navire("test5", TypeNavire.FERRY, TypeMarchandise.CONTENEURS, 14, 16, 4, new Point(0, 2));
+        ParamsNavire params = getParamsNavire();
+        Navire n = new Navire(params);
+        params.setDateArrivee(1);
+        params.setNom("Navire 2");
+        Navire n1 = new Navire(params);
+        params.setDateArrivee(5);
+        params.setNom("Navire 3");
+        Navire n2 = new Navire(params);
+        params.setDateArrivee(15);
+        params.setNom("Navire 4");
+        Navire n3 = new Navire(params);
+        params.setDateArrivee(7);
+        params.setNom("Navire 5");
+        Navire n4 = new Navire(params);
         
         JPanel panelGauche  = new JPanel(new GridLayout(3, 1));
         JPanel panelDroit   = new JPanel(new GridLayout(2, 1));
@@ -55,20 +79,20 @@ public class IHM extends JFrame {
         PanelNavires p5 = new PanelNavires("Navires arrivant", titres2, p3);
         p1.ajouterNavire(n);
         p1.ajouterNavire(n1);
+        p1.ajouterNavire(n2);
+        p1.ajouterNavire(n);
         p1.ajouterNavire(n1);
+        p1.ajouterNavire(n4);
+        p1.ajouterNavire(n3);
         p1.ajouterNavire(n1);
-        p1.ajouterNavire(n1);
-        p1.ajouterNavire(n1);
-        p1.ajouterNavire(n1);
-        p1.ajouterNavire(n1);
-        p1.ajouterNavire(n1);
+        p1.ajouterNavire(n);
         p5.ajouterNavire(n2);
         p5.ajouterNavire(n3);
         p5.ajouterNavire(n4);
+        p5.ajouterNavire(n);
         p5.ajouterNavire(n4);
-        p5.ajouterNavire(n4);
-        p5.ajouterNavire(n4);
-        p5.ajouterNavire(n4);
+        p5.ajouterNavire(n1);
+        p5.ajouterNavire(n2);
         p5.ajouterNavire(n4);
         PanelInfoJeu   p4 = new PanelInfoJeu();
         
