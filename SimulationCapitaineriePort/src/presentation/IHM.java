@@ -39,6 +39,7 @@ public class IHM extends JFrame {
     private void creationPanels() {
         String[] titres1 = {"Nom", "Arrivé le"};
         String[] titres2 = {"Nom", "Arrive le"};
+        
         Navire n = new Navire("CHANTACO", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.PASSAGER, 12, 1, 4, new Point(0, 2));
         Navire n1 = new Navire("test1", TypeNavire.PORTE_CONTENEURS, TypeMarchandise.CONTENEURS, 18, 10, 4, new Point(0, 2));
         Navire n2 = new Navire("test2", TypeNavire.RO_RO, TypeMarchandise.EOLIEN, 10, 15, 4, new Point(0, 2));

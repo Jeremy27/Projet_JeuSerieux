@@ -3,7 +3,9 @@ package modele;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeNavire;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import modele.outils.ParamsNavire;
 
 /**
  *
@@ -12,7 +14,8 @@ import java.util.ArrayList;
 public class Navire extends Forme {
     
     private TypeMarchandise _typeMachandise;
-    private int             _longueur;
+    private final int       _longueur;
+    private final int       _largeur;
     private int             _dateArrivee;
     private int             _tempsPriseEnCharge;
     private TypeNavire      _typeNavire;
@@ -20,14 +23,35 @@ public class Navire extends Forme {
     private int             _heurePriseEnCharge;
     
 
-    public Navire(String nom, TypeNavire type, TypeMarchandise typeMarchandise, int longueur, int dateArrivee, int tempsPriseEnCharge, Point position) {
-        super(nom);
-        this._typeNavire            = type;
-        this._typeMachandise        = typeMarchandise;
-        this._longueur              = longueur;
-        this._dateArrivee           = dateArrivee;
-        this._tempsPriseEnCharge    = tempsPriseEnCharge;
-        this._position              = position;
+    public Navire(ParamsNavire params) {
+        super(params.getNom());
+        _typeNavire             = params.getTypeNavire();
+        _typeMachandise         = params.getTypeMarchandise();
+        _longueur               = params.getLongueur();
+        _largeur                = params.getLargeur();
+        _dateArrivee            = params.getDateArrivee();
+        _tempsPriseEnCharge     = params.getTempsPriseEnCharge();
+        _position               = params.getPosition();
+        
+    }
+    
+    public void constructionNavire() {
+        double moitieLongueur = _longueur * 0.50;
+        double moitielargeur = _largeur * 0.50;
+        double x = _position.getX();
+        double y = _position.getY();
+        double longueurTete = _longueur * 0.10;
+        
+        //point arrière gauche
+        _coordonnees.add(new Point2D.Double(x-moitieLongueur, y-moitielargeur));
+        //avant gauche
+        _coordonnees.add(new Point2D.Double(x+moitieLongueur-longueurTete, y-moitielargeur));
+        //tête
+        _coordonnees.add(new Point2D.Double(x+moitieLongueur, y));
+        //avant droit
+        _coordonnees.add(new Point2D.Double(x+moitieLongueur-longueurTete, y+moitielargeur));
+        //arrière droit
+        _coordonnees.add(new Point2D.Double(x-moitieLongueur, y-moitielargeur));
     }
     
     public TypeNavire getType() {
@@ -48,10 +72,6 @@ public class Navire extends Forme {
 
     public int getLongueur() {
         return _longueur;
-    }
-
-    public void setLongueur(int longueur) {
-        this._longueur = longueur;
     }
 
     public int getDateArrivee() {
