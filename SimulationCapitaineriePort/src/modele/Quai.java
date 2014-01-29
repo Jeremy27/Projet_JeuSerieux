@@ -3,6 +3,7 @@ package modele;
 import java.awt.Color;
 import java.util.ArrayList;
 import modele.enumeration.TypeMarchandise;
+import modele.enumeration.TypeShape;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Quai extends Forme{
         _longueur       = longueur;
         _terminaux      = new ArrayList<>();
         _naviresAQuai   = new ArrayList<>();
+        _typeForme      = TypeShape.QUAI;
     }
     
     public Quai(String nom, boolean fill, Color couleur, long id, int longueur) {

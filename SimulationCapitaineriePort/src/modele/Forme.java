@@ -5,6 +5,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import modele.enumeration.TypeShape;
 
 /**
  *
@@ -17,17 +18,19 @@ public class Forme {
     protected boolean _fill = false;
     protected Color _couleur = Color.GRAY;
     protected long _id;
+    protected TypeShape _typeForme;
     
     public Forme(String nom) {
         _nom = nom;
     }
     
-    public Forme(String nom, boolean fill, Color couleur, long id) {
+    public Forme(String nom, boolean fill, Color couleur, long id, TypeShape typeForme) {
         _coordonnees = new ArrayList<>();
         _nom = nom;
         _fill = fill;
         _couleur = couleur;
         _id = id;
+        _typeForme = typeForme;
     }
 
     /*

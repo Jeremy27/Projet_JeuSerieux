@@ -5,6 +5,7 @@ import modele.enumeration.TypeNavire;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import modele.enumeration.TypeShape;
 import modele.outils.ParamsNavire;
 
 /**
@@ -32,7 +33,7 @@ public class Navire extends Forme {
         _dateArrivee            = params.getDateArrivee();
         _tempsPriseEnCharge     = params.getTempsPriseEnCharge();
         _position               = params.getPosition();
-        
+        _typeForme              = TypeShape.NAVIRE;
     }
     
     public void constructionNavire() {

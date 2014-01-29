@@ -140,6 +140,7 @@ public class PanelMap extends JPanel{
             thisBas = MAX_DEPART_Y;
             thisHaut += diff;
         }
+        
         //recalcul diff
         diffY = thisBas - thisHaut;
         diffX = thisDroite - thisGauche;
@@ -157,7 +158,6 @@ public class PanelMap extends JPanel{
         //trie les formes puis les paint
         for(Forme forme:_metier.getCoordonneesDessin()) {
             Color couleur = forme.getCouleur();
-            
             
             Path2D path = forme.getPath(m);
             g2.setColor(couleur);
@@ -178,6 +178,7 @@ public class PanelMap extends JPanel{
                 }
             } 
         }
+        
         g2.setFont(new Font("SansSerif", Font.BOLD, 20));
         g2.drawString("", 50, 50);
     }

@@ -114,7 +114,7 @@ public class DeplacementBateaux {
     
     public boolean deplacementPossible(Point2D p, ArrayList<Forme> formes) {
         for(Forme forme:formes) {
-            if(forme.getPath().contains(p)) {
+            if(forme.getPath().contains(p) && forme.get) {
                 return false;
             }
         }

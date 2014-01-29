@@ -9,22 +9,14 @@ package metier;
 import accesAuDonnees.ADMap;
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import modele.Forme;
-import modele.Navire;
 import modele.Quai;
 import modele.Terminal;
-import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeShape;
 import presentation.PanelMap;
 import presentation.PanelInfoForme;
@@ -78,7 +70,7 @@ public class MetierMap {
             if(type.equals(TypeShape.NATURAL.toString())) {
                 c = NATURALCOLOR;
                 fill = true;
-                forme = new Forme(nom, fill, c, id);
+                forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
             } else if(type.equals(TypeShape.QUAI.toString())) {
                 c = QUAICOLOR;
                 fill = true;
@@ -89,14 +81,14 @@ public class MetierMap {
                 forme = new Terminal(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
             } else if(type.equals(TypeShape.HIGHWAY.toString())) {
                 c = ROUTECOLOR;
-                forme = new Forme(nom, fill, c, id);
+                forme = new Forme(nom, fill, c, id, TypeShape.HIGHWAY);
             } else if(type.equals(TypeShape.BUILDING.toString())) {
                 c = BATIMENTCOLOR;
                 fill = true;
-                forme = new Forme(nom, fill, c, id);
+                forme = new Forme(nom, fill, c, id, TypeShape.BUILDING);
             } else {
                 c = AUTRECOLOR;
-                forme = new Forme(nom, fill, c, id);
+                forme = new Forme(nom, fill, c, id, TypeShape.NULL);
             }
             
             //traitement des coordonnées de la forme

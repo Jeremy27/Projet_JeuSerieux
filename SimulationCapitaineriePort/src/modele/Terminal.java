@@ -9,6 +9,7 @@ package modele;
 import java.awt.Color;
 import modele.enumeration.TypeMarchandise;
 import java.util.ArrayList;
+import modele.enumeration.TypeShape;
 
 /**
  *
@@ -26,9 +27,13 @@ public class Terminal extends Forme {
     }
     
     public Terminal(String nom, boolean fill, Color couleur, long id, int longueur) {
-        super(nom, fill, couleur, id);
+        super(nom);
+        _fill = fill;
+        _couleur = couleur;
+        _id = id;
         _longueur = longueur;
         _typeChargement = new ArrayList<>();
+        _typeForme = TypeShape.TERMINAL;
     }
     
     public void ajoutType(TypeMarchandise t) {

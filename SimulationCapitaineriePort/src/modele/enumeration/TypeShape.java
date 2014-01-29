@@ -6,5 +6,6 @@ public enum TypeShape {
     HIGHWAY,
     TERMINAL,
     QUAI,
+    NAVIRE,
     NULL
 }
