@@ -23,7 +23,7 @@ public class Terminal extends Forme {
     public Terminal(String nom, int longueur) {
         super(nom);
         _typeChargement = new ArrayList<>();
-        
+        _typeForme = TypeShape.TERMINAL;
     }
     
     public Terminal(String nom, boolean fill, Color couleur, long id, int longueur) {

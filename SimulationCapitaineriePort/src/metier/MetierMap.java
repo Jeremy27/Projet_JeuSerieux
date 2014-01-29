@@ -74,11 +74,9 @@ public class MetierMap {
                 fill = true;
                 forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
             } else if(type.equals(TypeShape.QUAI.name())) {
-                
                 c = QUAICOLOR;
                 fill = true;
                 forme = new Quai(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
-                System.out.println("nom " + nom + " " + forme.getTypeForme().name());
             } else if(type.equals(TypeShape.TERMINAL.name())) {
                 c = TERMINALCOLOR;
                 fill = true;

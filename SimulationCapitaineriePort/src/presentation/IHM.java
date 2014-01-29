@@ -52,8 +52,8 @@ public class IHM extends JFrame {
         params.setNom("Navire 1");
         params.setPosition(new Point2D.Double(0.093, 49.486));
         params.setTempsPriseEnCharge(5);
-        params.setTypeMarchandise(TypeMarchandise.PASSAGER);
-        params.setTypeNavire(TypeNavire.FERRY);
+        params.setTypeMarchandise(TypeMarchandise.CONTENEURS);
+        params.setTypeNavire(TypeNavire.PORTE_CONTENEURS);
         return params;
     }
     
@@ -110,6 +110,7 @@ public class IHM extends JFrame {
         
         PanelMap map = new PanelMap(p3);
         map.setNavires(new Navire[]{n1, n2, n3, n4});
+        map.lierMapRealite();
         map.initEvents();
         add(map, BorderLayout.CENTER);
         

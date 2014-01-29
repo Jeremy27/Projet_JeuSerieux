@@ -66,11 +66,16 @@ public class PanelMap extends JPanel{
     
     private String _infosMouseOver="";
     private String _coordonneesMouseOver="";
+    private Navire _navireSelectionne=null;
     
     public PanelMap(PanelInfoForme panelInfo) {
         _metier = new MetierMap(this, panelInfo);
         _metier.construireFormes();
         _panelInfoForme = panelInfo;
+    }
+    
+    public void lierMapRealite() {
+        _metier.lierQuaisTerminaux();
     }
     
     public void initEvents() {
@@ -307,9 +312,11 @@ public class PanelMap extends JPanel{
                 if(forme!=null) {
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
+                        _navireSelectionne = n;
                         setTypeColorer(n.getTypeMachandise());
                     } else  {
                         setTypeColorer(null);
+                        _navireSelectionne = null;
                         if(forme instanceof Quai) {
                             System.out.println("QUAI");
                             Quai q = (Quai) forme;
@@ -320,8 +327,12 @@ public class PanelMap extends JPanel{
                             Terminal t = (Terminal) forme;
                             _panelInfoForme.setInformations(t.getDonneesFormates());
                             _panelInfoForme.majInformations();
+                            if(_navireSelectionne!=null) {
+                                
+                            }
                         }
                     }
+                    refresh();
                 }
             }
         });
