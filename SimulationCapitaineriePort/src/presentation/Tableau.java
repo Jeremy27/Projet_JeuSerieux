@@ -53,6 +53,10 @@ public class Tableau extends JTable {
         return _modele.getNavire(this.getSelectedRow());
     }
     
+    public void supprimerNavireArrives(int temps) {
+        _modele.supprimerNaviresArrives(temps);
+    }
+    
     private void majPanelNavire() {
         if(_ligneSelectionnee != getSelectedRow()) {
             _ligneSelectionnee = getSelectedRow();
@@ -91,7 +95,7 @@ public class Tableau extends JTable {
             c.setBackground(Color.BLACK);
             c.setForeground(Color.WHITE);
         } else {
-            if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._temps)
+            if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._tempsCourant)
                 c.setBackground(new Color(235, 20, 0));
             else
                 if(ligne%2 == 0)

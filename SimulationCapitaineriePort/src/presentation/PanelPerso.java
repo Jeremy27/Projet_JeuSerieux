@@ -17,11 +17,11 @@ import javax.swing.JPanel;
  *
  * @author Jérémy
  */
-public class Panel extends JPanel {
+public class PanelPerso extends JPanel {
     
     protected JLabel _jlNomPanel;
 
-    public Panel(String nomPanel) {
+    public PanelPerso(String nomPanel) {
         setPreferredSize(new Dimension(200, this.getHeight()));
         setLayout(new BorderLayout());
         

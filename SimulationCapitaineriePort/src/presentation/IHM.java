@@ -13,6 +13,7 @@ import java.awt.geom.Point2D;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import metier.GestionJeu;
 import modele.Navire;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeMessage;
@@ -89,23 +90,6 @@ public class IHM extends JFrame {
         PanelInfoForme p3 = new PanelInfoForme("Navire", n.getDonneesFormates());
         PanelNavires p1 = new PanelNavires("Navires arrivés", titres1, p3);
         PanelNavires p5 = new PanelNavires("Navires arrivant", titres2, p3);
-        p1.ajouterNavire(n);
-        p1.ajouterNavire(n1);
-        p1.ajouterNavire(n2);
-        p1.ajouterNavire(n);
-        p1.ajouterNavire(n1);
-        p1.ajouterNavire(n4);
-        p1.ajouterNavire(n3);
-        p1.ajouterNavire(n1);
-        p1.ajouterNavire(n);
-        p5.ajouterNavire(n2);
-        p5.ajouterNavire(n3);
-        p5.ajouterNavire(n4);
-        p5.ajouterNavire(n);
-        p5.ajouterNavire(n4);
-        p5.ajouterNavire(n1);
-        p5.ajouterNavire(n2);
-        p5.ajouterNavire(n4);
         PanelInfoJeu   p4 = new PanelInfoJeu();
         
         PanelMap map = new PanelMap(p3);
@@ -126,6 +110,10 @@ public class IHM extends JFrame {
         
         add(panelGauche, BorderLayout.WEST);
         add(panelDroit, BorderLayout.EAST);
+    }
+    
+    public void lancementJeu() {
+        GestionJeu jeu;
     }
     
     public static void main(String[] args) {

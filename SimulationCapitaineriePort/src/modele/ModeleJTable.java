@@ -84,5 +84,10 @@ public class ModeleJTable extends AbstractTableModel {
         _navires.remove(rowIndex);
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
-
+    
+    public void supprimerNaviresArrives(int temps) {
+        for(Navire navire : _navires)
+            if(navire.getDateArrivee() <= temps)
+                _navires.remove(navire);
+    }
 }
