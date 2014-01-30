@@ -42,7 +42,7 @@ public class GestionJeu extends Thread {
             
             _naviresArrives.ajouterNavires(_instance.getNavires(PanelPartie._tempsCourant));
             _naviresArrivant.ajouterNavires(_instance.getNavires(PanelPartie._tempsCourant+1));
-            _naviresArrivant.supprimerNavires(PanelPartie._tempsCourant);
+//            _naviresArrivant.supprimerNavires(PanelPartie._tempsCourant);
             
             try {
                 sleep(1000);

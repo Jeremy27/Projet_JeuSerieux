@@ -23,14 +23,15 @@ public class GestionInstance {
     private Instance    _instance;
 
     public GestionInstance() {
-        _instance = new Instance();
+        _instance   = new Instance();
+        _random     = new Random();
     }
     
     public void genererAleatoirement() {
         Navire navire;
         int numNavire = 0;
         for (int i = 0; i < PanelPartie._tempsFin; i++) {
-            for (int j = 0; j < _random.nextInt(10); j++) {
+            for (int j = 0; j < _random.nextInt(5); j++) {
                 navire = getNavireAleatoire(numNavire++);
                 navire.setDateArrivee(i);
                 _instance.ajouterNavire(navire);

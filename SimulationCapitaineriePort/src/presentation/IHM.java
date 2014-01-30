@@ -25,6 +25,12 @@ import modele.outils.ParamsNavire;
  * @author Jérémy
  */
 public class IHM extends JFrame {
+    private PanelInfoForme  _infoForme;
+    private PanelInfoJeu    _infoJeu;
+    private PanelNavires    _naviresArrives;
+    private PanelNavires    _naviresArrivant;
+    private PanelPartie     _partie;
+    private PanelMap        _map;
 
     public IHM() throws HeadlessException {
         setTitle("Simulation port du Havre");
@@ -86,37 +92,38 @@ public class IHM extends JFrame {
         JPanel panelGauche  = new JPanel(new GridLayout(3, 1));
         JPanel panelDroit   = new JPanel(new GridLayout(2, 1));
         
-        PanelPartie    p2 = new PanelPartie();
-        PanelInfoForme p3 = new PanelInfoForme("Navire", n.getDonneesFormates());
-        PanelNavires p1 = new PanelNavires("Navires arrivés", titres1, p3);
-        PanelNavires p5 = new PanelNavires("Navires arrivant", titres2, p3);
-        PanelInfoJeu   p4 = new PanelInfoJeu();
+        _partie             = new PanelPartie();
+        _infoForme          = new PanelInfoForme("Navire", n.getDonneesFormates());
+        _naviresArrives     = new PanelNavires("Navires arrivés", titres1, _infoForme);
+        _naviresArrivant    = new PanelNavires("Navires arrivant", titres2, _infoForme);
+        _infoJeu            = new PanelInfoJeu();
         
-        PanelMap map = new PanelMap(p3);
-        map.setNavires(new Navire[]{n1, n2, n3, n4});
-        map.initEvents();
-        add(map, BorderLayout.CENTER);
+        _infoForme.majInformations();
+        _infoJeu.ajoutMessage("test", TypeMessage.NORMAL);
         
-        p4.ajoutMessage("Message erreur", TypeMessage.ERREUR);
+        _map = new PanelMap(_infoForme);
+        _map.setNavires(new Navire[]{n1, n2, n3, n4});
+        _map.initEvents();
+        add(_map, BorderLayout.CENTER);
         
-        p3.majInformations();
+        panelGauche.add(_naviresArrives);
+        panelGauche.add(_naviresArrivant);
+        panelGauche.add(_partie);
         
-        panelGauche.add(p1);
-        panelGauche.add(p5);
-        panelGauche.add(p2);
-        
-        panelDroit.add(p3);
-        panelDroit.add(p4);
+        panelDroit.add(_infoForme);
+        panelDroit.add(_infoJeu);
         
         add(panelGauche, BorderLayout.WEST);
         add(panelDroit, BorderLayout.EAST);
     }
     
     public void lancementJeu() {
-        GestionJeu jeu;
+        GestionJeu jeu = new GestionJeu(_naviresArrives, _naviresArrivant, _infoJeu);
+        jeu.start();
     }
     
     public static void main(String[] args) {
-        new IHM();
+        IHM ihm = new IHM();
+        ihm.lancementJeu();
     }
 }

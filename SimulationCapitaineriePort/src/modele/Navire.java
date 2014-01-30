@@ -120,7 +120,7 @@ public class Navire extends Forme {
         tabInfo.add("Temps à quai : " + _tempsPriseEnCharge);
         tabInfo.add("Marchandise : " + _typeMachandise.name());
         tabInfo.add("Type : " + _typeNavire.name());
-        tabInfo.add("Coordonnées : [" + _position.getX() + ", " + _position.getY() + ']');
+//        tabInfo.add("Coordonnées : [" + _position.getX() + ", " + _position.getY() + ']');
                 
         return tabInfo;
     }
