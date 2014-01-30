@@ -21,12 +21,12 @@ public class GestionJeu extends Thread {
     private Instance     _instance;
     private PanelNavires _naviresArrives;
     private PanelNavires _naviresArrivant;
-    private PanelInfoJeu _log;
+    private PanelInfoJeu _infoJeu;
     
-    public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu log) {
+    public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu infoJeu) {
         _naviresArrives     = naviresArrives;
         _naviresArrivant    = naviresArrivant;
-        _log                = log;
+        _infoJeu            = infoJeu;
         initialiserInstance();
     }
     
@@ -42,7 +42,7 @@ public class GestionJeu extends Thread {
             
             _naviresArrives.ajouterNavires(_instance.getNavires(PanelPartie._tempsCourant));
             _naviresArrivant.ajouterNavires(_instance.getNavires(PanelPartie._tempsCourant+1));
-//            _naviresArrivant.supprimerNavires(PanelPartie._tempsCourant);
+            _naviresArrivant.supprimerNavires(PanelPartie._tempsCourant);
             
             try {
                 sleep(1000);
