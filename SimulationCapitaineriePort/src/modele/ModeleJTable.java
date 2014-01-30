@@ -92,8 +92,7 @@ public class ModeleJTable extends AbstractTableModel {
                 aSupprimer.add(navire);
         
         while(!aSupprimer.isEmpty()) {
-            _navires.remove(aSupprimer.get(0));
-            aSupprimer.remove(0);
+            _navires.remove(aSupprimer.remove(0));
         }
     }
 }

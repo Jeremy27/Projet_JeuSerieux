@@ -58,4 +58,10 @@ public class PanelPartie extends PanelPerso {
         
         add(panelGrid, BorderLayout.CENTER);
     }
+    
+    public void actualiser() {
+        _jlTempsRestant.setText("Temps : " + _tempsCourant);
+        _jlNbRetard.setText("Retard cumulé : " + _nbRetard);
+        this.revalidate();
+    }
 }

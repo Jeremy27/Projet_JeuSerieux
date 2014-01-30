@@ -118,7 +118,7 @@ public class IHM extends JFrame {
     }
     
     public void lancementJeu() {
-        GestionJeu jeu = new GestionJeu(_naviresArrives, _naviresArrivant, _infoJeu);
+        GestionJeu jeu = new GestionJeu(_naviresArrives, _naviresArrivant, _infoJeu, _partie);
         jeu.start();
     }
     

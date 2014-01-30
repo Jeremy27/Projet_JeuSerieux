@@ -34,4 +34,8 @@ public class PanelNavires extends PanelPerso {
     public void supprimerNavires(int temps) {
         _tableau.supprimerNavireArrives(temps);
     }
+    
+    public int getNbNaviresEnRetard() {
+        return _tableau.getNbNaviresEnRetard();
+    }
 }

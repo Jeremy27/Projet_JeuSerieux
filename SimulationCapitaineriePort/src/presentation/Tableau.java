@@ -53,6 +53,14 @@ public class Tableau extends JTable {
         return _modele.getNavire(this.getSelectedRow());
     }
     
+    public int getNbNaviresEnRetard() {
+        int nbRetards = 0;
+        for(Navire navire : _modele.getNavires())
+            if(navire.getDateArrivee() < PanelPartie._tempsCourant)
+                nbRetards++;
+        return nbRetards;
+    }
+    
     public void supprimerNavireArrives(int temps) {
         _modele.supprimerNaviresArrives(temps);
     }
