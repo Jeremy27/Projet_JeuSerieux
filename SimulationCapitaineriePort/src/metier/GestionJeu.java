@@ -22,12 +22,12 @@ public class GestionJeu extends Thread {
     private Instance     _instance;
     private PanelNavires _naviresArrives;
     private PanelNavires _naviresArrivant;
-    private PanelInfoJeu _log;
+    private PanelInfoJeu _infoJeu;
     
-    public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu log) {
+    public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu infoJeu) {
         _naviresArrives     = naviresArrives;
         _naviresArrivant    = naviresArrivant;
-        _log                = log;
+        _infoJeu            = infoJeu;
         initialiserInstance();
     }
     
