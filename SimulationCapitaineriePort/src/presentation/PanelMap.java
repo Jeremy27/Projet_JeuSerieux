@@ -15,14 +15,17 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JPanel;
+import metier.DeplacementBateaux;
 import metier.MetierMap;
 import modele.Forme;
 import modele.Navire;
 import modele.Quai;
 import modele.Terminal;
 import modele.enumeration.TypeMarchandise;
+import modele.outils.PointPathFinding;
 
 public class PanelMap extends JPanel{
     private static final double ZOOMMIN = 1.0;
@@ -310,6 +313,13 @@ public class PanelMap extends JPanel{
             public void mouseClicked(MouseEvent e) {
                 Forme forme = _metier.getForme(e.getPoint());
                 if(forme!=null) {
+                    if(_navireSelectionne!=null) {
+                        System.out.println("déplacement");
+                        ArrayList<PointPathFinding> resultat = DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(0.1099269, 49.458458), _metier.getCoordonneesDessin(), _coefX, _coefY);
+                        System.out.println("fin déplacement");
+                        System.out.println(resultat);
+                    }
+                    _navireSelectionne = null;
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
                         _navireSelectionne = n;
@@ -328,10 +338,13 @@ public class PanelMap extends JPanel{
                             _panelInfoForme.setInformations(t.getDonneesFormates());
                             _panelInfoForme.majInformations();
                             if(_navireSelectionne!=null) {
-                                
+                                if(t.prendEnCharge(_navireSelectionne.getTypeMachandise())) {
+                                    DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(0.1099269, 49.458458), _metier.getCoordonneesDessin(), _coefX, _coefY);
+                                }
                             }
                         }
                     }
+                    
                     refresh();
                 }
             }

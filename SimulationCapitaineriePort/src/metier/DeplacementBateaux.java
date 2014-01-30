@@ -9,8 +9,15 @@ import modele.enumeration.TypeShape;
 import modele.outils.PointPathFinding;
 
 public class DeplacementBateaux {
-    public static ArrayList<PointPathFinding> deplacer(Navire bateau, Point2D destination, ArrayList<Forme> formes) {
-        PointPathFinding pointEnCours = new PointPathFinding(bateau.getPosition(), 0);
+    public static ArrayList<PointPathFinding> deplacer(Navire bateau, Point2D destination, ArrayList<Forme> formes, double coefX, double coefY) {
+        double x = bateau.getPosition().getX();
+        double y = bateau.getPosition().getY();
+        System.out.println("x " + x);
+        System.out.println("x " + y);
+        System.out.println("x " + destination.getX());
+        System.out.println("x " + destination.getY());
+        //PointPathFinding pointEnCours = new PointPathFinding(bateau.getPosition(), 0);
+        PointPathFinding pointEnCours = new PointPathFinding(new Point2D.Double(x, y) {}, 0);
         ArrayList<PointPathFinding> pile = new ArrayList<>();
         ArrayList<PointPathFinding> pointsVisites = new ArrayList<>();
         pile.add(pointEnCours);
