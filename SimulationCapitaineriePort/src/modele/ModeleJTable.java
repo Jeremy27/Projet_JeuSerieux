@@ -86,8 +86,14 @@ public class ModeleJTable extends AbstractTableModel {
     }
     
     public void supprimerNaviresArrives(int temps) {
+        ArrayList<Navire> aSupprimer = new ArrayList<>();
         for(Navire navire : _navires)
             if(navire.getDateArrivee() <= temps)
-                _navires.remove(navire);
+                aSupprimer.add(navire);
+        
+        while(!aSupprimer.isEmpty()) {
+            _navires.remove(aSupprimer.get(0));
+            aSupprimer.remove(0);
+        }
     }
 }
