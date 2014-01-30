@@ -60,10 +60,7 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     public boolean estVoisin(PointPathFinding p) {
         double diffX = _point.getX() - p._point.getX(); //différence des axes X
         double diffY = _point.getY() - p._point.getY(); //différence des axes Y
-        if(Math.abs(diffY)+Math.abs(diffX)==1.0) {
-            return true;
-        }
-        return false;
+        return Math.abs(diffY)+Math.abs(diffX)==1.0;
     }
     
     @Override
@@ -81,6 +78,18 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
                 return -1;
             }
         }
-            
+    }
+    
+    public boolean egal(Point2D p) {
+        //System.out.println("x: " + _point.getX() + " y: " + _point.getY() + " x: " + p.getX() + " y: " + p.getY());
+        double x = Math.abs(p.getX()-_point.getX());
+        double y = Math.abs(p.getY()-_point.getY());
+        double distance = p.distance(_point);
+        //System.out.println("distance: " + distance + " x: " + x + " y: " + y);
+        if(x<=0.0001 && y <=0.0001) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

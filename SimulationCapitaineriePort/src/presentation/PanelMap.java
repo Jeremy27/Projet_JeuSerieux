@@ -71,6 +71,8 @@ public class PanelMap extends JPanel{
     private String _coordonneesMouseOver="";
     private Navire _navireSelectionne=null;
     
+    ArrayList<PointPathFinding> resultat;
+    
     public PanelMap(PanelInfoForme panelInfo) {
         _metier = new MetierMap(this, panelInfo);
         _metier.construireFormes();
@@ -207,6 +209,18 @@ public class PanelMap extends JPanel{
         g2.setFont(new Font("SansSerif", Font.BOLD, 10));
         g2.drawString(_infosMouseOver, 50, (int)(h-30));
         g2.drawString(_coordonneesMouseOver, (int)(w-300), (int)(h-10));
+        if(resultat!=null) {
+            for(PointPathFinding p:resultat) {
+                //_coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
+                System.out.println("======================");
+                System.out.println(p.getPoint().getX());
+                System.out.println(h-p.getPoint().getY());
+                g2.drawRect((int)(p.getPoint().getX()/_coefX), (int)(p.getPoint().getY()/_coefY), 5, 5);
+                System.out.println(p.getPoint().getX()/_coefX);
+                System.out.println(h-p.getPoint().getY()/_coefY);
+            }
+        }
+            
     }
     
     public void setNavires(Navire[] navires) {
@@ -315,7 +329,7 @@ public class PanelMap extends JPanel{
                 if(forme!=null) {
                     if(_navireSelectionne!=null) {
                         System.out.println("déplacement");
-                        ArrayList<PointPathFinding> resultat = DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(0.1099269, 49.458458), _metier.getCoordonneesDessin(), _coefX, _coefY);
+                        resultat = DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(0.1099269, 49.458458), _metier.getCoordonneesDessin(), _coefX, _coefY);
                         System.out.println("fin déplacement");
                         System.out.println(resultat);
                     }
@@ -339,7 +353,7 @@ public class PanelMap extends JPanel{
                             _panelInfoForme.majInformations();
                             if(_navireSelectionne!=null) {
                                 if(t.prendEnCharge(_navireSelectionne.getTypeMachandise())) {
-                                    DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(0.1099269, 49.458458), _metier.getCoordonneesDessin(), _coefX, _coefY);
+                                    DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(0.109, 49.458), _metier.getCoordonneesDessin(), _coefX, _coefY);
                                 }
                             }
                         }

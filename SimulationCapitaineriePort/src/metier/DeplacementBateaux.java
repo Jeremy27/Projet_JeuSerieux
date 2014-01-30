@@ -21,11 +21,12 @@ public class DeplacementBateaux {
         ArrayList<PointPathFinding> pile = new ArrayList<>();
         ArrayList<PointPathFinding> pointsVisites = new ArrayList<>();
         pile.add(pointEnCours);
-        
+        System.out.println("on commence");
         while(!pile.isEmpty()) {
+            //System.out.println(pile.size());
             pointEnCours = pile.get(0);
             pointsVisites.add(pointEnCours);
-            if(pointEnCours.getPoint().equals(destination)) { //si on a trouvé
+            if(pointEnCours.egal(destination)) { //si on a trouvé
                 pile.clear();
                 break;
             }
@@ -37,7 +38,7 @@ public class DeplacementBateaux {
             
             pile.remove(pointEnCours);
         }
-        
+        System.out.println("ok");
         if(pointEnCours.getPoint().equals(destination)) {
             //on a trouvé
             ArrayList<PointPathFinding> chemin = new ArrayList<>();
@@ -48,7 +49,7 @@ public class DeplacementBateaux {
             }
             return chemin;
         }
-        return null;
+        return pointsVisites;
     }
     
     public static PointPathFinding trierVoisins(PointPathFinding pointEnCours, ArrayList<PointPathFinding> pointsVisites) {
@@ -67,36 +68,48 @@ public class DeplacementBateaux {
         double x = pointEnCours.getPoint().getX();
         double y = pointEnCours.getPoint().getY();
         int cout = pointEnCours.getCout();
-
+        
         PointPathFinding gauche, droit, bas, haut;
-        gauche = new PointPathFinding(new Point2D.Double(x-1, y), cout+1);
-        droit = new PointPathFinding(new Point2D.Double(x+1, y), cout+1);
-        bas = new PointPathFinding(new Point2D.Double(x, y-1), cout+1);
-        haut = new PointPathFinding(new Point2D.Double(x, y+1), cout+1);
+        gauche = new PointPathFinding(new Point2D.Double(x-0.001, y), cout+1);
+        droit = new PointPathFinding(new Point2D.Double(x+0.001, y), cout+1);
+        bas = new PointPathFinding(new Point2D.Double(x, y-0.001), cout+1);
+        haut = new PointPathFinding(new Point2D.Double(x, y+0.001), cout+1);
 
         if(deplacementPossible(gauche.getPoint(), formes)) {
-            gauche.setDistance(gauche.getPoint().distance(destination));
-            if(!arrayContient(visites, gauche)) {
-                voisinsPriorises.add(gauche);
+            if(gauche.getPoint().getX()>=0.09 && gauche.getPoint().getX()<=0.1900875 &&
+                gauche.getPoint().getY()>=49.448 && gauche.getPoint().getY()<=49.488) {
+                gauche.setDistance(gauche.getPoint().distance(destination));
+                if(!arrayContient(visites, gauche)) {
+                    voisinsPriorises.add(gauche);
+                }
             }
         }
         if(deplacementPossible(droit.getPoint(), formes)) {
-            droit.setDistance(droit.getPoint().distance(destination));
-            if(!arrayContient(visites, droit)) {
-                voisinsPriorises.add(droit);
+            if(droit.getPoint().getX()>=0.09 && droit.getPoint().getX()<=0.1900875 &&
+                droit.getPoint().getY()>=49.448 && droit.getPoint().getY()<=49.488) {
+                droit.setDistance(droit.getPoint().distance(destination));
+                if(!arrayContient(visites, droit)) {
+                    voisinsPriorises.add(droit);
+                }
             }
         }
         if(deplacementPossible(bas.getPoint(), formes)) {
-            bas.setDistance(bas.getPoint().distance(destination));
-            if(!arrayContient(visites, bas)) {
-                voisinsPriorises.add(bas);
+            if(bas.getPoint().getX()>=0.09 && bas.getPoint().getX()<=0.1900875 &&
+                bas.getPoint().getY()>=49.448 && bas.getPoint().getY()<=49.488) {
+                bas.setDistance(bas.getPoint().distance(destination));
+                if(!arrayContient(visites, bas)) {
+                    voisinsPriorises.add(bas);
+                }
             }
         }
         if(deplacementPossible(haut.getPoint(), formes)) {
-            haut.setDistance(haut.getPoint().distance(destination));
-            if(!arrayContient(visites, haut)) {
-                voisinsPriorises.add(haut);
-            }
+            if(haut.getPoint().getX()>=0.09 && haut.getPoint().getX()<=0.1900875 &&
+                haut.getPoint().getY()>=49.448 && haut.getPoint().getY()<=49.488) {
+                haut.setDistance(haut.getPoint().distance(destination));
+                if(!arrayContient(visites, haut)) {
+                    voisinsPriorises.add(haut);
+                }
+            } 
         }
         return voisinsPriorises;
     }
