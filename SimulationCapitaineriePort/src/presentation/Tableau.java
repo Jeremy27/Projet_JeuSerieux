@@ -101,18 +101,18 @@ public class Tableau extends JTable {
         
         if(getSelectedRow() == ligne) {
             c.setBackground(new Color(4, 47, 104));
-            c.setForeground(Color.lightGray);
+            c.setForeground(Color.white);
         } else {
             if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._tempsCourant) {
                 c.setBackground(new Color(235, 20, 0));
-                c.setForeground(Color.lightGray);
+                c.setForeground(Color.white);
             }
             else
                 if(ligne%2 == 0)
                     c.setBackground(new Color(78, 95, 150));
                 else
-                    c.setBackground(new Color(78, 95, 130));
-            c.setForeground(Color.lightGray);
+                    c.setBackground(new Color(100, 120, 150));
+            c.setForeground(Color.white);
         }
         return c;
     }
@@ -128,7 +128,7 @@ public class Tableau extends JTable {
             {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 c.setBackground(new Color(4, 47, 104));
-                c.setForeground(Color.lightGray);
+                c.setForeground(Color.white);
                 c.setFont(new Font(this.getFont().getName(), Font.BOLD, 13));
                 return c;
             }

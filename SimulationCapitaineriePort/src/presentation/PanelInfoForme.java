@@ -52,8 +52,8 @@ public class PanelInfoForme extends PanelPerso {
             if(pair = !pair)
                 label.setBackground(new Color(78, 95, 150));
             else
-                label.setBackground(new Color(78, 95, 130));
-            label.setForeground(Color.lightGray);
+                label.setBackground(new Color(100, 120, 150));
+            label.setForeground(Color.white);
             panelGrid.add(label);
         }
         add(panelGrid, BorderLayout.CENTER);
