@@ -24,7 +24,7 @@ public class PanelInfoJeu extends PanelPerso {
     private void initialisationLabelLog() {
         _jlInformations = new JLabel(_log);
         JScrollPane jsp = new JScrollPane(_jlInformations);
-        _jlInformations.setBackground(Color.gray);
+        _jlInformations.setBackground(new Color(78, 95, 150));
         _jlInformations.setOpaque(true);
         
         add(jsp, BorderLayout.CENTER);
@@ -46,6 +46,8 @@ public class PanelInfoJeu extends PanelPerso {
             classeCSS = "orange";
         else if(typeMessage == TypeMessage.AVERTISSEMENT)
             classeCSS = "jaune";
+        else if(typeMessage == TypeMessage.IMPORTANT)
+            classeCSS = "important";
         
         return classeCSS;
     }
@@ -58,6 +60,7 @@ public class PanelInfoJeu extends PanelPerso {
         debutHTML += ".gris    {color: #D3D3D3;}";
         debutHTML += ".orange  {color: orange;}";
         debutHTML += ".jaune   {color: yellow;}";
+        debutHTML += ".important   {color: #D3D3D3; text-decoration: underline;}";
         debutHTML += "</style></head><body>";
         return debutHTML;
     }

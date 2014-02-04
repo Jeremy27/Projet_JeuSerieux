@@ -31,7 +31,7 @@ public class PanelPerso extends JPanel {
     private void initialisationLabelNomPanel(String nomPanel) {
         _jlNomPanel = new JLabel(nomPanel, JLabel.CENTER);
         _jlNomPanel.setOpaque(true);
-        _jlNomPanel.setBackground(Color.black);
+        _jlNomPanel.setBackground(new Color(4, 47, 104));
         _jlNomPanel.setForeground(Color.white);
         _jlNomPanel.setPreferredSize(new Dimension(this.getWidth(), 50));
         _jlNomPanel.setFont(new Font(this.getFont().getName(), Font.BOLD, 18));

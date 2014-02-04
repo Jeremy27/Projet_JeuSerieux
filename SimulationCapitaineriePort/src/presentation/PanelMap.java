@@ -345,11 +345,13 @@ public class PanelMap extends JPanel{
                             System.out.println("QUAI");
                             Quai q = (Quai) forme;
                             _panelInfoForme.setInformations(q.getDonneesFormates());
+                            _panelInfoForme.setNomPanel("Quai");
                             _panelInfoForme.majInformations();
                         } else if(forme instanceof Terminal) {
                             System.out.println("TERMINAL");
                             Terminal t = (Terminal) forme;
                             _panelInfoForme.setInformations(t.getDonneesFormates());
+                            _panelInfoForme.setNomPanel("Terminal");
                             _panelInfoForme.majInformations();
                             if(_navireSelectionne!=null) {
                                 if(t.prendEnCharge(_navireSelectionne.getTypeMachandise())) {

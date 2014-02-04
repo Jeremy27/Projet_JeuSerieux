@@ -50,9 +50,10 @@ public class PanelInfoForme extends PanelPerso {
             label = new JLabel(info);
             label.setOpaque(true);
             if(pair = !pair)
-                label.setBackground(Color.lightGray);
+                label.setBackground(new Color(78, 95, 150));
             else
-                label.setBackground(Color.gray);
+                label.setBackground(new Color(78, 95, 130));
+            label.setForeground(Color.lightGray);
             panelGrid.add(label);
         }
         add(panelGrid, BorderLayout.CENTER);

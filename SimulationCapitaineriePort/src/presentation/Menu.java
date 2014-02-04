@@ -19,6 +19,7 @@ public class Menu extends JMenuBar {
     private JMenuItem _fichierPreference;
     private JMenuItem _fichierFermer;
     
+    private JMenuItem _partieNouvelle;
     private JMenuItem _partieAide;
     private JMenuItem _partieResoudre;
     private JMenuItem _partieScores;
@@ -45,6 +46,7 @@ public class Menu extends JMenuBar {
         _fichierPreference  = new JMenuItem("Préférences");
         _fichierFermer      = new JMenuItem("Fermer");
         
+        _partieNouvelle = new JMenuItem("Nouvelle...");
         _partieAide     = new JMenuItem("Aide");
         _partieResoudre = new JMenuItem("Résoudre");
         _partieScores   = new JMenuItem("Scores");
@@ -58,6 +60,7 @@ public class Menu extends JMenuBar {
         _menuFichier.add(_fichierPreference);
         _menuFichier.add(_fichierFermer);
         
+        _menuPartie.add(_partieNouvelle);
         _menuPartie.add(_partieAide);
         _menuPartie.add(_partieResoudre);
         _menuPartie.add(_partieScores);

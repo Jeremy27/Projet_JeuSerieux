@@ -14,5 +14,6 @@ public enum TypeMessage {
     RETARD,
     NORMAL,
     ERREUR,
-    AVERTISSEMENT
+    AVERTISSEMENT,
+    IMPORTANT
 }
