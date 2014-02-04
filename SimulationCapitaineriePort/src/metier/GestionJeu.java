@@ -9,10 +9,10 @@ package metier;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 import modele.Instance;
 import modele.Navire;
 import modele.enumeration.TypeMessage;
+import modele.enumeration.TypeNavire;
 import presentation.PanelInfoJeu;
 import presentation.PanelNavires;
 import presentation.PanelPartie;
@@ -45,7 +45,6 @@ public class GestionJeu extends Thread {
     @Override
     public void run() {
         ArrayList<Navire> naviresArrives;
-        ArrayList<Navire> naviresEnRetard;
         while(PanelPartie._tempsCourant <= PanelPartie._tempsFin) {
             
             // Panel navires arrivés
@@ -54,12 +53,16 @@ public class GestionJeu extends Thread {
             
             if(!naviresArrives.isEmpty()) {
                 for(Navire navire : naviresArrives)
-                    _infoJeu.ajoutMessage(navire.getNom() + "  " + navire.getType(), TypeMessage.NORMAL);
-                _infoJeu.ajoutMessage("Navires arrivés le "+PanelPartie._tempsCourant+" : ", TypeMessage.AVERTISSEMENT);
+                    if(navire.getType() == TypeNavire.FERRY)
+                        _infoJeu.ajoutMessage(navire.getNom() + "  " + navire.getType(), TypeMessage.AVERTISSEMENT);
+                    else
+                        _infoJeu.ajoutMessage(navire.getNom() + "  " + navire.getType(), TypeMessage.NORMAL);
+                _infoJeu.ajoutMessage("Navires arrivés le "+PanelPartie._tempsCourant+" : ", TypeMessage.IMPORTANT);
             }
             
             // Panel navires arrivant
             _naviresArrivant.ajouterNavires(_instance.getNavires(PanelPartie._tempsCourant+1));
+            _naviresArrivant.ajouterNavires(_instance.getNavires(PanelPartie._tempsCourant+2));
             _naviresArrivant.supprimerNavires(PanelPartie._tempsCourant);
             
             // Calcul des retards

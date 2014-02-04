@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.geom.Point2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -120,6 +122,11 @@ public class IHM extends JFrame {
     public void lancementJeu() {
         GestionJeu jeu = new GestionJeu(_naviresArrives, _naviresArrivant, _infoJeu, _partie);
         jeu.start();
+        try {
+            jeu.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(IHM.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static void main(String[] args) {

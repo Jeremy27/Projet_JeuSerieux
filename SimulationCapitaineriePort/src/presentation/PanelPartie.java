@@ -32,21 +32,20 @@ public class PanelPartie extends PanelPerso {
     
     private void initialisationComposants() {
         JPanel panelGrid = new JPanel(new GridLayout(3, 1));
-        panelGrid.setBackground(Color.gray);
         
         JPanel panelFlow1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel panelFlow2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel panelFlow3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelFlow1.setBackground(Color.gray);
-        panelFlow2.setBackground(Color.gray);
-        panelFlow3.setBackground(Color.gray);
+        panelFlow1.setBackground(new Color(78, 95, 150));
+        panelFlow2.setBackground(new Color(78, 95, 150));
+        panelFlow3.setBackground(new Color(78, 95, 150));
         
         _jlTempsRestant = new JLabel("Temps : " + _tempsCourant);
         _jlNbRetard     = new JLabel("Retard cumulé : " + _nbRetard);
         _jbValider      = new JButton("Valider");
         
-        _jlNbRetard.setBackground(Color.gray);
-        _jlTempsRestant.setBackground(Color.gray);
+        _jlNbRetard.setForeground(Color.lightGray);
+        _jlTempsRestant.setForeground(Color.lightGray);
         
         panelFlow1.add(_jlTempsRestant);
         panelFlow2.add(_jlNbRetard);

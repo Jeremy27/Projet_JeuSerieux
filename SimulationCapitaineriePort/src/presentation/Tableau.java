@@ -100,17 +100,19 @@ public class Tableau extends JTable {
         Component c = super.prepareRenderer(renderer, ligne, colonne);
         
         if(getSelectedRow() == ligne) {
-            c.setBackground(Color.BLACK);
-            c.setForeground(Color.WHITE);
+            c.setBackground(new Color(4, 47, 104));
+            c.setForeground(Color.lightGray);
         } else {
-            if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._tempsCourant)
+            if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._tempsCourant) {
                 c.setBackground(new Color(235, 20, 0));
+                c.setForeground(Color.lightGray);
+            }
             else
                 if(ligne%2 == 0)
-                    c.setBackground(Color.GRAY);
+                    c.setBackground(new Color(78, 95, 150));
                 else
-                    c.setBackground(Color.LIGHT_GRAY);
-            c.setForeground(Color.BLACK);
+                    c.setBackground(new Color(78, 95, 130));
+            c.setForeground(Color.lightGray);
         }
         return c;
     }
@@ -125,8 +127,8 @@ public class Tableau extends JTable {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
             {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                c.setBackground(Color.BLACK);
-                c.setForeground(Color.LIGHT_GRAY);
+                c.setBackground(new Color(4, 47, 104));
+                c.setForeground(Color.lightGray);
                 c.setFont(new Font(this.getFont().getName(), Font.BOLD, 13));
                 return c;
             }
