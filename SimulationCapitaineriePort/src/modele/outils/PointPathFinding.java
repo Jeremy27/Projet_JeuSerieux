@@ -67,15 +67,15 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     public int compareTo(PointPathFinding p) {
         if(_cout!=p._cout) {
             if(this._distance>p._distance) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         } else {
             if(this._cout>p._cout) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         }
     }
