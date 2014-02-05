@@ -1,10 +1,11 @@
 package modele;
 
-import modele.enumeration.TypeMarchandise;
-import modele.enumeration.TypeNavire;
 import java.awt.Point;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import modele.enumeration.TypeMarchandise;
+import modele.enumeration.TypeNavire;
 import modele.enumeration.TypeShape;
 import modele.outils.ParamsNavire;
 
@@ -37,6 +38,7 @@ public class Navire extends Forme {
     }
     
     public void constructionNavire() {
+        _coordonnees = new ArrayList<>();
         double moitieLongueur = _longueur * 0.50;
         double moitielargeur = getLargeur() * 0.50;
         double x = _position.getX();
@@ -56,6 +58,30 @@ public class Navire extends Forme {
         _coordonnees.add(new Point2D.Double(x+moitieLongueur-longueurTete, bas));
         //arrière droit
         _coordonnees.add(new Point2D.Double(x-moitieLongueur, bas));
+        makePathOriginale();
+    }
+    
+    public Path2D boundingsPosition(Point2D p) {
+        double moitieLongueur = _longueur * 0.50;
+        double moitielargeur = getLargeur() * 0.50;
+        double x = p.getX();
+        double y = p.getY();
+        double longueurTete = _longueur * 0.20;
+        
+        double haut = y-moitielargeur;
+        double bas = y+moitielargeur;
+        Path2D path = new Path2D.Double();
+        //point arrière gauche
+        path.moveTo(x-moitieLongueur, haut);
+        //avant gauche
+        path.lineTo(x+moitieLongueur-longueurTete, haut);
+        //tête
+        path.lineTo(x+moitieLongueur, y);
+        //avant droit
+        path.lineTo(x+moitieLongueur-longueurTete, bas);
+        //arrière droit
+        path.lineTo(x-moitieLongueur, bas);
+        return path;
         
     }
     
@@ -99,7 +125,7 @@ public class Navire extends Forme {
         return _position;
     }
 
-    public void setPosition(Point _position) {
+    public void setPosition(Point2D _position) {
         this._position = _position;
     }
 

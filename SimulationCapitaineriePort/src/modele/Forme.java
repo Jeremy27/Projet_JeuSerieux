@@ -15,6 +15,7 @@ public class Forme {
     protected String _nom;
     protected ArrayList<Point2D> _coordonnees;
     protected Path2D _path;
+    private Path2D _pathOriginal;
     protected boolean _fill = false;
     protected Color _couleur = Color.GRAY;
     protected long _id;
@@ -33,11 +34,13 @@ public class Forme {
     }
     
     public Forme(String nom) {
+        _pathOriginal = new Path2D.Double();
         _nom = nom;
         _coordonnees = new ArrayList<>();
     }
     
     public Forme(String nom, boolean fill, Color couleur, long id, TypeShape typeForme) {
+        _pathOriginal = new Path2D.Double();
         _coordonnees = new ArrayList<>();
         _nom = nom;
         _fill = fill;
@@ -148,11 +151,30 @@ public class Forme {
     public void ajoutCoordonnee(Point2D p) {
         _coordonnees.add(p);
     }
+    
+    public void makePathOriginale() {
+        boolean premier = true;
+        for(Point2D p:_coordonnees) {
+            if(premier) {
+                getPathOriginal().moveTo(p.getX(), p.getY());
+                premier = false;
+            } else {
+                getPathOriginal().lineTo(p.getX(), p.getY());
+            }
+        }
+    }
 
     /**
      * @return the _typeForme
      */
     public TypeShape getTypeForme() {
         return _typeForme;
+    }
+
+    /**
+     * @return the _pathOriginal
+     */
+    public Path2D getPathOriginal() {
+        return _pathOriginal;
     }
 }

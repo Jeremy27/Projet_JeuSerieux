@@ -7,6 +7,8 @@
 package modele.outils;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import metier.DeplacementBateaux;
 
 /**
  *
@@ -16,9 +18,11 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     private Point2D _point;
     private int _cout;
     private double _distance;
+    private ArrayList<PointPathFinding> _voisins;
     public PointPathFinding(Point2D p, int cout) {
         _point = p;
         _cout = cout;
+        _voisins = new ArrayList<>();
     }
 
     public void setDistance(double _distance) {
@@ -57,15 +61,24 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
         this._cout = _cout;
     }
     
-    public boolean estVoisin(PointPathFinding p) {
-        double diffX = _point.getX() - p._point.getX(); //différence des axes X
-        double diffY = _point.getY() - p._point.getY(); //différence des axes Y
-        return Math.abs(diffY)+Math.abs(diffX)==1.0;
+    public void ajoutVoisin(PointPathFinding p) {
+        _voisins.add(p);
     }
+    
+    public ArrayList<PointPathFinding> getVoisins() {
+        return _voisins;
+    }
+//    
+//    public boolean estVoisin(PointPathFinding p) {
+//        double diffX = _point.getX() - p._point.getX(); //différence des axes X
+//        double diffY = _point.getY() - p._point.getY(); //différence des axes Y
+//        System.out.println(Math.round((Math.abs(diffY)+Math.abs(diffX))*10000)/10000);
+//        return Math.round((Math.abs(diffY)+Math.abs(diffX))*10000)/10000.0==DeplacementBateaux.PASVOISIN;
+//    }
     
     @Override
     public int compareTo(PointPathFinding p) {
-        if(_cout!=p._cout) {
+        if(_cout==p._cout) {
             if(this._distance>p._distance) {
                 return -1;
             } else {
@@ -86,6 +99,6 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
         double y = Math.abs(p.getY()-_point.getY());
         double distance = p.distance(_point);
         //System.out.println("distance: " + distance + " x: " + x + " y: " + y);
-        return x<=0.0001 && y <=0.0001;
+        return x<=DeplacementBateaux.PASVOISIN && y <=DeplacementBateaux.PASVOISIN;
     }
 }
