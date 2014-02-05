@@ -212,12 +212,12 @@ public class PanelMap extends JPanel{
         if(resultat!=null) {
             for(PointPathFinding p:resultat) {
                 //_coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
-                System.out.println("======================");
-                System.out.println(p.getPoint().getX());
-                System.out.println(h-p.getPoint().getY());
+//                System.out.println("======================");
+//                System.out.println(p.getPoint().getX());
+//                System.out.println(h-p.getPoint().getY());
                 g2.drawRect((int)(p.getPoint().getX()/_coefX), (int)(p.getPoint().getY()/_coefY), 5, 5);
-                System.out.println(p.getPoint().getX()/_coefX);
-                System.out.println(h-p.getPoint().getY()/_coefY);
+//                System.out.println(p.getPoint().getX()/_coefX);
+//                System.out.println(h-p.getPoint().getY()/_coefY);
             }
         }
             

@@ -86,10 +86,6 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
         double y = Math.abs(p.getY()-_point.getY());
         double distance = p.distance(_point);
         //System.out.println("distance: " + distance + " x: " + x + " y: " + y);
-        if(x<=0.0001 && y <=0.0001) {
-            return true;
-        } else {
-            return false;
-        }
+        return x<=0.0001 && y <=0.0001;
     }
 }
