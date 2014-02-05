@@ -60,7 +60,7 @@ public class PanelInfoJeu extends PanelPerso {
         debutHTML += ".gris    {color: #D3D3D3;}";
         debutHTML += ".orange  {color: orange;}";
         debutHTML += ".jaune   {color: yellow;}";
-        debutHTML += ".important   {color: #D3D3D3; text-decoration: underline;}";
+        debutHTML += ".important   {color: white;}";
         debutHTML += "</style></head><body>";
         return debutHTML;
     }

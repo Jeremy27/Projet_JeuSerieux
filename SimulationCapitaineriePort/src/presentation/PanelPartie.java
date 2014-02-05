@@ -44,8 +44,8 @@ public class PanelPartie extends PanelPerso {
         _jlNbRetard     = new JLabel("Retard cumulé : " + _nbRetard);
         _jbValider      = new JButton("Valider");
         
-        _jlNbRetard.setForeground(Color.lightGray);
-        _jlTempsRestant.setForeground(Color.lightGray);
+        _jlNbRetard.setForeground(Color.white);
+        _jlTempsRestant.setForeground(Color.white);
         
         panelFlow1.add(_jlTempsRestant);
         panelFlow2.add(_jlNbRetard);
