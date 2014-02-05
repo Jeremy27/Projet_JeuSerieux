@@ -74,22 +74,22 @@ public class IHM extends JFrame {
         Navire n = new Navire(params);
         params.setDateArrivee(1);
         params.setNom("Navire 2");
-        Navire n1 = new Navire(params);
-        params.setDateArrivee(5);
-        params.setNom("Navire 3");
-        Navire n2 = new Navire(params);
-        params.setDateArrivee(15);
-        params.setNom("Navire 4");
-        Navire n3 = new Navire(params);
-        params.setDateArrivee(7);
-        params.setNom("Navire 5");
-        Navire n4 = new Navire(params);
+//        Navire n1 = new Navire(params);
+//        params.setDateArrivee(5);
+//        params.setNom("Navire 3");
+//        Navire n2 = new Navire(params);
+//        params.setDateArrivee(15);
+//        params.setNom("Navire 4");
+//        Navire n3 = new Navire(params);
+//        params.setDateArrivee(7);
+//        params.setNom("Navire 5");
+//        Navire n4 = new Navire(params);
         
         n.constructionNavire();
-        n1.constructionNavire();
-        n2.constructionNavire();
-        n3.constructionNavire();
-        n4.constructionNavire();
+//        n1.constructionNavire();
+//        n2.constructionNavire();
+//        n3.constructionNavire();
+//        n4.constructionNavire();
         
         JPanel panelGauche  = new JPanel(new GridLayout(3, 1));
         JPanel panelDroit   = new JPanel(new GridLayout(2, 1));
@@ -104,7 +104,7 @@ public class IHM extends JFrame {
         _infoJeu.ajoutMessage("test", TypeMessage.NORMAL);
         
         _map = new PanelMap(_infoForme);
-        _map.setNavires(new Navire[]{n1, n2, n3, n4});
+        _map.setNavires(new Navire[]{n/*1, n2, n3, n4*/});
         _map.initEvents();
         add(_map, BorderLayout.CENTER);
         

@@ -101,9 +101,23 @@ public class MetierMap {
                 double y = Double.parseDouble(node.get("y").toString());
                 forme.ajoutCoordonnee(new Point2D.Double(x, y));
             }
+            forme.makePathOriginale();
             _coordonneesDessin.add(forme);
         }
         
+//        Forme forme = new Forme("CONNARD", true, Color.BLUE, 564641653, TypeShape.BUILDING);
+//        forme.ajoutCoordonnee(new Point2D.Double(0.10279, 49.481344));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.102454, 49.47971));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.106643, 49.47781));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.107549, 49.480325));
+//        forme.makePathOriginale();
+//        _coordonneesDessin.add(forme);
+        
+//        for(Forme f:_coordonneesDessin) {
+//            if(forme.getPathOriginal().intersects(f.getPathOriginal().getBounds2D())) {
+//                System.out.println(f.getNom() + " " + f.getId());
+//            }
+//        }
     }
     
     public void ajoutForme(Forme f) {
