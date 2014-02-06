@@ -1,5 +1,7 @@
 package presentation;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -68,5 +70,15 @@ public class Menu extends JMenuBar {
         _menuAide.add(_aideDidacticiel);
         _menuAide.add(_aideDocumentation);
         _menuAide.add(_aideAPropos);
+    }
+    
+    private void evenementsPartie() {
+        _partieNouvelle.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                
+            }
+        });
     }
 }

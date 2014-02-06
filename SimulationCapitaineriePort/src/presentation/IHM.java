@@ -131,7 +131,7 @@ public class IHM extends JFrame {
     
     public static void main(String[] args) {
         IHM ihm = new IHM();
-        NouvellePartie partie = new NouvellePartie();
-        //ihm.lancementJeu();
+//        NouvellePartie partie = new NouvellePartie();
+        ihm.lancementJeu();
     }
 }
