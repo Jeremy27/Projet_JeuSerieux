@@ -13,7 +13,7 @@ import modele.outils.PointPathFinding;
 import presentation.PanelMap;
 
 public class DeplacementBateaux{
-    public static double PASVOISIN = 0.0005;
+    public static double PASVOISIN = 0.001;
     public static ArrayList<PointPathFinding> deplacer(Navire bateau, Point2D destination, ArrayList<Forme> formes, double coefX, double coefY, PanelMap map) {
         double x = bateau.getPosition().getX();
         double y = bateau.getPosition().getY();
@@ -38,12 +38,17 @@ public class DeplacementBateaux{
                 break;
             }
             
-            TreeSet<PointPathFinding> voisinsPriorises = trierVoisins(pointEnCours, destination, formes, pointsVisites, bateau);
+            TreeSet<PointPathFinding> voisinsPriorises = trierVoisins(pointEnCours, destination, formes, bateau);
             while(!voisinsPriorises.isEmpty()) {
                 PointPathFinding voisin = voisinsPriorises.pollFirst();
+                if(voisin.getCout()>pointEnCours.getCout()+1) {
+                    voisin.setCout(pointEnCours.getCout()+1);
+                }
                 voisin.ajoutVoisin(pointEnCours);
                 pointEnCours.ajoutVoisin(voisin);
-                pile.add(0, voisin);
+                if(!arrayContient(pointsVisites, voisin)) {
+                    pile.add(0, voisin);
+                }
             }
             
             
@@ -113,7 +118,7 @@ public class DeplacementBateaux{
         return null;
     }
     
-    public static TreeSet<PointPathFinding> trierVoisins(PointPathFinding pointEnCours, Point2D destination, ArrayList<Forme> formes, ArrayList<PointPathFinding> visites, Navire bateau) {
+    public static TreeSet<PointPathFinding> trierVoisins(PointPathFinding pointEnCours, Point2D destination, ArrayList<Forme> formes, Navire bateau) {
         TreeSet<PointPathFinding> voisinsPriorises = new TreeSet<>();
         double x = pointEnCours.getPoint().getX();
         double y = pointEnCours.getPoint().getY();
@@ -129,27 +134,27 @@ public class DeplacementBateaux{
             if(gauche.getPoint().getX()>=0.09 && gauche.getPoint().getX()<=0.1900875 &&
                 gauche.getPoint().getY()>=49.448 && gauche.getPoint().getY()<=49.488) {
                 gauche.setDistance(gauche.getPoint().distance(destination));
-                if(!arrayContient(visites, gauche)) {
+                //if(!arrayContient(visites, gauche)) {
                     voisinsPriorises.add(gauche);
-                }
+                //}
             }
         }
         if(deplacementPossible(bateau.boundingsPosition(droit.getPoint()), formes, bateau)) {
             if(droit.getPoint().getX()>=0.09 && droit.getPoint().getX()<=0.1900875 &&
                 droit.getPoint().getY()>=49.448 && droit.getPoint().getY()<=49.488) {
                 droit.setDistance(droit.getPoint().distance(destination));
-                if(!arrayContient(visites, droit)) {
+                //if(!arrayContient(visites, droit)) {
                     voisinsPriorises.add(droit);
-                }
+                //}
             }
         }
         if(deplacementPossible(bateau.boundingsPosition(bas.getPoint()), formes, bateau)) {
             if(bas.getPoint().getX()>=0.09 && bas.getPoint().getX()<=0.1900875 &&
                 bas.getPoint().getY()>=49.448 && bas.getPoint().getY()<=49.488) {
                 bas.setDistance(bas.getPoint().distance(destination));
-                if(!arrayContient(visites, bas)) {
+                //if(!arrayContient(visites, bas)) {
                     voisinsPriorises.add(bas);
-                }
+                //}
             }
         }
         
@@ -157,9 +162,9 @@ public class DeplacementBateaux{
             if(haut.getPoint().getX()>=0.09 && haut.getPoint().getX()<=0.1900875 &&
                 haut.getPoint().getY()>=49.448 && haut.getPoint().getY()<=49.488) {
                 haut.setDistance(haut.getPoint().distance(destination));
-                if(!arrayContient(visites, haut)) {
+                //if(!arrayContient(visites, haut)) {
                     voisinsPriorises.add(haut);
-                }
+                //}
             } 
         }
         return voisinsPriorises;
