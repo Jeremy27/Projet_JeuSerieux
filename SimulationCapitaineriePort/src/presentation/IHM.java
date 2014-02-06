@@ -106,6 +106,7 @@ public class IHM extends JFrame {
         _map = new PanelMap(_infoForme);
         _map.setNavires(new Navire[]{n/*1, n2, n3, n4*/});
         _map.initEvents();
+        _map.lierMapRealite();
         add(_map, BorderLayout.CENTER);
         
         panelGauche.add(_naviresArrives);
