@@ -40,7 +40,8 @@ public class PanelMap extends JPanel{
     private double _pourcentGauche=0.5;
     private double _pourcentHaut=0.5;
     //dezoom max
-    private final double MAX_DEPART_X=0.1900875;
+    private final double MAX_DEPART_X=0.1950875;
+    //private final double MAX_DEPART_X=0.1900875;
     private final double MAX_DEPART_Y=49.488;
 //    private final double MIN_DEPART_X=0.10;
     private final double MIN_DEPART_X=0.09;
