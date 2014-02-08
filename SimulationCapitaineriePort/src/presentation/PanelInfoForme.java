@@ -42,6 +42,11 @@ public class PanelInfoForme extends PanelPerso {
     
     public void majInformations() {
         
+        if(_informations == null || _informations.isEmpty()) {
+            _informations = new ArrayList<>();
+            _informations.add("Aucune information");
+        }
+        
         JLabel label;
         JPanel panelGrid = new JPanel(new GridLayout(_informations.size(), 1));
         boolean pair = true;
@@ -50,13 +55,19 @@ public class PanelInfoForme extends PanelPerso {
             label = new JLabel(info);
             label.setOpaque(true);
             if(pair = !pair)
-                label.setBackground(new Color(78, 95, 150));
+                label.setBackground(COULEUR_PANEL1);
             else
-                label.setBackground(new Color(100, 120, 150));
+                label.setBackground(COULEUR_PANEL2);
             label.setForeground(Color.white);
             panelGrid.add(label);
         }
         add(panelGrid, BorderLayout.CENTER);
         this.validate();
+    }
+    
+    public void remiseAZero() {
+        _informations = null;
+        setNomPanel("Sélection");
+        majInformations();
     }
 }

@@ -38,4 +38,8 @@ public class PanelNavires extends PanelPerso {
     public int getNbNaviresEnRetard() {
         return _tableau.getNbNaviresEnRetard();
     }
+    
+    public void remiseAZero() {
+        _tableau.remiseAZero();
+    }
 }

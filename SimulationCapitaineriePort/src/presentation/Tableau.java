@@ -5,12 +5,10 @@
  */
 package presentation;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -65,6 +63,10 @@ public class Tableau extends JTable {
         _modele.supprimerNaviresArrives(temps);
     }
     
+    public void remiseAZero() {
+        _modele.supprimerNavires();
+    }
+    
     private void majPanelNavire() {
         if(_ligneSelectionnee != getSelectedRow()) {
             _ligneSelectionnee = getSelectedRow();
@@ -100,19 +102,19 @@ public class Tableau extends JTable {
         Component c = super.prepareRenderer(renderer, ligne, colonne);
         
         if(getSelectedRow() == ligne) {
-            c.setBackground(new Color(4, 47, 104));
-            c.setForeground(Color.white);
+            c.setBackground(PanelPerso.COULEUR_BACKGROUND_TITRE);
+            c.setForeground(PanelPerso.COULEUR_ECRITURE);
         } else {
             if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._tempsCourant) {
-                c.setBackground(new Color(235, 20, 0));
-                c.setForeground(Color.white);
+                c.setBackground(PanelPerso.COULEUR_RETARD);
+                c.setForeground(PanelPerso.COULEUR_ECRITURE);
             }
             else
                 if(ligne%2 == 0)
-                    c.setBackground(new Color(78, 95, 150));
+                    c.setBackground(PanelPerso.COULEUR_PANEL1);
                 else
-                    c.setBackground(new Color(100, 120, 150));
-            c.setForeground(Color.white);
+                    c.setBackground(PanelPerso.COULEUR_PANEL2);
+            c.setForeground(PanelPerso.COULEUR_ECRITURE);
         }
         return c;
     }
@@ -127,8 +129,8 @@ public class Tableau extends JTable {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
             {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                c.setBackground(new Color(4, 47, 104));
-                c.setForeground(Color.white);
+                c.setBackground(PanelPerso.COULEUR_BACKGROUND_TITRE);
+                c.setForeground(PanelPerso.COULEUR_ECRITURE);
                 c.setFont(new Font(this.getFont().getName(), Font.BOLD, 13));
                 return c;
             }

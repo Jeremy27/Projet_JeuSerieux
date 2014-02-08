@@ -1,7 +1,6 @@
 package presentation;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import modele.enumeration.TypeMessage;
@@ -24,7 +23,7 @@ public class PanelInfoJeu extends PanelPerso {
     private void initialisationLabelLog() {
         _jlInformations = new JLabel(_log);
         JScrollPane jsp = new JScrollPane(_jlInformations);
-        _jlInformations.setBackground(new Color(78, 95, 150));
+        _jlInformations.setBackground(COULEUR_PANEL1);
         _jlInformations.setOpaque(true);
         
         add(jsp, BorderLayout.CENTER);
@@ -33,6 +32,11 @@ public class PanelInfoJeu extends PanelPerso {
     public void ajoutMessage(String message, TypeMessage typeMessage) {
         _log = "<p class=\"" + getCouleur(typeMessage) + "\">" + message + "</p>" + _log;
         _jlInformations.setText(getDebutHTML() + _log + getFinHTML());
+    }
+    
+    public void remiseAZero() {
+        _log =  "<p class=\"gris\">En attente ...</p>";
+        initialisationLabelLog();
     }
 
     private String getCouleur(TypeMessage typeMessage) {

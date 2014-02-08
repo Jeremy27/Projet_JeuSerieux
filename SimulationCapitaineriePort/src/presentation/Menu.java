@@ -2,6 +2,7 @@ package presentation;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -11,6 +12,8 @@ import javax.swing.JMenuItem;
  * @author Jérémy
  */
 public class Menu extends JMenuBar {
+    
+    private final IHM _ihm;
     
     private JMenu _menuFichier;
     private JMenu _menuPartie;
@@ -30,8 +33,10 @@ public class Menu extends JMenuBar {
     private JMenuItem _aideDocumentation;
     private JMenuItem _aideAPropos;
 
-    public Menu() {
+    public Menu(IHM ihm) {
+        _ihm = ihm;
         initComposants();
+        evenementsPartie();
         
         add(_menuFichier);
         add(_menuPartie);
@@ -73,11 +78,11 @@ public class Menu extends JMenuBar {
     }
     
     private void evenementsPartie() {
+        
         _partieNouvelle.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
+                NouvellePartie nouvellePartie = new NouvellePartie(_ihm);
             }
         });
     }

@@ -407,4 +407,8 @@ public class PanelMap extends JPanel{
             }
         });
     }
+    
+    public void remiseAZero() {
+        // virer les navires sur la map
+    }
 }

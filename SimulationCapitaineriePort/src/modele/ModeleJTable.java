@@ -95,4 +95,8 @@ public class ModeleJTable extends AbstractTableModel {
             _navires.remove(aSupprimer.remove(0));
         }
     }
+    
+    public void supprimerNavires() {
+        _navires = new ArrayList<>();
+    }
 }

@@ -27,19 +27,19 @@ import modele.outils.ParamsNavire;
  * @author Jérémy
  */
 public class IHM extends JFrame {
-    private PanelInfoForme  _infoForme;
-    private PanelInfoJeu    _infoJeu;
-    private PanelNavires    _naviresArrives;
-    private PanelNavires    _naviresArrivant;
-    private PanelPartie     _partie;
-    private PanelMap        _map;
+    PanelInfoForme  _infoForme;
+    PanelInfoJeu    _infoJeu;
+    PanelNavires    _naviresArrives;
+    PanelNavires    _naviresArrivant;
+    PanelPartie     _partie;
+    PanelMap        _map;
 
     public IHM() throws HeadlessException {
         setTitle("Simulation port du Havre");
         setSize(1300, 650);
         setLayout(new BorderLayout());
         
-        setJMenuBar(new Menu());
+        setJMenuBar(new Menu(this));
         creationPanels();
         
         setLocationRelativeTo(null);
@@ -129,9 +129,18 @@ public class IHM extends JFrame {
         }
     }
     
+    public void remiseAZero() {
+        _infoForme.remiseAZero();
+        _naviresArrivant.remiseAZero();
+        _naviresArrives.remiseAZero();
+        _infoJeu.remiseAZero();
+        _partie.remiseAZero();
+    }
+    
+    
     public static void main(String[] args) {
         IHM ihm = new IHM();
 //        NouvellePartie partie = new NouvellePartie();
-        ihm.lancementJeu();
+//        ihm.lancementJeu();
     }
 }

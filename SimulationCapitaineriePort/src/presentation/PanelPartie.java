@@ -1,7 +1,6 @@
 package presentation;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -36,16 +35,16 @@ public class PanelPartie extends PanelPerso {
         JPanel panelFlow1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel panelFlow2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel panelFlow3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelFlow1.setBackground(new Color(78, 95, 150));
-        panelFlow2.setBackground(new Color(78, 95, 150));
-        panelFlow3.setBackground(new Color(78, 95, 150));
+        panelFlow1.setBackground(COULEUR_PANEL1);
+        panelFlow2.setBackground(COULEUR_PANEL1);
+        panelFlow3.setBackground(COULEUR_PANEL1);
         
         _jlTempsRestant = new JLabel("Temps : " + _tempsCourant);
         _jlNbRetard     = new JLabel("Retard cumulé : " + _nbRetard);
         _jbValider      = new JButton("Valider");
         
-        _jlNbRetard.setForeground(Color.white);
-        _jlTempsRestant.setForeground(Color.white);
+        _jlNbRetard.setForeground(COULEUR_ECRITURE);
+        _jlTempsRestant.setForeground(COULEUR_ECRITURE);
         
         panelFlow1.add(_jlTempsRestant);
         panelFlow2.add(_jlNbRetard);
@@ -62,5 +61,10 @@ public class PanelPartie extends PanelPerso {
         _jlTempsRestant.setText("Temps : " + _tempsCourant);
         _jlNbRetard.setText("Retard cumulé : " + _nbRetard);
         this.revalidate();
+    }
+    
+    public void remiseAZero() {
+        _tempsCourant   = 0;
+        _nbRetard       = 0;
     }
 }

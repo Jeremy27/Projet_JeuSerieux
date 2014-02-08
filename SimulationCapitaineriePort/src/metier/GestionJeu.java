@@ -45,6 +45,8 @@ public class GestionJeu extends Thread {
     @Override
     public void run() {
         ArrayList<Navire> naviresArrives;
+        PanelPartie._tempsCourant = 0;
+        
         while(PanelPartie._tempsCourant <= PanelPartie._tempsFin) {
             
             // Panel navires arrivés
@@ -71,6 +73,7 @@ public class GestionJeu extends Thread {
             
             try {
                 sleep(3000);
+                break;
             } catch (InterruptedException ex) {
                 Logger.getLogger(GestionJeu.class.getName()).log(Level.SEVERE, null, ex);
             }
