@@ -120,16 +120,6 @@ public class IHM extends JFrame {
         add(panelDroit, BorderLayout.EAST);
     }
     
-    public void lancementJeu() {
-        GestionJeu jeu = new GestionJeu(_naviresArrives, _naviresArrivant, _infoJeu, _partie);
-        jeu.start();
-        try {
-            jeu.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(IHM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     public void remiseAZero() {
         _infoForme.remiseAZero();
         _naviresArrivant.remiseAZero();
@@ -138,10 +128,7 @@ public class IHM extends JFrame {
         _partie.remiseAZero();
     }
     
-    
     public static void main(String[] args) {
         IHM ihm = new IHM();
-//        NouvellePartie partie = new NouvellePartie();
-//        ihm.lancementJeu();
     }
 }

@@ -21,17 +21,23 @@ import presentation.PanelPartie;
 public class GestionInstance {
     private Random      _random;
     private Instance    _instance;
+    private int         _nbMaxNavire;
+    private int         _nbMinNavire;
 
-    public GestionInstance() {
-        _instance   = new Instance();
-        _random     = new Random();
+    public GestionInstance(int nbMaxNavire, int nbMinNavire) {
+        _instance       = new Instance();
+        _random         = new Random();
+        _nbMaxNavire    = nbMaxNavire;
+        _nbMinNavire    = nbMinNavire;
     }
     
     public void genererAleatoirement() {
         Navire navire;
         int numNavire = 0;
+        int nbNavires;
         for (int i = 0; i < PanelPartie._tempsFin; i++) {
-            for (int j = 0; j < _random.nextInt(5); j++) {
+            nbNavires = _random.nextInt(_nbMaxNavire) + _nbMinNavire;
+            for (int j = 0; j < nbNavires; j++) {
                 navire = getNavireAleatoire(numNavire++);
                 navire.setDateArrivee(i);
                 _instance.ajouterNavire(navire);

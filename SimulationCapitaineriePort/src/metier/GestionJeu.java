@@ -16,6 +16,7 @@ import modele.enumeration.TypeNavire;
 import presentation.PanelInfoJeu;
 import presentation.PanelNavires;
 import presentation.PanelPartie;
+import sun.org.mozilla.javascript.Token;
 
 /**
  *
@@ -27,17 +28,26 @@ public class GestionJeu extends Thread {
     private PanelNavires _naviresArrivant;
     private PanelInfoJeu _infoJeu;
     private PanelPartie  _partie;
+    private int          _tempsTour;
     
     public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu infoJeu, PanelPartie partie) {
         _naviresArrives     = naviresArrives;
         _naviresArrivant    = naviresArrivant;
         _infoJeu            = infoJeu;
         _partie             = partie;
-        initialiserInstance();
+//        initialiserInstance();
+    }
+    
+    public void setTempTour(int tempsTour) {
+        _tempsTour = tempsTour;
+    }
+    
+    public void setInstance(Instance instance) {
+        _instance = instance;
     }
     
     private void initialiserInstance() {
-        GestionInstance gInstance = new GestionInstance();
+        GestionInstance gInstance = new GestionInstance(4, 0);
         gInstance.genererAleatoirement();
         _instance = gInstance.getInstance();
     }
@@ -72,8 +82,7 @@ public class GestionJeu extends Thread {
             
             
             try {
-                sleep(3000);
-                break;
+                sleep(_tempsTour);
             } catch (InterruptedException ex) {
                 Logger.getLogger(GestionJeu.class.getName()).log(Level.SEVERE, null, ex);
             }
