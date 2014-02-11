@@ -10,12 +10,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.geom.Point2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import metier.GestionJeu;
 import modele.Navire;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeMessage;
@@ -126,6 +123,7 @@ public class IHM extends JFrame {
         _naviresArrives.remiseAZero();
         _infoJeu.remiseAZero();
         _partie.remiseAZero();
+        _map.remiseAZero();
     }
     
     public static void main(String[] args) {

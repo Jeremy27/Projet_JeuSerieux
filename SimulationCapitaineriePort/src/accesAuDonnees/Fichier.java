@@ -31,6 +31,7 @@ public class Fichier {
             Logger.getLogger(Fichier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     public String lire() {
         try {
             StringBuilder sb = new StringBuilder();
