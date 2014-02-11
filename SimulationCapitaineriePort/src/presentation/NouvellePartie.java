@@ -152,7 +152,7 @@ public class NouvellePartie extends JDialog {
         Partie._abandon = true;
         
         try {
-            Thread.sleep(1000);
+            Thread.sleep(400);
         } catch (InterruptedException ex) {
             Logger.getLogger(NouvellePartie.class.getName()).log(Level.SEVERE, null, ex);
         }
