@@ -18,6 +18,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import modele.ModeleJTable;
 import modele.Navire;
+import modele.Partie;
 
 /**
  *
@@ -54,7 +55,7 @@ public class Tableau extends JTable {
     public int getNbNaviresEnRetard() {
         int nbRetards = 0;
         for(Navire navire : _modele.getNavires())
-            if(navire.getDateArrivee() < PanelPartie._tempsCourant)
+            if(navire.getDateArrivee() < Partie._tempsCourant)
                 nbRetards++;
         return nbRetards;
     }
@@ -105,7 +106,7 @@ public class Tableau extends JTable {
             c.setBackground(PanelPerso.COULEUR_BACKGROUND_TITRE);
             c.setForeground(PanelPerso.COULEUR_ECRITURE);
         } else {
-            if(_modele.getNavire(ligne).getDateArrivee() < PanelPartie._tempsCourant) {
+            if(_modele.getNavire(ligne).getDateArrivee() < Partie._tempsCourant) {
                 c.setBackground(PanelPerso.COULEUR_RETARD);
                 c.setForeground(PanelPerso.COULEUR_ECRITURE);
             }

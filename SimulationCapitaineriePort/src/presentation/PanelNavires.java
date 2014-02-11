@@ -42,4 +42,9 @@ public class PanelNavires extends PanelPerso {
     public void remiseAZero() {
         _tableau.remiseAZero();
     }
+    
+    public void actualiser() {
+        revalidate();
+        repaint();
+    }
 }

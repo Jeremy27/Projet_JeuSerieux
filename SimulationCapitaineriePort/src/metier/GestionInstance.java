@@ -9,10 +9,10 @@ package metier;
 import java.util.Random;
 import modele.Instance;
 import modele.Navire;
+import modele.Partie;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeNavire;
 import modele.outils.ParamsNavire;
-import presentation.PanelPartie;
 
 /**
  *
@@ -21,22 +21,18 @@ import presentation.PanelPartie;
 public class GestionInstance {
     private Random      _random;
     private Instance    _instance;
-    private int         _nbMaxNavire;
-    private int         _nbMinNavire;
 
-    public GestionInstance(int nbMaxNavire, int nbMinNavire) {
-        _instance       = new Instance();
-        _random         = new Random();
-        _nbMaxNavire    = nbMaxNavire;
-        _nbMinNavire    = nbMinNavire;
+    public GestionInstance() {
+        _instance = new Instance();
+        _random   = new Random();
     }
     
     public void genererAleatoirement() {
         Navire navire;
         int numNavire = 0;
         int nbNavires;
-        for (int i = 0; i < PanelPartie._tempsFin; i++) {
-            nbNavires = _random.nextInt(_nbMaxNavire) + _nbMinNavire;
+        for (int i = 0; i < Partie._tempsFin; i++) {
+            nbNavires = _random.nextInt(Partie._nbMaxNavires) + Partie._nbMinNavires;
             for (int j = 0; j < nbNavires; j++) {
                 navire = getNavireAleatoire(numNavire++);
                 navire.setDateArrivee(i);

@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import metier.GestionInstance;
 import metier.GestionJeu;
 import modele.Instance;
+import modele.Partie;
 
 /**
  *
@@ -135,29 +136,11 @@ public class NouvellePartie extends JDialog {
         StringBuilder str = new StringBuilder();
         str.append("<html><body>");
         if(_jcbDifficulte.getSelectedItem().equals("Facile")){
-            str.append("Niveau de difficulté : Facile");
-            str.append("<br/><br/>");
-            str.append("Nombre de navires minimum par tour : 0");
-            str.append("<br/><br/>");
-            str.append("Nombre de navires maximum par tour : 3");
-            str.append("<br/><br/>");
-            str.append("Temps entre deux tours : 60s");
+            str.append(Partie.toStringFacile());
         } else if(_jcbDifficulte.getSelectedItem().equals("Normal")) {
-            str.append("Niveau de difficulté : Normal");
-            str.append("<br/><br/>");
-            str.append("Nombre de navires minimum par tour : 1");
-            str.append("<br/><br/>");
-            str.append("Nombre de navires maximum par tour : 5");
-            str.append("<br/><br/>");
-            str.append("Temps entre deux tours : 50s");
+            str.append(Partie.toStringNormal());
         } else if (_jcbDifficulte.getSelectedItem().equals("Difficile")) {
-            str.append("Niveau de difficulté : Difficile");
-            str.append("<br/><br/>");
-            str.append("Nombre de navires minimum par tour : 3");
-            str.append("<br/><br/>");
-            str.append("Nombre de navires maximum par tour : 8");
-            str.append("<br/><br/>");
-            str.append("Temps entre deux tours : 40s");
+            str.append(Partie.toStringDifficile());
         }
         str.append("</body></html>");
         _jlInfos.setText(str.toString());
@@ -166,54 +149,32 @@ public class NouvellePartie extends JDialog {
     
     // TO DO bien arreter la partie en cours
     void arretPartieEnCours() {
-        PanelPartie._tempsCourant = PanelPartie._tempsFin;
+        Partie._abandon = true;
+        
         try {
-            Thread.sleep(200);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(NouvellePartie.class.getName()).log(Level.SEVERE, null, ex);
         }
         _ihm.remiseAZero();
+        Partie._abandon = false;
     }
     
     void demarrerNouvellePartie() {
         arretPartieEnCours();
         GestionJeu gestionJeu = new GestionJeu(_ihm._naviresArrives, _ihm._naviresArrivant, _ihm._infoJeu, _ihm._partie);
+        
+        Partie nouvellePartie = new Partie(_jcbDifficulte.getSelectedItem().toString());
+        nouvellePartie.initialiserDifficulte();
+        
         gestionJeu.setInstance(creerInstance());
-        gestionJeu.setTempTour(getTempsTour());
         gestionJeu.start();
+        
         dispose();
     }
     
-    int getTempsTour() {
-        int tempsTour = 0;
-        
-        if(_jcbDifficulte.getSelectedItem().equals("Facile")){
-            tempsTour = 60000;
-        } else if(_jcbDifficulte.getSelectedItem().equals("Normal")) {
-            tempsTour = 50000;
-        } else if (_jcbDifficulte.getSelectedItem().equals("Difficile")) {
-            tempsTour = 40000;
-        }
-        
-        return tempsTour;
-    }
-    
     Instance creerInstance() {
-        int nbMaxNavire = 0;
-        int nbMinNavire = 0;
-        
-        if(_jcbDifficulte.getSelectedItem().equals("Facile")){
-            nbMaxNavire = 4;
-            nbMinNavire = 0;
-        } else if(_jcbDifficulte.getSelectedItem().equals("Normal")) {
-            nbMaxNavire = 6;
-            nbMinNavire = 1;
-        } else if (_jcbDifficulte.getSelectedItem().equals("Difficile")) {
-            nbMaxNavire = 9;
-            nbMinNavire = 3;
-        }
-        
-        GestionInstance gInstance = new GestionInstance(nbMaxNavire, nbMinNavire);
+        GestionInstance gInstance = new GestionInstance();
         gInstance.genererAleatoirement();
         return gInstance.getInstance();
     }

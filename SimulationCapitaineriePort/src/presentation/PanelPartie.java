@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import modele.Partie;
 
 /**
  *
@@ -17,15 +18,9 @@ public class PanelPartie extends PanelPerso {
     private JLabel _jlNbRetard;
     
     private JButton _jbValider;
-    
-    public static int _tempsCourant;
-    public static int _tempsFin;
-    public static int _nbRetard;
 
     public PanelPartie() {
         super("Partie en cours");
-        _tempsCourant   = 0;
-        _tempsFin       = 100;
         initialisationComposants();
     }
     
@@ -39,8 +34,8 @@ public class PanelPartie extends PanelPerso {
         panelFlow2.setBackground(COULEUR_PANEL1);
         panelFlow3.setBackground(COULEUR_PANEL1);
         
-        _jlTempsRestant = new JLabel("Temps : " + _tempsCourant);
-        _jlNbRetard     = new JLabel("Retard cumulé : " + _nbRetard);
+        _jlTempsRestant = new JLabel("Temps : " + Partie._tempsCourant);
+        _jlNbRetard     = new JLabel("Retard cumulé : " + Partie._nbRetards);
         _jbValider      = new JButton("Valider");
         
         _jlNbRetard.setForeground(COULEUR_ECRITURE);
@@ -58,13 +53,13 @@ public class PanelPartie extends PanelPerso {
     }
     
     public void actualiser() {
-        _jlTempsRestant.setText("Temps : " + _tempsCourant);
-        _jlNbRetard.setText("Retard cumulé : " + _nbRetard);
+        _jlTempsRestant.setText("Temps : " + Partie._tempsCourant);
+        _jlNbRetard.setText("Retard cumulé : " + Partie._nbRetards);
         this.revalidate();
     }
     
     public void remiseAZero() {
-        _tempsCourant   = 0;
-        _nbRetard       = 0;
+        Partie._tempsCourant   = 0;
+        Partie._nbRetards      = 0;
     }
 }
