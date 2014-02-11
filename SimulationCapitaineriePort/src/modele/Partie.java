@@ -14,7 +14,7 @@ public class Partie {
     
     public static String  _pseudo;
     public static String  _difficulte   = "Facile";
-    public static int     _tempsCourant = 0;
+    public static int     _tempsCourant = -1;
     public static int     _tempsFin     = 100;
     public static int     _nbRetards;
     public static int     _nbMaxNavires;

@@ -147,21 +147,21 @@ public class NouvellePartie extends JDialog {
         pack();
     }
     
-    // TO DO bien arreter la partie en cours
     void arretPartieEnCours() {
         Partie._abandon = true;
-        
+
         try {
             Thread.sleep(400);
         } catch (InterruptedException ex) {
             Logger.getLogger(NouvellePartie.class.getName()).log(Level.SEVERE, null, ex);
         }
         _ihm.remiseAZero();
-        Partie._abandon = false;
+        
     }
     
     void demarrerNouvellePartie() {
         arretPartieEnCours();
+        
         GestionJeu gestionJeu = new GestionJeu(_ihm._naviresArrives, _ihm._naviresArrivant, _ihm._infoJeu, _ihm._partie);
         
         Partie nouvellePartie = new Partie(_jcbDifficulte.getSelectedItem().toString());
