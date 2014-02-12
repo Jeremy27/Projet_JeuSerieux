@@ -164,8 +164,7 @@ public class NouvellePartie extends JDialog {
         
         GestionJeu gestionJeu = new GestionJeu(_ihm._naviresArrives, _ihm._naviresArrivant, _ihm._infoJeu, _ihm._partie);
         
-        Partie nouvellePartie = new Partie(_jcbDifficulte.getSelectedItem().toString());
-        nouvellePartie.initialiserDifficulte();
+        Partie nouvellePartie = new Partie(_jcbDifficulte.getSelectedItem().toString(), getPseudo());
         
         gestionJeu.setInstance(creerInstance());
         gestionJeu.start();
@@ -177,5 +176,13 @@ public class NouvellePartie extends JDialog {
         GestionInstance gInstance = new GestionInstance();
         gInstance.genererAleatoirement();
         return gInstance.getInstance();
+    }
+    
+    private String getPseudo() {
+        String pseudo = _jtfPseuso.getText();
+        if(pseudo.isEmpty()) {
+            pseudo = "Anonyme";
+        }
+        return pseudo;
     }
 }

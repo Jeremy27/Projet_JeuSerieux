@@ -14,7 +14,7 @@ public class Partie {
     
     public static String  _pseudo;
     public static String  _difficulte   = "Facile";
-    public static int     _tempsCourant = -1;
+    public static int     _tempsCourant = 0;
     public static int     _tempsFin     = 100;
     public static int     _nbRetards;
     public static int     _nbMaxNavires;
@@ -22,11 +22,12 @@ public class Partie {
     public static int     _tempsTour;
     public static boolean _abandon;
     
-    public Partie(String difficulte) {
+    public Partie(String difficulte, String pseudo) {
         _difficulte     = difficulte;
+        _pseudo         = pseudo;
         _abandon        = false;
         _tempsCourant   = 0;
-        _tempsFin       = 100;
+        _tempsFin       = 2;
         initialiserDifficulte();
     }
     
