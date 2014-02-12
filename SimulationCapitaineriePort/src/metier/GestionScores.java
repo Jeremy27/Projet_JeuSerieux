@@ -55,7 +55,6 @@ public class GestionScores {
     }
     
     public void sauvegarderScore() {
-        JsonBuilderFactory factory      = Json.createBuilderFactory(null);
         JsonArrayBuilder nouveauTableau = Json.createArrayBuilder();
         
         JsonObject objetJson            = genererObjetJson();

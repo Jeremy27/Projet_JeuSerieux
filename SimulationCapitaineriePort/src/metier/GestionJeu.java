@@ -89,7 +89,11 @@ public class GestionJeu extends Thread {
                 break;
             }
         }
+        
+        if(!Partie._abandon) {
+            GestionScores gScores = new GestionScores("scores");
+            gScores.sauvegarderScore();
+            System.out.println("Sauvegarde des scores");
+        }
     }
-    
-    
 }
