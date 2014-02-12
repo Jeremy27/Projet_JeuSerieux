@@ -12,12 +12,8 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
-import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
-import javax.json.stream.JsonParser;
-import javax.json.stream.JsonParserFactory;
 import modele.Partie;
 
 /**
@@ -37,11 +33,6 @@ public class GestionScores {
     }
     
     public JsonObject genererObjetJson() {
-        // A virer
-        new Partie("Facile");
-        Partie._pseudo = "Claudy";
-        // ------
-        
         JsonBuilderFactory factory  = Json.createBuilderFactory(null);
         JsonObject objetJson        = factory.createObjectBuilder()
             .add("Pseudo", Partie._pseudo)
@@ -59,26 +50,22 @@ public class GestionScores {
         try (JsonReader jsonReader = Json.createReader(new StringReader(scores))) {
             tableauJson = jsonReader.readArray();
         }
-        catch(JsonException ex) {
-            System.out.println("lol");
-        }
         
         return tableauJson;
     }
     
     public void sauvegarderScore() {
-        JsonObject objetJson = genererObjetJson();
-        JsonArray tableauJson = lireFichierScores();
+        JsonBuilderFactory factory      = Json.createBuilderFactory(null);
+        JsonArrayBuilder nouveauTableau = Json.createArrayBuilder();
         
-        // MOI PAS COMPRENDRE COMMENT FAIRE O_O
+        JsonObject objetJson            = genererObjetJson();
+        JsonArray tableauJson           = lireFichierScores();
         
-        _fichierScores.ecrire(tableauJson.toString(), false);
-    }
-    
-    public static void main(String[] args) {
-        GestionScores scores = new GestionScores();
-        scores.sauvegarderScore();
-        JsonArray tab = scores.lireFichierScores();
-        System.out.println(tab.toString());
+        for(int i=0; i<tableauJson.size(); i++) {
+            nouveauTableau.add(tableauJson.get(i));
+        }
+        nouveauTableau.add(objetJson);
+        
+        _fichierScores.ecrire(nouveauTableau.build().toString(), false);
     }
 }
