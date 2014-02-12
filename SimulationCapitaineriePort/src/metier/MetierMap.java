@@ -14,14 +14,15 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 import modele.Forme;
 import modele.Navire;
 import modele.Quai;
 import modele.Terminal;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeShape;
-import presentation.PanelMap;
 import presentation.PanelInfoForme;
+import presentation.PanelMap;
 
 /**
  *
@@ -32,6 +33,7 @@ public class MetierMap {
     
     
     private final ArrayList<Forme> _coordonneesDessin;
+    private final ArrayList<Forme> _littoraux;
     
     //couleurs des différentes formes
     private static final Color NATURALCOLOR = new Color(181, 208, 208);
@@ -40,11 +42,13 @@ public class MetierMap {
     private static final Color ROUTECOLOR = new Color(182, 181, 146);
     private static final Color BATIMENTCOLOR = Color.GRAY;
     private static final Color AUTRECOLOR = Color.GRAY;
+    private static final Color FORETCOLOR = new Color(0, 80, 0);
     
     private final ADMap _accesDonneesMap;
     
     public MetierMap(PanelMap map, PanelInfoForme panelInfo) {
         _coordonneesDessin = new ArrayList<>();
+        _littoraux = new ArrayList<>();
         _accesDonneesMap = new ADMap();
         
     }
@@ -57,6 +61,10 @@ public class MetierMap {
         return _coordonneesDessin;
     }
     
+    public ArrayList<Forme> getCoordonneesLittoraux() {
+        return _littoraux;
+    }
+    
     public void makePath2D(JsonArray ja) {
         for(Object obj:ja.toArray()) {
             //variables indispensables
@@ -66,6 +74,8 @@ public class MetierMap {
             long id = Long.parseLong(jo.get("_id").toString());
             String type = jo.get("_type").toString();
             String nom = jo.get("_nom").toString();
+            JsonValue littoral = jo.get("_littoral");
+            
             Forme forme;
 
             //construction de l'objet
@@ -88,6 +98,14 @@ public class MetierMap {
                 c = BATIMENTCOLOR;
                 fill = true;
                 forme = new Forme(nom, fill, c, id, TypeShape.BUILDING);
+            } else if(type.equals(TypeShape.FORET.name())) {
+                c = FORETCOLOR;
+                fill = true;
+                forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
+            } else if(type.equals("TEST")) {
+                c = new Color(255, 0, 0);
+                fill = false;
+                forme = new Forme(nom, fill, c, id, TypeShape.NULL);
             } else {
                 c = AUTRECOLOR;
                 forme = new Forme(nom, fill, c, id, TypeShape.NULL);
@@ -102,22 +120,46 @@ public class MetierMap {
                 forme.ajoutCoordonnee(new Point2D.Double(x, y));
             }
             forme.makePathOriginale();
-            _coordonneesDessin.add(forme);
+            if(littoral!=null) {
+                _littoraux.add(forme);
+            }
+            //if(forme.getId()==71155277) {
+                _coordonneesDessin.add(forme);
+            //}
+            
         }
         
-//        Forme forme = new Forme("CONNARD", true, Color.BLUE, 564641653, TypeShape.BUILDING);
-//        forme.ajoutCoordonnee(new Point2D.Double(0.10279, 49.481344));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.102454, 49.47971));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.106643, 49.47781));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.107549, 49.480325));
-//        forme.makePathOriginale();
-//        _coordonneesDessin.add(forme);
         
-//        for(Forme f:_coordonneesDessin) {
-//            if(forme.getPathOriginal().intersects(f.getPathOriginal().getBounds2D())) {
-//                System.out.println(f.getNom() + " " + f.getId());
-//            }
-//        }
+        Forme forme = new Forme("CONNARD", true, Color.BLUE, 564641653, TypeShape.BUILDING);
+        
+        forme.ajoutCoordonnee(new Point2D.Double(0.1065890219049898, 49.46740831623104));
+        forme.ajoutCoordonnee(new Point2D.Double(0.10933301555274476, 49.466411450617876));
+        forme.ajoutCoordonnee(new Point2D.Double(0.10696957576854706, 49.46519175622059));
+        forme.ajoutCoordonnee(new Point2D.Double(0.1044258736279275, 49.46634108363342));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.09195284219457013, 49.48870730050934));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.10627368495475113, 49.48329490662139));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.13374366515837105, 49.47849235993209));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.1399927601809955, 49.47506196943973));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.16850425622171944, 49.478873514431235));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.18087225678733032, 49.48764006791171));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.191027036199095, 49.486953989813244));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.1894647624434389, 49.480779286926996));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.20144219457013574, 49.47849235993209));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.20196295248868779, 49.469573344651955));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.17553448812217193, 49.449753310696096));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.1001547794117647, 49.45249762308998));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.09104151583710407, 49.483980984719864));
+//        forme.ajoutCoordonnee(new Point2D.Double(0.09130189479638008, 49.488554838709675));
+        forme.makePathOriginale();
+//        _coordonneesDessin.add(forme);
+        int cpt=0;
+        for(Forme f:_coordonneesDessin) {
+            if(forme.getPathOriginal().intersects(f.getPathOriginal().getBounds2D())) {
+                
+                cpt++;
+            }
+        }
+        
     }
     
     public void ajoutForme(Forme f) {
@@ -142,7 +184,8 @@ public class MetierMap {
                 } else {
                     if(forme instanceof Quai ||
                         forme instanceof Terminal ||
-                        forme instanceof Navire) {
+                        forme instanceof Navire ||
+                        forme.getTypeForme().name().equals(TypeShape.NATURAL.name())) {
                         selectionnee = forme;
                     }
                 }

@@ -27,7 +27,7 @@ public class Forme {
         s += "nom " + _nom;
         s += " id " + _id;
         if(_typeForme==null) {
-            System.out.println("FORME NULLE ID " + _id + " NOM " + _nom);
+            
         }
         s += " type " + _typeForme.name();
         return s;
@@ -103,7 +103,7 @@ public class Forme {
                     path.lineTo(x, y);
                 }
             }
-            path.closePath();
+            //path.closePath();
             _path = path;
             return path;
         } else {

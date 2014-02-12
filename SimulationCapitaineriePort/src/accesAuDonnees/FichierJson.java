@@ -22,6 +22,6 @@ public class FichierJson {
     
 //    public static void main(String[] args) {
 //        FichierJson fj = new FichierJson("C:\\Users\\brokep\\Downloads\\osm2json-master\\data\\map.json");
-//        System.out.println(fj.getJson().size());
+//        
 //    }
 }
