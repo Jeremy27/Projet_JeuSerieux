@@ -76,6 +76,9 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     
     @Override
     public int compareTo(PointPathFinding p) {
+//        if(_point.getX()==p._point.getX() && _point.getY()==p._point.getY()) {
+//            return 0;
+//        }
         if(_cout==p._cout) {
             if(this._distance>p._distance) {
                 return -1;

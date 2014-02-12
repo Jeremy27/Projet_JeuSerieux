@@ -339,15 +339,17 @@ public class PanelMap extends JPanel{
                     if(_navireSelectionne!=null) {
                         
                         //(_pointClick.getX()/_coefX+_mapGauche) + ", " + ((h-_pointClick.getY())/_coefY+_mapHaut);
-                        Thread t = new Thread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                Insets insets = getInsets();
-                                double h = getHeight() - insets.top - insets.bottom;
-                                resultat = DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(_pointClick.getX()/_coefX+_mapGauche, (h-_pointClick.getY())/_coefY+_mapHaut), _metier.getCoordonneesDessin(), _coefX, _coefY, getThis());
-                            }
-                        });
+                        DeplacementBateaux t = new DeplacementBateaux(_navireSelectionne, new Point2D.Double(_pointClick.getX()/_coefX+_mapGauche, (h-_pointClick.getY())/_coefY+_mapHaut), _metier.getCoordonneesDessin(), getThis());
+                        
+//                        Thread t = new Thread(new Runnable() {
+//
+//                            @Override
+//                            public void run() {
+//                                Insets insets = getInsets();
+//                                double h = getHeight() - insets.top - insets.bottom;
+//                                resultat = DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(_pointClick.getX()/_coefX+_mapGauche, (h-_pointClick.getY())/_coefY+_mapHaut), _metier.getCoordonneesDessin(), _coefX, _coefY, getThis());
+//                            }
+//                        });
                         t.start();
                         try {
                             Thread.sleep(10);
