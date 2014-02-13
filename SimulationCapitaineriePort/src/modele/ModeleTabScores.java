@@ -7,6 +7,7 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -27,6 +28,15 @@ public class ModeleTabScores extends AbstractTableModel {
     
     public void ajouterScore(Score score) {
         _scores.add(score);
+    }
+    
+    public void trierScores() {
+        Collections.sort(_scores);
+    }
+
+    @Override
+    public String getColumnName(int colonne) {
+        return _titres.get(colonne);
     }
 
     @Override
