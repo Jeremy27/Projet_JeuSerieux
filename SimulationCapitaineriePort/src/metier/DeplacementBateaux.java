@@ -276,7 +276,9 @@ public class DeplacementBateaux extends Thread{
                 } else if(forme==_bateau) {
                     return true;
                 } else {
-                    dansShape = true;
+                    if(forme.getTypeForme()!=TypeShape.HIGHWAY) {
+                        dansShape = true;
+                    }
                 }
             }
         }
