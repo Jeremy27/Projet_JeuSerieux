@@ -15,8 +15,10 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonValue;
 import modele.Partie;
 import modele.Score;
+import modele.enumeration.TypeDifficulte;
 
 /**
  *
@@ -56,6 +58,21 @@ public class GestionScores {
         }
         
         return tableauJson;
+    }
+    
+    public ArrayList<Score> getTableauScores() {
+        ArrayList<Score> listeScores    = new ArrayList<>();
+        JsonArray tableauScores         = lireFichierScores();
+        
+        for (Object objet : tableauScores.toArray()) {
+            JsonObject jo   = (JsonObject) objet;
+            String pseudo   = jo.get("Pseudo").toString();
+            int nbRetard    = Integer.parseInt(jo.get("Nombre de retard").toString());
+            TypeDifficulte difficulte = TypeDifficulte.valueOf(jo.get("Difficulté").toString());
+            listeScores.add(new Score(pseudo, difficulte, nbRetard));
+        }
+        
+        return listeScores;
     }
     
     public void sauvegarderScore() {

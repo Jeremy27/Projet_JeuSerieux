@@ -6,9 +6,13 @@
 
 package presentation;
 
+import java.util.ArrayList;
 import javax.swing.JDialog;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
+import metier.GestionScores;
+import modele.Score;
+import modele.enumeration.TypeDifficulte;
 
 /**
  *
@@ -16,29 +20,72 @@ import javax.swing.JTable;
  */
 public class FenetreScores extends JDialog {
     
-    private JTabbedPane _jtpOnglets;
-    private JTable      _jtTableau1;
-    private JTable      _jtTableau2;
+    private JTabbedPane     _jtpOnglets;
+    private TableauScores   _jtTabFacile;
+    private TableauScores   _jtTabNormal;
+    private TableauScores   _jtTabDifficile;
 
     public FenetreScores() {
         setTitle("Affichage des scores");
-        setSize(200, 600);
+        setSize(400, 400);
         
         initialiserComposants();
         
         setModal(true);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
     }
     
     private void initialiserComposants() {
-        _jtpOnglets = new JTabbedPane();
-        _jtTableau1 = new JTable();
-        _jtTableau2 = new JTable();
+        _jtpOnglets     = new JTabbedPane();
+        _jtTabFacile    = new TableauScores();
+        _jtTabNormal    = new TableauScores();
+        _jtTabDifficile = new TableauScores();
         
-        _jtpOnglets.addTab("Facile", _jtTableau1);
-        _jtpOnglets.addTab("Normal", _jtTableau2);
+        initialiserTableaux();
+        trierTableaux();
+        
+        _jtpOnglets.addTab(TypeDifficulte.FACILE.name(), new JScrollPane(_jtTabFacile));
+        _jtpOnglets.addTab(TypeDifficulte.NORMAL.name(), new JScrollPane(_jtTabNormal));
+        _jtpOnglets.addTab(TypeDifficulte.DIFFICILE.name(), new JScrollPane(_jtTabDifficile));
         
         add(_jtpOnglets);
+    }
+    
+    private void trierTableaux() {
+        _jtTabDifficile.trierScores();
+        _jtTabFacile.trierScores();
+        _jtTabNormal.trierScores();
+    }
+    
+    private void initialiserTableaux() {
+        GestionScores gScores       = new GestionScores("scores");
+        ArrayList<Score> tabScores  = gScores.getTableauScores();
+        
+        for(Score score : tabScores)
+            traitementScore(score);
+    }
+    
+    private void traitementScore(Score score) {
+        
+        if(score.getDifficulte().equals(TypeDifficulte.DIFFICILE)) {
+            _jtTabDifficile.ajouterScore(score);
+        }else if(score.getDifficulte().equals(TypeDifficulte.FACILE)){
+            _jtTabFacile.ajouterScore(score);
+        }else if(score.getDifficulte().equals(TypeDifficulte.NORMAL)) {
+            _jtTabNormal.ajouterScore(score);
+        }
+    }
+    
+    public void actualiser() {
+        revalidate();
+        repaint();
+    }
+    
+    public static void main(String [] args) {
+        FenetreScores test = new FenetreScores();
+        
+        test.initialiserTableaux();
     }
 }

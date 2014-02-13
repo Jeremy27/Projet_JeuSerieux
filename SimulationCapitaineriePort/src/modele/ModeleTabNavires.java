@@ -69,8 +69,6 @@ public class ModeleTabNavires extends AbstractTableModel {
                 return _navires.get(rowIndex).getNom();
             case 1:
                 return _navires.get(rowIndex).getDateArrivee();
-            case 2:
-                break;
         }
         return _navires.get(rowIndex);
     }

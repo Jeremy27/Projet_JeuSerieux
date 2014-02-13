@@ -27,8 +27,8 @@ import modele.Partie;
 public class TableauNavires extends JTable {
 
     private ModeleTabNavires    _modele;
-    private int             _ligneSelectionnee;
-    private PanelInfoForme  _panelInfo;
+    private int                 _ligneSelectionnee;
+    private PanelInfoForme      _panelInfo;
     
 
     public TableauNavires(String[] titres, PanelInfoForme panelInfo) {

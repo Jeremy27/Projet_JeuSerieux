@@ -12,7 +12,7 @@ import modele.enumeration.TypeDifficulte;
  *
  * @author jeremy
  */
-public class Score {
+public class Score implements Comparable<Score>{
     
     private String          _pseudo;
     private TypeDifficulte  _difficulte;
@@ -62,6 +62,16 @@ public class Score {
         str.append(_nbRetard);
         
         return str.toString();
+    }
+
+    @Override
+    public int compareTo(Score t) {
+        if(this._nbRetard < t._nbRetard)
+            return -1;
+        else if (this._nbRetard > t._nbRetard)
+            return 1;
+        else
+            return 0;
     }
     
     

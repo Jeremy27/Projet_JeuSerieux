@@ -8,7 +8,6 @@ package presentation;
 
 import java.awt.Component;
 import java.awt.Font;
-import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -26,11 +25,16 @@ public class TableauScores extends JTable {
 
     public TableauScores() {
         _modele = new ModeleTabScores();
+        setModel(_modele);
         
     }
     
-    private void ajouterScore(Score score) {
+    public void ajouterScore(Score score) {
         _modele.ajouterScore(score);
+    }
+    
+    public void trierScores() {
+        _modele.trierScores();
     }
     
     @Override
