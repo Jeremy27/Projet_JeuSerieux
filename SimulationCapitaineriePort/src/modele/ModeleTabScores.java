@@ -26,6 +26,11 @@ public class ModeleTabScores extends AbstractTableModel {
         this._scores = new ArrayList<>();
     }
     
+    public ModeleTabScores(ArrayList<String> titres) {
+        _titres = titres;
+        _scores = new ArrayList<>();
+    }
+    
     public void ajouterScore(Score score) {
         _scores.add(score);
     }
@@ -60,6 +65,8 @@ public class ModeleTabScores extends AbstractTableModel {
                 return _scores.get(ligne).getPseudo();
             case 1:
                 return _scores.get(ligne).getNbRetard();
+            case 2:
+                return _scores.get(ligne).getDifficulte();
         }
        return _scores.get(ligne);
     }

@@ -8,6 +8,7 @@ package presentation;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -28,13 +29,27 @@ public class TableauScores extends JTable {
         initialiserModele();
     }
     
+    public TableauScores(ArrayList<String> titres) {
+        initialiserModele(titres);
+    }
+    
     public TableauScores(Score scoreImportant) {
         initialiserModele();
         _scoreImportant = scoreImportant;
     }
     
+    public TableauScores(Score scoreImportant, ArrayList<String> titres) {
+        initialiserModele(titres);
+        _scoreImportant = scoreImportant;
+    }
+    
     private void initialiserModele() {
         _modele = new ModeleTabScores();
+        setModel(_modele);
+    }
+    
+    private void initialiserModele(ArrayList<String> titres) {
+        _modele = new ModeleTabScores(titres);
         setModel(_modele);
     }
     
@@ -53,6 +68,10 @@ public class TableauScores extends JTable {
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int ligne, int colonne) {
         Component c = super.prepareRenderer(renderer, ligne, colonne);
+        System.out.println("====Score important====");
+        System.out.println(_scoreImportant);
+        System.out.println("====A comparer avec====");
+        System.out.println(_modele.getScore(ligne));
         
         if(getSelectedRow() == ligne) {
             c.setBackground(PanelPerso.COULEUR_BACKGROUND_TITRE);

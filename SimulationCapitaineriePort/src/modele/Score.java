@@ -18,6 +18,7 @@ public class Score implements Comparable<Score>{
     private String          _pseudo;
     private TypeDifficulte  _difficulte;
     private int             _nbRetard;
+    private long            _tempsMilliSec;
 
     public Score() {
     }
@@ -26,6 +27,22 @@ public class Score implements Comparable<Score>{
         this._pseudo        = _pseudo;
         this._difficulte    = _difficulte;
         this._nbRetard      = _nbRetard;
+        _tempsMilliSec      = System.currentTimeMillis();
+    }
+    
+    public Score(String _pseudo, TypeDifficulte _difficulte, int _nbRetard, long tempsMilliSec) {
+        this._pseudo        = _pseudo;
+        this._difficulte    = _difficulte;
+        this._nbRetard      = _nbRetard;
+        _tempsMilliSec      = tempsMilliSec;
+    }
+
+    public long getTempsMilliSec() {
+        return _tempsMilliSec;
+    }
+
+    public void setTempsMilliSec(long tempsMilliSec) {
+        this._tempsMilliSec = tempsMilliSec;
     }
     
     public static Score getScoreCourant() {
@@ -68,6 +85,9 @@ public class Score implements Comparable<Score>{
         str.append("\n");
         str.append("Nombre de retard : ");
         str.append(_nbRetard);
+        str.append("\n");
+        str.append("Temps : ");
+        str.append(_tempsMilliSec);
         
         return str.toString();
     }
@@ -85,9 +105,10 @@ public class Score implements Comparable<Score>{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this._pseudo);
-        hash = 67 * hash + Objects.hashCode(this._difficulte);
-        hash = 67 * hash + this._nbRetard;
+        hash = 97 * hash + Objects.hashCode(this._pseudo);
+        hash = 97 * hash + Objects.hashCode(this._difficulte);
+        hash = 97 * hash + this._nbRetard;
+        hash = 97 * hash + (int) (this._tempsMilliSec ^ (this._tempsMilliSec >>> 32));
         return hash;
     }
 
@@ -109,6 +130,11 @@ public class Score implements Comparable<Score>{
         if (this._nbRetard != other._nbRetard) {
             return false;
         }
+        if (this._tempsMilliSec != other._tempsMilliSec) {
+            return false;
+        }
         return true;
     }
+
+   
 }

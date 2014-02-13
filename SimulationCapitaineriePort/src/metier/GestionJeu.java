@@ -118,9 +118,9 @@ public class GestionJeu extends Thread {
         
         if(!Partie._abandon) {
             GestionScores gScores = new GestionScores("scores");
-            gScores.sauvegarderScore();
+            Score score = gScores.sauvegarderScore();
             
-            FenetreScores fScores = new FenetreScores(Score.getScoreCourant());
+            FenetreScores fScores = new FenetreScores(score);
         }
     }
 }

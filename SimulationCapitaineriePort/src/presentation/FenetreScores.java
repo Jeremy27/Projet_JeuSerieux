@@ -6,13 +6,10 @@
 
 package presentation;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import metier.GestionScores;
 import modele.Score;
 import modele.enumeration.TypeDifficulte;
@@ -41,12 +38,20 @@ public class FenetreScores extends JDialog {
         setVisible(true);
     }
     
+    private ArrayList<String> getTitresAvecDifficulte() {
+        ArrayList<String> titres = new ArrayList<>();
+        titres.add("Pseudo");
+        titres.add("Nombre de retard");
+        titres.add("Difficulté");
+        return titres;
+    }
+    
     private void initialiserComposants(Score score) {
         _jtpOnglets         = new JTabbedPane();
         _jtTabFacile        = new TableauScores();
         _jtTabNormal        = new TableauScores();
         _jtTabDifficile     = new TableauScores();
-        _jtTabTousLesScores = new TableauScores();
+        _jtTabTousLesScores = new TableauScores(getTitresAvecDifficulte());
         
         
         definirScoreImportant(score);
@@ -70,7 +75,7 @@ public class FenetreScores extends JDialog {
             } else if(score.getDifficulte().equals(TypeDifficulte.NORMAL)) {
                 _jtTabNormal = new TableauScores(score);
             }
-            _jtTabTousLesScores = new TableauScores(score);
+            _jtTabTousLesScores = new TableauScores(score, getTitresAvecDifficulte());
         }
     }
     
