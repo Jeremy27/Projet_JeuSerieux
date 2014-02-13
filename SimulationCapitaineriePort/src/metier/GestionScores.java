@@ -15,7 +15,6 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
 import modele.Partie;
 import modele.Score;
 import modele.enumeration.TypeDifficulte;
@@ -31,11 +30,16 @@ public class GestionScores {
     
     public GestionScores() {
         _fichierScores  = new Fichier("scores");
-        _score          = new Score(Partie._pseudo, Partie._difficulte, Partie._nbRetards);
+        initialiserScore();
     }
     
     public GestionScores(String nomFichier) {
-        _fichierScores = new Fichier(nomFichier);
+        _fichierScores  = new Fichier(nomFichier);
+        initialiserScore();
+    }
+    
+    private void initialiserScore() {
+        _score = new Score(Partie._pseudo, Partie._difficulte, Partie._nbRetards);
     }
     
     public JsonObject genererObjetJson() {
