@@ -26,10 +26,6 @@ public class DeplacementBateaux extends Thread{
         _bateau = bateau;
         _formes = formes;
         _map = map;
-        if(bateau.getPosition().getX()==-1 && bateau.getPosition().getY()==-1) {
-            bateau.setPosition(DEPART_DEFAUT);
-            _map.refresh();
-        }
     }
     
     @Override
@@ -43,6 +39,11 @@ public class DeplacementBateaux extends Thread{
     }
     
     public ArrayList<PointPathFinding> deplacer() {
+        if(_bateau.getPosition().getX()==-1 && _bateau.getPosition().getY()==-1) {
+            _bateau.setPosition(DEPART_DEFAUT);
+            _map.refresh();
+        }
+        
         double x = _bateau.getPosition().getX();
         double y = _bateau.getPosition().getY();
         
