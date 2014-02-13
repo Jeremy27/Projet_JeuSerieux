@@ -8,6 +8,7 @@ package presentation;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -22,11 +23,34 @@ import modele.Score;
 public class TableauScores extends JTable {
     
     private ModeleTabScores _modele;
+    private Score           _scoreImportant;
 
     public TableauScores() {
+        initialiserModele();
+    }
+    
+    public TableauScores(ArrayList<String> titres) {
+        initialiserModele(titres);
+    }
+    
+    public TableauScores(Score scoreImportant) {
+        initialiserModele();
+        _scoreImportant = scoreImportant;
+    }
+    
+    public TableauScores(Score scoreImportant, ArrayList<String> titres) {
+        initialiserModele(titres);
+        _scoreImportant = scoreImportant;
+    }
+    
+    private void initialiserModele() {
         _modele = new ModeleTabScores();
         setModel(_modele);
-        
+    }
+    
+    private void initialiserModele(ArrayList<String> titres) {
+        _modele = new ModeleTabScores(titres);
+        setModel(_modele);
     }
     
     public void ajouterScore(Score score) {
@@ -37,15 +61,25 @@ public class TableauScores extends JTable {
         _modele.trierScores();
     }
     
+    public void setScoreImportant(Score score) {
+        _scoreImportant = score;
+    }
+    
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int ligne, int colonne) {
         Component c = super.prepareRenderer(renderer, ligne, colonne);
+        System.out.println("====Score important====");
+        System.out.println(_scoreImportant);
+        System.out.println("====A comparer avec====");
+        System.out.println(_modele.getScore(ligne));
         
         if(getSelectedRow() == ligne) {
             c.setBackground(PanelPerso.COULEUR_BACKGROUND_TITRE);
             c.setForeground(PanelPerso.COULEUR_ECRITURE);
         } else {
-            if(ligne%2 == 0)
+            if(_modele.getScore(ligne).equals(_scoreImportant))
+                c.setBackground(PanelPerso.COULEUR_RETARD);
+            else if(ligne%2 == 0)
                 c.setBackground(PanelPerso.COULEUR_PANEL1);
             else
                 c.setBackground(PanelPerso.COULEUR_PANEL2);

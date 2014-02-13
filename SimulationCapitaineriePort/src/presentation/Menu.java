@@ -90,7 +90,7 @@ public class Menu extends JMenuBar {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                FenetreScores fenetreScores = new FenetreScores();
+                FenetreScores fenetreScores = new FenetreScores(null);
             }
         });
     }

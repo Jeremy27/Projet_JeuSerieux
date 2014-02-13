@@ -12,8 +12,10 @@ import java.util.logging.Logger;
 import modele.Instance;
 import modele.Navire;
 import modele.Partie;
+import modele.Score;
 import modele.enumeration.TypeMessage;
 import modele.enumeration.TypeNavire;
+import presentation.FenetreScores;
 import presentation.PanelInfoJeu;
 import presentation.PanelMap;
 import presentation.PanelNavires;
@@ -42,6 +44,53 @@ public class GestionJeu extends Thread {
     public void setInstance(Instance instance) {
         _instance = instance;
     }
+    
+    private void majNaviresArrives(ArrayList<Navire> naviresArrives) {
+        _naviresArrives.ajouterNavires(naviresArrives);
+    }
+    
+    private void afficherArrivesDansLog(ArrayList<Navire> naviresArrives) {
+        if (!naviresArrives.isEmpty()) {
+            for (Navire navire : naviresArrives) {
+                if (navire.getType() == TypeNavire.FERRY) {
+                    _infoJeu.ajoutMessage(navire.getNom() + "  " + navire.getType(), TypeMessage.AVERTISSEMENT);
+                } else {
+                    _infoJeu.ajoutMessage(navire.getNom() + "  " + navire.getType(), TypeMessage.NORMAL);
+                }
+            }
+            _infoJeu.ajoutMessage("Navires arrivés le " + Partie._tempsCourant + " : ", TypeMessage.IMPORTANT);
+        }
+    }
+    
+    private void majNaviresArrivant(ArrayList<Navire> naviresArrivant) {
+        _naviresArrivant.ajouterNavires(_instance.getNavires(Partie._tempsCourant+1));
+        _naviresArrivant.supprimerNavires(Partie._tempsCourant);
+    }
+    
+    private void majNbRetards() {
+        Partie._nbRetards += _naviresArrives.getNbNaviresEnRetard();
+    }
+    
+    private void actualiserPanels() {
+        _partie.actualiser();
+        _naviresArrivant.actualiser();
+        _naviresArrives.actualiser();
+    }
+    
+    private void incrementerTemps(int compteur) {
+        if(compteur != 0) {
+            Partie._tempsCourant++;
+        }
+    }
+    
+    private int pausethread(int sleep) {
+        try {
+            sleep(sleep);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GestionJeu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sleep;
+    }
 
     @Override
     public void run() {
@@ -52,41 +101,18 @@ public class GestionJeu extends Thread {
         while(Partie._tempsCourant <= Partie._tempsFin) {
             
             if(compteur%Partie._tempsTour == 0) {
-                if(compteur != 0) {
-                    Partie._tempsCourant++;
-                }
+                incrementerTemps(compteur);
                 
-                // Panel navires arrivés
                 naviresArrives = _instance.getNavires(Partie._tempsCourant);
-                _naviresArrives.ajouterNavires(_instance.getNavires(Partie._tempsCourant));
-
-                if(!naviresArrives.isEmpty()) {
-                    for(Navire navire : naviresArrives)
-                        if(navire.getType() == TypeNavire.FERRY)
-                            _infoJeu.ajoutMessage(navire.getNom() + "  " + navire.getType(), TypeMessage.AVERTISSEMENT);
-                        else
-                            _infoJeu.ajoutMessage(navire.getNom() + "  " + navire.getType(), TypeMessage.NORMAL);
-                    _infoJeu.ajoutMessage("Navires arrivés le "+Partie._tempsCourant+" : ", TypeMessage.IMPORTANT);
-                }
-
-                // Panel navires arrivant
-                _naviresArrivant.ajouterNavires(_instance.getNavires(Partie._tempsCourant+1));
-                _naviresArrivant.supprimerNavires(Partie._tempsCourant);
-
-                // Calcul des retards
-                Partie._nbRetards += _naviresArrives.getNbNaviresEnRetard();
                 
-                _partie.actualiser();
-                _naviresArrivant.actualiser();
-                _naviresArrives.actualiser();
+                majNaviresArrives(naviresArrives);
+                afficherArrivesDansLog(naviresArrives);
+                majNaviresArrivant(naviresArrives);
+                majNbRetards();
+                actualiserPanels();
             }
             
-            try {
-                sleep(sleep);
-                compteur+=sleep;
-            } catch (InterruptedException ex) {
-                Logger.getLogger(GestionJeu.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            compteur += pausethread(sleep);
             
             if(Partie._abandon) {
                 break;
@@ -95,8 +121,9 @@ public class GestionJeu extends Thread {
         
         if(!Partie._abandon) {
             GestionScores gScores = new GestionScores("scores");
-            gScores.sauvegarderScore();
-            System.out.println("Sauvegarde des scores");
+            Score score = gScores.sauvegarderScore();
+            
+            FenetreScores fScores = new FenetreScores(score);
         }
     }
 }

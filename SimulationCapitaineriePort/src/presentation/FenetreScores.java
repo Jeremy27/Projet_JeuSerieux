@@ -24,12 +24,13 @@ public class FenetreScores extends JDialog {
     private TableauScores   _jtTabFacile;
     private TableauScores   _jtTabNormal;
     private TableauScores   _jtTabDifficile;
+    private TableauScores   _jtTabTousLesScores;
 
-    public FenetreScores() {
+    public FenetreScores(Score score) {
         setTitle("Affichage des scores");
         setSize(400, 400);
         
-        initialiserComposants();
+        initialiserComposants(score);
         
         setModal(true);
         setLocationRelativeTo(null);
@@ -37,15 +38,27 @@ public class FenetreScores extends JDialog {
         setVisible(true);
     }
     
-    private void initialiserComposants() {
-        _jtpOnglets     = new JTabbedPane();
-        _jtTabFacile    = new TableauScores();
-        _jtTabNormal    = new TableauScores();
-        _jtTabDifficile = new TableauScores();
+    private ArrayList<String> getTitresAvecDifficulte() {
+        ArrayList<String> titres = new ArrayList<>();
+        titres.add("Pseudo");
+        titres.add("Nombre de retard");
+        titres.add("Difficulté");
+        return titres;
+    }
+    
+    private void initialiserComposants(Score score) {
+        _jtpOnglets         = new JTabbedPane();
+        _jtTabFacile        = new TableauScores();
+        _jtTabNormal        = new TableauScores();
+        _jtTabDifficile     = new TableauScores();
+        _jtTabTousLesScores = new TableauScores(getTitresAvecDifficulte());
         
-        initialiserTableaux();
+        
+        definirScoreImportant(score);
+        remplirTableaux();
         trierTableaux();
         
+        _jtpOnglets.addTab("Tous les scores", new JScrollPane(_jtTabTousLesScores));
         _jtpOnglets.addTab(TypeDifficulte.FACILE.name(), new JScrollPane(_jtTabFacile));
         _jtpOnglets.addTab(TypeDifficulte.NORMAL.name(), new JScrollPane(_jtTabNormal));
         _jtpOnglets.addTab(TypeDifficulte.DIFFICILE.name(), new JScrollPane(_jtTabDifficile));
@@ -53,29 +66,45 @@ public class FenetreScores extends JDialog {
         add(_jtpOnglets);
     }
     
+    private void definirScoreImportant(Score score) {
+        if(score != null) {
+            if(score.getDifficulte().equals(TypeDifficulte.DIFFICILE)) {
+                _jtTabDifficile = new TableauScores(score);
+            } else if(score.getDifficulte().equals(TypeDifficulte.FACILE)) {
+                _jtTabFacile = new TableauScores(score);
+            } else if(score.getDifficulte().equals(TypeDifficulte.NORMAL)) {
+                _jtTabNormal = new TableauScores(score);
+            }
+            _jtTabTousLesScores = new TableauScores(score, getTitresAvecDifficulte());
+        }
+    }
+    
     private void trierTableaux() {
+        _jtTabTousLesScores.trierScores();
         _jtTabDifficile.trierScores();
         _jtTabFacile.trierScores();
         _jtTabNormal.trierScores();
     }
     
-    private void initialiserTableaux() {
+    private void remplirTableaux() {
         GestionScores gScores       = new GestionScores("scores");
         ArrayList<Score> tabScores  = gScores.getTableauScores();
         
-        for(Score score : tabScores)
+        for(Score score : tabScores) {
             traitementScore(score);
+        }
     }
     
     private void traitementScore(Score score) {
         
         if(score.getDifficulte().equals(TypeDifficulte.DIFFICILE)) {
             _jtTabDifficile.ajouterScore(score);
-        }else if(score.getDifficulte().equals(TypeDifficulte.FACILE)){
+        } else if(score.getDifficulte().equals(TypeDifficulte.FACILE)){
             _jtTabFacile.ajouterScore(score);
-        }else if(score.getDifficulte().equals(TypeDifficulte.NORMAL)) {
+        } else if(score.getDifficulte().equals(TypeDifficulte.NORMAL)) {
             _jtTabNormal.ajouterScore(score);
         }
+        _jtTabTousLesScores.ajouterScore(score);
     }
     
     public void actualiser() {
@@ -84,8 +113,8 @@ public class FenetreScores extends JDialog {
     }
     
     public static void main(String [] args) {
-        FenetreScores test = new FenetreScores();
+        FenetreScores test = new FenetreScores(null);
         
-        test.initialiserTableaux();
+        test.remplirTableaux();
     }
 }

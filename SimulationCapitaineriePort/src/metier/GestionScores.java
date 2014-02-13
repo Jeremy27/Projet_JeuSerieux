@@ -15,8 +15,6 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
-import modele.Partie;
 import modele.Score;
 import modele.enumeration.TypeDifficulte;
 
@@ -31,11 +29,16 @@ public class GestionScores {
     
     public GestionScores() {
         _fichierScores  = new Fichier("scores");
-        _score          = new Score(Partie._pseudo, Partie._difficulte, Partie._nbRetards);
+        initialiserScore();
     }
     
     public GestionScores(String nomFichier) {
-        _fichierScores = new Fichier(nomFichier);
+        _fichierScores  = new Fichier(nomFichier);
+        initialiserScore();
+    }
+    
+    private void initialiserScore() {
+        _score = Score.getScoreCourant();
     }
     
     public JsonObject genererObjetJson() {
@@ -43,7 +46,8 @@ public class GestionScores {
         JsonObject objetJson        = factory.createObjectBuilder()
             .add("Pseudo", _score.getPseudo())
             .add("Difficulté", _score.getDifficulte().name())
-            .add("Nombre de retard", _score.getNbRetard()).build();
+            .add("Nombre de retard", _score.getNbRetard())
+            .add("Temps", _score.getTempsMilliSec()).build();
         
         return objetJson;
     }
@@ -69,13 +73,14 @@ public class GestionScores {
             String pseudo   = jo.get("Pseudo").toString();
             int nbRetard    = Integer.parseInt(jo.get("Nombre de retard").toString());
             TypeDifficulte difficulte = TypeDifficulte.valueOf(jo.get("Difficulté").toString());
-            listeScores.add(new Score(pseudo, difficulte, nbRetard));
+            long tempsMilliSec        = Long.parseLong(jo.get("Temps").toString());
+            listeScores.add(new Score(pseudo, difficulte, nbRetard, tempsMilliSec));
         }
         
         return listeScores;
     }
     
-    public void sauvegarderScore() {
+    public Score sauvegarderScore() {
         JsonArrayBuilder nouveauTableau = Json.createArrayBuilder();
         
         JsonObject objetJson            = genererObjetJson();
@@ -87,6 +92,8 @@ public class GestionScores {
         nouveauTableau.add(objetJson);
         
         _fichierScores.ecrire(nouveauTableau.build().toString(), false);
+        
+        return _score;
     }
     
     public ArrayList<Object[]> recupererScores() {

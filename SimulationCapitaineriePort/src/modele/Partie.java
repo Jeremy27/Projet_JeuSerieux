@@ -56,13 +56,13 @@ public class Partie {
     private void initialiserNormal() {
         _nbMaxNavires   = 6;
         _nbMinNavires   = 1;
-        _tempsTour      = 30000;
+        _tempsTour      = 3000;
     }
     
     private void initialiserDifficile() {
         _nbMaxNavires   = 8;
         _nbMinNavires   = 2;
-        _tempsTour      = 30000;
+        _tempsTour      = 3000;
     }
     
     public static String toStringFacile() {
