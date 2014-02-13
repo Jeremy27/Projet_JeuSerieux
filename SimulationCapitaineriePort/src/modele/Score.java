@@ -6,6 +6,7 @@
 
 package modele;
 
+import java.util.Objects;
 import modele.enumeration.TypeDifficulte;
 
 /**
@@ -18,10 +19,17 @@ public class Score implements Comparable<Score>{
     private TypeDifficulte  _difficulte;
     private int             _nbRetard;
 
+    public Score() {
+    }
+    
     public Score(String _pseudo, TypeDifficulte _difficulte, int _nbRetard) {
         this._pseudo        = _pseudo;
         this._difficulte    = _difficulte;
         this._nbRetard      = _nbRetard;
+    }
+    
+    public static Score getScoreCourant() {
+        return new Score(Partie._pseudo, Partie._difficulte, Partie._nbRetards);
     }
 
     public TypeDifficulte getDifficulte() {
@@ -73,6 +81,34 @@ public class Score implements Comparable<Score>{
         else
             return 0;
     }
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this._pseudo);
+        hash = 67 * hash + Objects.hashCode(this._difficulte);
+        hash = 67 * hash + this._nbRetard;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Score other = (Score) obj;
+        if (!Objects.equals(this._pseudo, other._pseudo)) {
+            return false;
+        }
+        if (this._difficulte != other._difficulte) {
+            return false;
+        }
+        if (this._nbRetard != other._nbRetard) {
+            return false;
+        }
+        return true;
+    }
 }

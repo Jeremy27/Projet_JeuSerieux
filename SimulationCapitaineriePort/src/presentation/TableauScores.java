@@ -22,11 +22,20 @@ import modele.Score;
 public class TableauScores extends JTable {
     
     private ModeleTabScores _modele;
+    private Score           _scoreImportant;
 
     public TableauScores() {
+        initialiserModele();
+    }
+    
+    public TableauScores(Score scoreImportant) {
+        initialiserModele();
+        _scoreImportant = scoreImportant;
+    }
+    
+    private void initialiserModele() {
         _modele = new ModeleTabScores();
         setModel(_modele);
-        
     }
     
     public void ajouterScore(Score score) {
@@ -37,6 +46,10 @@ public class TableauScores extends JTable {
         _modele.trierScores();
     }
     
+    public void setScoreImportant(Score score) {
+        _scoreImportant = score;
+    }
+    
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int ligne, int colonne) {
         Component c = super.prepareRenderer(renderer, ligne, colonne);
@@ -45,7 +58,9 @@ public class TableauScores extends JTable {
             c.setBackground(PanelPerso.COULEUR_BACKGROUND_TITRE);
             c.setForeground(PanelPerso.COULEUR_ECRITURE);
         } else {
-            if(ligne%2 == 0)
+            if(_modele.getScore(ligne).equals(_scoreImportant))
+                c.setBackground(PanelPerso.COULEUR_RETARD);
+            else if(ligne%2 == 0)
                 c.setBackground(PanelPerso.COULEUR_PANEL1);
             else
                 c.setBackground(PanelPerso.COULEUR_PANEL2);

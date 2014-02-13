@@ -48,6 +48,10 @@ public class ModeleTabScores extends AbstractTableModel {
     public int getColumnCount() {
         return _titres.size();
     }
+    
+    public Score getScore(int ligne) {
+        return _scores.get(ligne);
+    }
 
     @Override
     public Object getValueAt(int ligne, int colonne) {
@@ -60,4 +64,7 @@ public class ModeleTabScores extends AbstractTableModel {
        return _scores.get(ligne);
     }
     
+    public ArrayList<Score> getScores() {
+        return _scores;
+    }
 }

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import modele.Instance;
 import modele.Navire;
 import modele.Partie;
+import modele.Score;
 import modele.enumeration.TypeMessage;
 import modele.enumeration.TypeNavire;
 import presentation.FenetreScores;
@@ -119,7 +120,7 @@ public class GestionJeu extends Thread {
             GestionScores gScores = new GestionScores("scores");
             gScores.sauvegarderScore();
             
-            FenetreScores fScores = new FenetreScores();
+            FenetreScores fScores = new FenetreScores(Score.getScoreCourant());
         }
     }
 }
