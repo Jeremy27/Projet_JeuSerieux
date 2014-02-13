@@ -85,7 +85,7 @@ public class MetierMap {
                 forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
             } else if(type.equals(TypeShape.QUAI.name())) {
                 c = QUAICOLOR;
-                fill = true;
+                fill = false;
                 forme = new Quai(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
             } else if(type.equals(TypeShape.TERMINAL.name())) {
                 c = TERMINALCOLOR;
@@ -123,7 +123,7 @@ public class MetierMap {
             if(littoral!=null) {
                 _littoraux.add(forme);
             }
-            //if(forme.getId()==71155277) {
+            //if(forme.getId()!=238953919) {
                 _coordonneesDessin.add(forme);
             //}
             

@@ -68,7 +68,7 @@ public class PanelMap extends JPanel{
     
     private final PanelInfoForme _panelInfoForme;
     
-    private Navire[] _navires;
+    private ArrayList<Navire> _navires = new ArrayList<>();
     
     private String _infosMouseOver="";
     private String _coordonneesMouseOver="";
@@ -224,11 +224,8 @@ public class PanelMap extends JPanel{
         }
     }
     
-    public void setNavires(Navire[] navires) {
-        _navires = navires;
-        for(Navire n:_navires) {
-            _metier.ajoutForme(n);
-        }
+    public void ajoutNavire(Navire navire) {
+        _navires.add(navire);
     }
     
     public void augmenterZoom() {
@@ -351,11 +348,6 @@ public class PanelMap extends JPanel{
 //                            }
 //                        });
                         t.start();
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(PanelMap.class.getName()).log(Level.SEVERE, null, ex);
-                        }
                         //resultat = DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(_pointClick.getX()/_coefX+_mapGauche, (h-_pointClick.getY())/_coefY+_mapHaut), _metier.getCoordonneesDessin(), _coefX, _coefY);
 //                        for(PointPathFinding p:resultat) {
 //                            
@@ -366,6 +358,9 @@ public class PanelMap extends JPanel{
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
                         _navireSelectionne = n;
+                        _panelInfoForme.setInformations(n.getDonneesFormates());
+                        _panelInfoForme.setNomPanel("Navire");
+                        _panelInfoForme.majInformations();
                         setTypeColorer(n.getTypeMachandise());
                     } else  {
                         setTypeColorer(null);

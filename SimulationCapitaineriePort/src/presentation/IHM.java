@@ -101,7 +101,7 @@ public class IHM extends JFrame {
         _infoJeu.ajoutMessage("test", TypeMessage.NORMAL);
         
         _map = new PanelMap(_infoForme);
-        _map.setNavires(new Navire[]{n/*1, n2, n3, n4*/});
+        _map.ajoutNavire(n);
         _map.initEvents();
         _map.lierMapRealite();
         add(_map, BorderLayout.CENTER);
