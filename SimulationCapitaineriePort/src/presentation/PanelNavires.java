@@ -17,12 +17,12 @@ import modele.Navire;
  */
 public class PanelNavires extends PanelPerso {
 
-    private Tableau _tableau;
+    private TableauNavires _tableau;
     
     public PanelNavires(String nomPanel, String[] titres, PanelInfoForme panelInfo) {
         super(nomPanel);
         
-        _tableau = new Tableau(titres, panelInfo);
+        _tableau = new TableauNavires(titres, panelInfo);
         add(new JScrollPane(_tableau), BorderLayout.CENTER);
     }
     
@@ -37,6 +37,14 @@ public class PanelNavires extends PanelPerso {
     
     public int getNbNaviresEnRetard() {
         return _tableau.getNbNaviresEnRetard();
+    }
+    
+    public ArrayList<Navire> getNavires() {
+        return _tableau.getNavires();
+    }
+    
+    public Navire getNavireSelectionne() {
+        return _tableau.getNavireSelectionne();
     }
     
     public void remiseAZero() {

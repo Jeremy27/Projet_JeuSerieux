@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
-import modele.ModeleJTable;
+import modele.ModeleTabNavires;
 import modele.Navire;
 import modele.Partie;
 
@@ -24,16 +24,16 @@ import modele.Partie;
  *
  * @author jeremy
  */
-public class Tableau extends JTable {
+public class TableauNavires extends JTable {
 
-    private ModeleJTable    _modele;
+    private ModeleTabNavires    _modele;
     private int             _ligneSelectionnee;
     private PanelInfoForme  _panelInfo;
     
 
-    public Tableau(String[] titres, PanelInfoForme panelInfo) {
+    public TableauNavires(String[] titres, PanelInfoForme panelInfo) {
         _panelInfo          = panelInfo;
-        _modele             = new ModeleJTable(titres, new ArrayList<Navire>());
+        _modele             = new ModeleTabNavires(titres, new ArrayList<Navire>());
         _ligneSelectionnee  = -1;
         setModel(_modele);
         initialiserEvent();
@@ -42,6 +42,10 @@ public class Tableau extends JTable {
     public void setNavires(ArrayList<Navire> navires) {
         for(Navire navire : navires)
             _modele.ajouterNavire(navire);
+    }
+    
+    public ArrayList<Navire> getNavires() {
+        return _modele.getNavires();
     }
     
     public void ajouterNavire(Navire n) {

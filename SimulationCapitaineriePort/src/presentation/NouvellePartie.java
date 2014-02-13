@@ -26,6 +26,7 @@ import metier.GestionInstance;
 import metier.GestionJeu;
 import modele.Instance;
 import modele.Partie;
+import modele.enumeration.TypeDifficulte;
 
 /**
  *
@@ -62,7 +63,7 @@ public class NouvellePartie extends JDialog {
         _jlPseudo       = new JLabel("Pseudo : ");
         _jlDifficulte   = new JLabel("Difficulté : ");
         _jtfPseuso      = new JTextField("Joueur");
-        _jcbDifficulte  = new JComboBox(new Object[] {"Facile", "Normal", "Difficile"});
+        _jcbDifficulte  = new JComboBox(new Object[] {TypeDifficulte.FACILE, TypeDifficulte.NORMAL, TypeDifficulte.DIFFICILE});
         _jbAnnuler      = new JButton("Annuler");
         _jbCommencer    = new JButton("Commencer");
         _jlInfos        = new JLabel();
@@ -135,11 +136,11 @@ public class NouvellePartie extends JDialog {
     private void majInfos() {
         StringBuilder str = new StringBuilder();
         str.append("<html><body>");
-        if(_jcbDifficulte.getSelectedItem().equals("Facile")){
+        if(_jcbDifficulte.getSelectedItem().equals(TypeDifficulte.FACILE)){
             str.append(Partie.toStringFacile());
-        } else if(_jcbDifficulte.getSelectedItem().equals("Normal")) {
+        } else if(_jcbDifficulte.getSelectedItem().equals(TypeDifficulte.NORMAL)) {
             str.append(Partie.toStringNormal());
-        } else if (_jcbDifficulte.getSelectedItem().equals("Difficile")) {
+        } else if (_jcbDifficulte.getSelectedItem().equals(TypeDifficulte.DIFFICILE)) {
             str.append(Partie.toStringDifficile());
         }
         str.append("</body></html>");
@@ -164,7 +165,7 @@ public class NouvellePartie extends JDialog {
         
         GestionJeu gestionJeu = new GestionJeu(_ihm._naviresArrives, _ihm._naviresArrivant, _ihm._infoJeu, _ihm._partie);
         
-        Partie nouvellePartie = new Partie(_jcbDifficulte.getSelectedItem().toString(), getPseudo());
+        Partie nouvellePartie = new Partie((TypeDifficulte)_jcbDifficulte.getSelectedItem(), getPseudo());
         
         gestionJeu.setInstance(creerInstance());
         gestionJeu.start();
