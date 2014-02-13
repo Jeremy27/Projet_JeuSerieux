@@ -6,23 +6,25 @@
 
 package modele;
 
+import modele.enumeration.TypeDifficulte;
+
 /**
  *
  * @author jeremy
  */
 public class Partie {
     
-    public static String  _pseudo;
-    public static String  _difficulte   = "Facile";
-    public static int     _tempsCourant = 0;
-    public static int     _tempsFin     = 100;
-    public static int     _nbRetards;
-    public static int     _nbMaxNavires;
-    public static int     _nbMinNavires;
-    public static int     _tempsTour;
-    public static boolean _abandon;
+    public static String            _pseudo;
+    public static TypeDifficulte    _difficulte   = TypeDifficulte.FACILE;
+    public static int               _tempsCourant = 0;
+    public static int               _tempsFin     = 100;
+    public static int               _nbRetards;
+    public static int               _nbMaxNavires;
+    public static int               _nbMinNavires;
+    public static int               _tempsTour;
+    public static boolean           _abandon;
     
-    public Partie(String difficulte, String pseudo) {
+    public Partie(TypeDifficulte difficulte, String pseudo) {
         _difficulte     = difficulte;
         _pseudo         = pseudo;
         _abandon        = false;
@@ -33,13 +35,13 @@ public class Partie {
     
     public final void initialiserDifficulte() {
         switch (_difficulte) {
-            case "Facile":
+            case FACILE :
                 initialiserFacile();
                 break;
-            case "Normal":
+            case NORMAL:
                 initialiserNormal();
                 break;
-            case "Difficile":
+            case DIFFICILE:
                 initialiserDifficile();
                 break;
         }

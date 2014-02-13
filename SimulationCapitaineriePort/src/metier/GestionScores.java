@@ -8,6 +8,7 @@ package metier;
 
 import accesAuDonnees.Fichier;
 import java.io.StringReader;
+import java.util.ArrayList;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -15,6 +16,7 @@ import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import modele.Partie;
+import modele.Score;
 
 /**
  *
@@ -23,9 +25,11 @@ import modele.Partie;
 public class GestionScores {
     
     private Fichier _fichierScores;
+    private Score   _score;
     
     public GestionScores() {
-        _fichierScores = new Fichier("scores");
+        _fichierScores  = new Fichier("scores");
+        _score          = new Score(Partie._pseudo, Partie._difficulte, Partie._nbRetards);
     }
     
     public GestionScores(String nomFichier) {
@@ -35,9 +39,9 @@ public class GestionScores {
     public JsonObject genererObjetJson() {
         JsonBuilderFactory factory  = Json.createBuilderFactory(null);
         JsonObject objetJson        = factory.createObjectBuilder()
-            .add("Pseudo", Partie._pseudo)
-            .add("Difficulté", Partie._difficulte)
-            .add("Nombre de retard", Partie._nbRetards+"").build();
+            .add("Pseudo", _score.getPseudo())
+            .add("Difficulté", _score.getDifficulte().name())
+            .add("Nombre de retard", _score.getNbRetard()).build();
         
         return objetJson;
     }
@@ -66,5 +70,11 @@ public class GestionScores {
         nouveauTableau.add(objetJson);
         
         _fichierScores.ecrire(nouveauTableau.build().toString(), false);
+    }
+    
+    public ArrayList<Object[]> recupererScores() {
+        ArrayList<Object[]> listeScores = new ArrayList<>();
+        
+        return listeScores;
     }
 }

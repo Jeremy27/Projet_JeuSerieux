@@ -85,5 +85,13 @@ public class Menu extends JMenuBar {
                 NouvellePartie nouvellePartie = new NouvellePartie(_ihm);
             }
         });
+        
+        _partieScores.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                FenetreScores fenetreScores = new FenetreScores();
+            }
+        });
     }
 }
