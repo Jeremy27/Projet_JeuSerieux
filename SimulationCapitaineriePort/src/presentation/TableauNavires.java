@@ -29,6 +29,7 @@ public class TableauNavires extends JTable {
     private ModeleTabNavires    _modele;
     private int             _ligneSelectionnee;
     private PanelInfoForme  _panelInfo;
+    private PanelMap _map;
     
 
     public TableauNavires(String[] titres, PanelInfoForme panelInfo) {
@@ -37,6 +38,10 @@ public class TableauNavires extends JTable {
         _ligneSelectionnee  = -1;
         setModel(_modele);
         initialiserEvent();
+    }
+    
+    public void setMap(PanelMap map) {
+        _map = map;
     }
     
     public void setNavires(ArrayList<Navire> navires) {
@@ -75,8 +80,10 @@ public class TableauNavires extends JTable {
     private void majPanelNavire() {
         if(_ligneSelectionnee != getSelectedRow()) {
             _ligneSelectionnee = getSelectedRow();
+            Navire n = _modele.getNavire(_ligneSelectionnee);
+            _map.setNavireSelectionne(n);
             _panelInfo.setNomPanel("Navire");
-            _panelInfo.setInformations(_modele.getNavire(_ligneSelectionnee).getDonneesFormates());
+            _panelInfo.setInformations(n.getDonneesFormates());
             _panelInfo.majInformations();
         }
     }

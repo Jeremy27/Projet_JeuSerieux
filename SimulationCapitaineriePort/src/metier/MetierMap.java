@@ -15,6 +15,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 import modele.Forme;
+import modele.Navire;
 import modele.Quai;
 import modele.Terminal;
 import modele.enumeration.TypeMarchandise;
@@ -162,6 +163,20 @@ public class MetierMap {
     
     public void ajoutForme(Forme f) {
         _coordonneesDessin.add(f);
+    }
+    
+    public void enleverNavires() {
+        ArrayList<Navire> navires = new ArrayList<>();
+        for(Forme f:_coordonneesDessin) {
+            if(f instanceof Navire) {
+                navires.add((Navire)f);
+            }
+        }
+        
+        while(!navires.isEmpty()) {
+            _coordonneesDessin.remove(navires.get(0));
+            navires.remove(0);
+        }
     }
     
     public Forme getForme(String nom) {

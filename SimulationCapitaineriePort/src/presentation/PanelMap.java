@@ -71,12 +71,15 @@ public class PanelMap extends JPanel{
     private String _coordonneesMouseOver="";
     private Navire _navireSelectionne=null;
     
+    private PanelNavires _naviresArrives;
+    
     ArrayList<PointPathFinding> resultat = new ArrayList<>();
     
-    public PanelMap(PanelInfoForme panelInfo) {
+    public PanelMap(PanelInfoForme panelInfo, PanelNavires naviresArrives) {
         _metier = new MetierMap(this, panelInfo);
         _metier.construireFormes();
         _panelInfoForme = panelInfo;
+        _naviresArrives = naviresArrives;
     }
     
     public void lierMapRealite() {
@@ -199,13 +202,13 @@ public class PanelMap extends JPanel{
         }
         
         g2.setColor(Color.RED);
-        for(Navire navire:_navires) {
+        mergeNavires();
+        for(Navire navire:_naviresArrives.getNavires()) {
             
             Path2D p = navire.getPath(m);
             if(p!=null) {
                 g2.fill(p);
             }
-            
         }
         
         g2.setFont(new Font("SansSerif", Font.BOLD, 10));
@@ -218,6 +221,19 @@ public class PanelMap extends JPanel{
                 g2.setFont(new Font("SansSerif", Font.BOLD, (int)(5*_zoomEtat)));
                 g2.drawString(cpt+"", (float)((p.getPoint().getX()-_mapGauche)*_coefX), (float)(h-((p.getPoint().getY()-_mapHaut)*_coefY)));
                 cpt++;
+            }
+        }
+    }
+    
+    public void mergeNavires() {
+        for(Navire n:_naviresArrives.getNavires()) {
+            if(!_navires.contains(n)) {
+                if(n.getPosition()==null) {
+                    n.setPosition(new Point2D.Double(-1, -1));
+                    n.constructionNavire();
+                }
+                _navires.add(n);
+                _metier.ajoutForme(n);
             }
         }
     }
@@ -315,7 +331,7 @@ public class PanelMap extends JPanel{
                 Insets insets = getInsets();
                 double h = getHeight() - insets.top - insets.bottom;
                 _pointClick = e.getPoint();
-                
+                System.out.println((_pointClick.getX()/_coefX+_mapGauche) + ", " + ((h-_pointClick.getY())/_coefY+_mapHaut));
             }
         });
     }
@@ -362,11 +378,7 @@ public class PanelMap extends JPanel{
                     //_navireSelectionne = null;
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
-                        _navireSelectionne = n;
-                        _panelInfoForme.setInformations(n.getDonneesFormates());
-                        _panelInfoForme.setNomPanel("Navire");
-                        _panelInfoForme.majInformations();
-                        setTypeColorer(n.getTypeMachandise());
+                        setNavireSelectionne(n);
                     } else  {
                         setTypeColorer(null);
                         _navireSelectionne = null;
@@ -407,7 +419,20 @@ public class PanelMap extends JPanel{
         });
     }
     
+    public void setNavireSelectionne(Navire n) {
+        _navireSelectionne = n;
+        _panelInfoForme.setInformations(n.getDonneesFormates());
+        _panelInfoForme.setNomPanel("Navire");
+        _panelInfoForme.majInformations();
+        setTypeColorer(n.getTypeMachandise());
+    }
+    
     public void remiseAZero() {
         // virer les navires sur la map
+        _navires = new ArrayList<>();
+        _navireSelectionne = null;
+        _typeMarchandiseNavire = null;
+        _metier.enleverNavires();
+        refresh();
     }
 }

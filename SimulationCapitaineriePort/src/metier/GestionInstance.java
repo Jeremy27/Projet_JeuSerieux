@@ -55,11 +55,11 @@ public class GestionInstance {
     }
     
     public double getLargeurAleatoire() {
-        return _random.nextDouble();
+        return _random.nextDouble()/1000;
     }
     
     public double getLongueurAleatoire() {
-        return _random.nextDouble();
+        return _random.nextDouble()/200;
     }
     
     public int getTempsPriseEnChargeAleatoire() {

@@ -13,6 +13,8 @@ import modele.outils.PointPathFinding;
 import presentation.PanelMap;
 
 public class DeplacementBateaux extends Thread{
+    public static Point2D DEPART_DEFAUT = new Point2D.Double(0.09364530542986425, 49.45562308998302);
+    public static Point2D SORTIE_DEFAUT = new Point2D.Double(0.09794155825791855, 49.448762308998305);
     public static double PASVOISIN = 0.0008;
     private final Navire _bateau;
     private final Point2D _destination;
@@ -20,14 +22,23 @@ public class DeplacementBateaux extends Thread{
     private final PanelMap _map;
     
     public DeplacementBateaux(Navire bateau, Point2D destination, ArrayList<Forme> formes, PanelMap map) {
-        _bateau = bateau;
         _destination = destination;
+        _bateau = bateau;
         _formes = formes;
         _map = map;
+        if(bateau.getPosition().getX()==-1 && bateau.getPosition().getY()==-1) {
+            bateau.setPosition(DEPART_DEFAUT);
+            _map.refresh();
+        }
     }
     
     @Override
     public void run() {
+        try {
+            sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(DeplacementBateaux.class.getName()).log(Level.SEVERE, null, ex);
+        }
         deplacer();
     }
     

@@ -26,6 +26,10 @@ public class PanelNavires extends PanelPerso {
         add(new JScrollPane(_tableau), BorderLayout.CENTER);
     }
     
+    public void setMap(PanelMap map) {
+        _tableau.setMap(map);
+    }
+    
     public void ajouterNavires(ArrayList<Navire> listeNavires) {
         for(Navire n : listeNavires)
             _tableau.ajouterNavire(n);
