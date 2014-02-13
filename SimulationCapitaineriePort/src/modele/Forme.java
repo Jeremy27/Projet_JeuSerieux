@@ -177,4 +177,8 @@ public class Forme {
     public Path2D getPathOriginal() {
         return _pathOriginal;
     }
+    
+    public int getPriorite() {
+        return 1;
+    }
 }

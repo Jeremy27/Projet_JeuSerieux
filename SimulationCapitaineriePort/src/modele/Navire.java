@@ -14,7 +14,6 @@ import modele.outils.ParamsNavire;
  * @author Jérémy & Gary
  */
 public class Navire extends Forme {
-    
     private TypeMarchandise _typeMachandise;
     private final double       _longueur;
     private final double       _largeur;
@@ -163,5 +162,10 @@ public class Navire extends Forme {
      */
     public double getLargeur() {
         return _largeur;
+    }
+    
+    @Override
+    public int getPriorite() {
+        return 3;
     }
 }

@@ -11,7 +11,7 @@ import modele.enumeration.TypeShape;
  */
 public class Quai extends Forme{
     private ArrayList<Navire> _naviresAQuai;
-    private ArrayList<Terminal> _terminaux;
+    private final ArrayList<Terminal> _terminaux;
     private int _longueur;
     
     public Quai(String nom, int longueur) {
@@ -93,5 +93,9 @@ public class Quai extends Forme{
             }
         }
         return false;
+    }
+    @Override
+    public int getPriorite() {
+        return 2;
     }
 }
