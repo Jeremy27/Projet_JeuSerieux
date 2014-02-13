@@ -7,11 +7,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -177,10 +179,20 @@ public class PanelMap extends JPanel{
         m.put("gauche", _mapGauche);
         m.put("droite", _mapDroite);
         //trie les formes puis les paint
+        mergeNavires();
         for(Forme forme:_metier.getCoordonneesDessin()) {
             Color couleur = forme.getCouleur();
-            
             Path2D path = forme.getPath(m);
+            
+            if(forme instanceof Navire) {
+                couleur = Color.red;
+//                Rectangle bounds = path.getBounds();
+//                AffineTransform transform = new AffineTransform();
+//                System.out.println(bounds.getLocation());
+//                transform.rotate(Math.toRadians(-30), bounds.width / 2.0 + bounds.x, bounds.height / 2.0 + bounds.y);
+//                System.out.println(path.getBounds().getLocation());
+//                path = new Path2D.Double(path.createTransformedShape(transform));
+            }
             g2.setColor(couleur);
             if(path!=null) {
                 boolean fill = forme.isFill();
@@ -191,9 +203,9 @@ public class PanelMap extends JPanel{
                     }
                 }
                 if(fill) {
-                    if(forme instanceof Navire && _navireSelectionne==forme) {
-                        g2.setColor(Color.blue);
-                    }
+//                    if(forme instanceof Navire && _navireSelectionne==forme) {
+//                        g2.setColor(Color.blue);
+//                    }
                     g2.fill(path);
                 } else {
                     g2.draw(path);
@@ -202,14 +214,19 @@ public class PanelMap extends JPanel{
         }
         
         g2.setColor(Color.RED);
-        mergeNavires();
-        for(Navire navire:_naviresArrives.getNavires()) {
-            
-            Path2D p = navire.getPath(m);
-            if(p!=null) {
-                g2.fill(p);
-            }
-        }
+        
+//        for(Navire navire:_navires) {
+//            
+//            Path2D path = navire.getPath(m);
+//            if(path!=null) {
+//                Rectangle bounds = path.getBounds();
+//                AffineTransform transform = new AffineTransform();
+//
+//                transform.rotate(Math.toRadians(30), bounds.width / 2.0, bounds.height / 2.0);
+//                path = new Path2D.Double(path.createTransformedShape(transform));
+//                g2.fill(path);
+//            }
+//        }
         
         g2.setFont(new Font("SansSerif", Font.BOLD, 10));
         g2.drawString(_infosMouseOver, 50, (int)(h-30));
@@ -381,7 +398,7 @@ public class PanelMap extends JPanel{
                         setNavireSelectionne(n);
                     } else  {
                         setTypeColorer(null);
-                        _navireSelectionne = null;
+//                        _navireSelectionne = null;
                         if(forme instanceof Quai) {
                             
                             Quai q = (Quai) forme;

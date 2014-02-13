@@ -22,6 +22,10 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     private PointPathFinding _voisinDroit;
     private PointPathFinding _voisinHaut;
     private PointPathFinding _voisinBas;
+    private PointPathFinding _voisinBasGauche;
+    private PointPathFinding _voisinBasDroit;
+    private PointPathFinding _voisinHautGauche;
+    private PointPathFinding _voisinHautDroit;
     private final ArrayList<PointPathFinding> _voisins = new ArrayList<>();
     
     public PointPathFinding(Point2D p, int cout) {
@@ -120,10 +124,10 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     }
 
     /**
-     * @param _voisinGauche the _voisinGauche to set
+     * @param voisinGauche the _voisinGauche to set
      */
-    public void setVoisinGauche(PointPathFinding _voisinGauche) {
-        this._voisinGauche = _voisinGauche;
+    public void setVoisinGauche(PointPathFinding voisinGauche) {
+        this._voisinGauche = voisinGauche;
         if(!_voisins.contains(_voisinGauche)) {
             _voisins.add(_voisinGauche);
         }
@@ -137,10 +141,10 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     }
 
     /**
-     * @param _voisinDroit the _voisinDroit to set
+     * @param voisinDroit the _voisinDroit to set
      */
-    public void setVoisinDroit(PointPathFinding _voisinDroit) {
-        this._voisinDroit = _voisinDroit;
+    public void setVoisinDroit(PointPathFinding voisinDroit) {
+        this._voisinDroit = voisinDroit;
         if(!_voisins.contains(_voisinDroit)) {
             _voisins.add(_voisinDroit);
         }
@@ -154,10 +158,10 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     }
 
     /**
-     * @param _voisinHaut the _voisinHaut to set
+     * @param voisinHaut the _voisinHaut to set
      */
-    public void setVoisinHaut(PointPathFinding _voisinHaut) {
-        this._voisinHaut = _voisinHaut;
+    public void setVoisinHaut(PointPathFinding voisinHaut) {
+        this._voisinHaut = voisinHaut;
         if(!_voisins.contains(_voisinHaut)) {
             _voisins.add(_voisinHaut);
         }
@@ -171,10 +175,10 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     }
 
     /**
-     * @param _voisinBas the _voisinBas to set
+     * @param voisinBas the _voisinBas to set
      */
-    public void setVoisinBas(PointPathFinding _voisinBas) {
-        this._voisinBas = _voisinBas;
+    public void setVoisinBas(PointPathFinding voisinBas) {
+        this._voisinBas = voisinBas;
         if(!_voisins.contains(_voisinBas)) {
             _voisins.add(_voisinBas);
         }
@@ -182,5 +186,73 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     
     public ArrayList<PointPathFinding> getVoisins() {
         return _voisins;
+    }
+
+    /**
+     * @return the _voisinBasGauche
+     */
+    public PointPathFinding getVoisinBasGauche() {
+        return _voisinBasGauche;
+    }
+
+    /**
+     * @param voisinBasGauche the _voisinBasGauche to set
+     */
+    public void setVoisinBasGauche(PointPathFinding voisinBasGauche) {
+        _voisinBasGauche = voisinBasGauche;
+        if(!_voisins.contains(_voisinBasGauche)) {
+            _voisins.add(_voisinBasGauche);
+        }
+    }
+
+    /**
+     * @return the _voisinBasDroit
+     */
+    public PointPathFinding getVoisinBasDroit() {
+        return _voisinBasDroit;
+    }
+
+    /**
+     * @param voisinBasDroit the _voisinBasDroit to set
+     */
+    public void setVoisinBasDroit(PointPathFinding voisinBasDroit) {
+        _voisinBasDroit = voisinBasDroit;
+        if(!_voisins.contains(_voisinBasDroit)) {
+            _voisins.add(_voisinBasDroit);
+        }
+    }
+
+    /**
+     * @return the _voisinHautGauche
+     */
+    public PointPathFinding getVoisinHautGauche() {
+        return _voisinHautGauche;
+    }
+
+    /**
+     * @param voisinHautGauche the _voisinHautGauche to set
+     */
+    public void setVoisinHautGauche(PointPathFinding voisinHautGauche) {
+        _voisinHautGauche = voisinHautGauche;
+        if(!_voisins.contains(_voisinHautGauche)) {
+            _voisins.add(_voisinHautGauche);
+        }
+    }
+
+    /**
+     * @return the _voisinHautDroit
+     */
+    public PointPathFinding getVoisinHautDroit() {
+        return _voisinHautDroit;
+    }
+
+    /**
+     * @param voisinHautDroit the _voisinHautDroit to set
+     */
+    public void setVoisinHautDroit(PointPathFinding voisinHautDroit) {
+        _voisinHautDroit = voisinHautDroit;
+        if(!_voisins.contains(_voisinHautDroit)) {
+            _voisins.add(_voisinHautDroit);
+        }
     }
 }

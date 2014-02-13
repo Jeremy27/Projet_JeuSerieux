@@ -39,6 +39,7 @@ public class DeplacementBateaux extends Thread{
     }
     
     public ArrayList<PointPathFinding> deplacer() {
+        System.out.println("Déplacement... " + _bateau);
         if(_bateau.getPosition().getX()==-1 && _bateau.getPosition().getY()==-1) {
             _bateau.setPosition(DEPART_DEFAUT);
             _map.refresh();
@@ -68,15 +69,10 @@ public class DeplacementBateaux extends Thread{
                 
                 PointPathFinding voisin = voisinsPriorises.pollFirst();
                 voisin.majCouts();
-                if(!arrayContient(pointsVisites, voisin)) {
+                if(!pointsVisites.contains(voisin)) {
                     pile.add(0, voisin);
                     pointsVisites.add(voisin);
                 }
-//                if(!pointsVisites.contains(voisin)) {
-//                    pile.add(0, voisin);
-//                } else {
-//                    System.out.println("contient");
-//                }
             }
             pile.remove(pointEnCours);
         }
@@ -85,17 +81,22 @@ public class DeplacementBateaux extends Thread{
             //on a trouvé
             ArrayList<PointPathFinding> chemin = new ArrayList<>();
             chemin.add(pointEnCours);
-            
             while(!pointEnCours.egal(_bateau.getPosition())) {
                 pointEnCours = trierVoisins(pointEnCours, _destination);
+                if(pointEnCours==null) {
+                    System.out.println("NULL");
+                    break;
+                }
                 chemin.add(pointEnCours);
             }
             
             //return chemin;
             for(int i=chemin.size()-1;i>=0;i--) {
                 PointPathFinding p = chemin.get(i);
+                _bateau.setAngle(getAngle(_bateau.getPosition(), p.getPoint()));
                 _bateau.setPosition(p.getPoint());
                 _bateau.constructionNavire();
+                
                 _map.refresh();
                 try {
                     Thread.sleep(30);
@@ -103,64 +104,66 @@ public class DeplacementBateaux extends Thread{
                     Logger.getLogger(DeplacementBateaux.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            
         }
         return pointsVisites;
     }
     
+    public double getAngle(Point2D depart, Point2D arrivee) {
+        double deltaX = arrivee.getX()-depart.getX();
+        double deltaY = arrivee.getY()-depart.getY();
+        return (Math.atan2(deltaY, deltaX) * 180 / Math.PI)*-1.0;
+    }
+    
     public static PointPathFinding trierVoisins(PointPathFinding pointEnCours, Point2D destination) {
+        PointPathFinding min = pointEnCours;
         for(PointPathFinding p:pointEnCours.getVoisins()) {
-//                
-//                
-                if(p.getCout()+1==pointEnCours.getCout()) {
-                    return p;
+                if(p.getCout()<min.getCout()) {
+                    min = p;
                 }
         }
-//        int cpt = 0;
-//        for(PointPathFinding voisin:pointEnCours.getVoisins()) {
-//            if(voisin.getCout()+1==pointEnCours.getCout()) {
-////                double distanceEnCours = destination.distance(pointEnCours.getPoint());
-////                double distanceVoisin = destination.distance(voisin.getPoint());
-////                
-//                
-//                if(pointEnCours.getDistance() < voisin.getDistance()) {
-//                    
-//                    return voisin; 
-//                }
-//            }
-//            cpt++;
-//        }
-        return null;
+        if(min==pointEnCours) {
+            return null;
+        } else {
+            return min;
+        }
+    }
+    
+    public PointPathFinding trouverPoint(PointPathFinding point, double diffX, double diffY, ArrayList<PointPathFinding> visites) {
+        double x = point.getPoint().getX();
+        double y = point.getPoint().getY();
+        int cout = point.getCout();
+        PointPathFinding trouve = getPointExistant(x+diffX, y+diffY, visites);
+        if(trouve==null) {
+            trouve = new PointPathFinding(new Point2D.Double(x+diffX, y+diffY), cout+1);
+            if(deplacementPossible(trouve.getPoint())) {
+                if(trouve.getPoint().getX()>=0.09 && trouve.getPoint().getX()<=0.1900875 &&
+                    trouve.getPoint().getY()>=49.448 && trouve.getPoint().getY()<=49.488) {
+                    trouve.setDistance(trouve.getPoint().distance(_destination));
+                    trouve.setCout(cout+1);
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } else {
+            trouve.setDistance(trouve.getPoint().distance(_destination));
+            if(trouve.getCout()+1<point.getCout()) {
+                trouve.setCout(point.getCout()+1);
+            }
+            
+        }
+        return trouve;
     }
     
     public TreeSet<PointPathFinding> trierVoisins(PointPathFinding pointEnCours, ArrayList<PointPathFinding> visites) {
         TreeSet<PointPathFinding> voisinsPriorises = new TreeSet<>();
-        double x = pointEnCours.getPoint().getX();
-        double y = pointEnCours.getPoint().getY();
-        int cout = pointEnCours.getCout();
-        if(pointEnCours.getCout()==76 || pointEnCours.getCout()==51) {
-            System.out.println("");  
-        }
         
+        //gauche
         if(pointEnCours.getVoisinGauche()==null) {
-            PointPathFinding gauche;
-            gauche = getPointExistant(x-PASVOISIN, y, visites);
-            if(gauche==null) {
-                gauche = new PointPathFinding(new Point2D.Double(x-PASVOISIN, y), cout+1);
-                if(deplacementPossible(gauche.getPoint())) {
-                    if(gauche.getPoint().getX()>=0.09 && gauche.getPoint().getX()<=0.1900875 &&
-                        gauche.getPoint().getY()>=49.448 && gauche.getPoint().getY()<=49.488) {
-                        gauche.setDistance(gauche.getPoint().distance(_destination));
-                        gauche.setCout(pointEnCours.getCout()+1);
-                        pointEnCours.setVoisinGauche(gauche);
-                        gauche.setVoisinDroit(pointEnCours);
-                        voisinsPriorises.add(gauche); 
-                    }
-                }
-            } else {
-                gauche.setDistance(gauche.getPoint().distance(_destination));
-                if(gauche.getCout()+1<pointEnCours.getCout()) {
-                    gauche.setCout(pointEnCours.getCout()+1);
-                }
+            PointPathFinding gauche = trouverPoint(pointEnCours, -PASVOISIN, 0, visites);
+            if(gauche!=null) {
                 pointEnCours.setVoisinGauche(gauche);
                 gauche.setVoisinDroit(pointEnCours);
                 voisinsPriorises.add(gauche);
@@ -168,96 +171,88 @@ public class DeplacementBateaux extends Thread{
         } else {
             voisinsPriorises.add(pointEnCours.getVoisinGauche());
         }
-            
+         
+        //droit
         if(pointEnCours.getVoisinDroit()==null) {
-            PointPathFinding droit;
-            droit = getPointExistant(x+PASVOISIN, y, visites);
-            if(droit==null) {
-                droit = new PointPathFinding(new Point2D.Double(x+PASVOISIN, y), cout+1);
-                if(deplacementPossible(droit.getPoint())) {
-                    if(droit.getPoint().getX()>=0.09 && droit.getPoint().getX()<=0.1900875 &&
-                        droit.getPoint().getY()>=49.448 && droit.getPoint().getY()<=49.488) {
-                        droit.setDistance(droit.getPoint().distance(_destination));
-
-                        droit.setCout(pointEnCours.getCout()+1);
-                        pointEnCours.setVoisinDroit(droit); 
-                        droit.setVoisinGauche(pointEnCours);
-                        voisinsPriorises.add(droit);    
-                    }
-                }
-            } else {
-                if(droit.getCout()+1<pointEnCours.getCout()) {
-                    droit.setCout(pointEnCours.getCout()+1);
-                }
-                droit.setDistance(droit.getPoint().distance(_destination));
-                pointEnCours.setVoisinDroit(droit); 
+            PointPathFinding droit = trouverPoint(pointEnCours, PASVOISIN, 0, visites);
+            if(droit!=null) {
+                pointEnCours.setVoisinDroit(droit);
                 droit.setVoisinGauche(pointEnCours);
-                voisinsPriorises.add(droit);  
+                voisinsPriorises.add(droit);
             }
-            
-                
-            
         } else {
             voisinsPriorises.add(pointEnCours.getVoisinDroit());
         }
-            
         
-        if(pointEnCours.getVoisinBas()==null) {
-            PointPathFinding bas;
-            bas = getPointExistant(x, y-PASVOISIN, visites);
-            if(bas==null) {
-                bas = new PointPathFinding(new Point2D.Double(x, y-PASVOISIN), cout+1);
-                if(deplacementPossible(bas.getPoint())) {
-                    if(bas.getPoint().getX()>=0.09 && bas.getPoint().getX()<=0.1900875 &&
-                        bas.getPoint().getY()>=49.448 && bas.getPoint().getY()<=49.488) {
-                        bas.setDistance(bas.getPoint().distance(_destination));
-                        bas.setCout(pointEnCours.getCout()+1);
-                        pointEnCours.setVoisinBas(bas);
-                        bas.setVoisinHaut(pointEnCours);
-                        voisinsPriorises.add(bas);          
-                    }
-                }
-            } else {
-                bas.setDistance(bas.getPoint().distance(_destination));
-                bas.setCout(pointEnCours.getCout()+1);
-                pointEnCours.setVoisinBas(bas);
-                bas.setVoisinHaut(pointEnCours);
-                voisinsPriorises.add(bas); 
-            }
-            
-            if(bas.getCout()+1<pointEnCours.getCout()) {
-                bas.setCout(pointEnCours.getCout()+1);
-            }
-            
-        } else {
-            voisinsPriorises.add(pointEnCours.getVoisinBas());
-        }
-            
-        
+        //haut
         if(pointEnCours.getVoisinHaut()==null) {
-            PointPathFinding haut;
-            //haut = getPointExistant(x, y+PASVOISIN, visites);
-            //if(haut==null) {
-                haut = new PointPathFinding(new Point2D.Double(x, y+PASVOISIN), cout+1);
-                if(deplacementPossible(haut.getPoint())) {
-                    if(haut.getPoint().getX()>=0.09 && haut.getPoint().getX()<=0.1900875 &&
-                        haut.getPoint().getY()>=49.448 && haut.getPoint().getY()<=49.488) {
-                            haut.setDistance(haut.getPoint().distance(_destination));
-                            
-                            haut.setCout(pointEnCours.getCout()+1);
-                            pointEnCours.setVoisinHaut(haut);
-                            haut.setVoisinBas(pointEnCours);
-                            voisinsPriorises.add(haut);
-                    }
-                }
-            //}
-            
-            if(haut.getCout()+1<pointEnCours.getCout()) {
-                haut.setCout(pointEnCours.getCout()+1);
+            PointPathFinding haut = trouverPoint(pointEnCours, 0, PASVOISIN, visites);
+            if(haut!=null) {
+                pointEnCours.setVoisinHaut(haut);
+                haut.setVoisinBas(pointEnCours);
+                voisinsPriorises.add(haut);
             }
         } else {
             voisinsPriorises.add(pointEnCours.getVoisinHaut());
         }
+        
+        //bas
+        if(pointEnCours.getVoisinBas()==null) {
+            PointPathFinding bas = trouverPoint(pointEnCours, 0, -PASVOISIN, visites);
+            if(bas!=null) {
+                pointEnCours.setVoisinBas(bas);
+                bas.setVoisinHaut(pointEnCours);
+                voisinsPriorises.add(bas);
+            }
+        } else {
+            voisinsPriorises.add(pointEnCours.getVoisinBas());
+        }
+        
+        //diag haut droit
+        if(pointEnCours.getVoisinHautDroit()==null) {
+            PointPathFinding hautDroit = trouverPoint(pointEnCours, PASVOISIN, PASVOISIN, visites);
+            if(hautDroit!=null) {
+                pointEnCours.setVoisinHautDroit(hautDroit);
+                hautDroit.setVoisinBasGauche(pointEnCours);
+                voisinsPriorises.add(hautDroit);
+            }
+        } else {
+            voisinsPriorises.add(pointEnCours.getVoisinHautDroit());
+        }
+        //diag haut gauche
+        if(pointEnCours.getVoisinHautGauche()==null) {
+            PointPathFinding hautGauche = trouverPoint(pointEnCours, -PASVOISIN, PASVOISIN, visites);
+            if(hautGauche!=null) {
+                pointEnCours.setVoisinHautGauche(hautGauche);
+                hautGauche.setVoisinBasDroit(pointEnCours);
+                voisinsPriorises.add(hautGauche);
+            }
+        } else {
+            voisinsPriorises.add(pointEnCours.getVoisinHautGauche());
+        }
+        //diag bas droit
+        if(pointEnCours.getVoisinBasDroit()==null) {
+            PointPathFinding basDroit = trouverPoint(pointEnCours, PASVOISIN, -PASVOISIN, visites);
+            if(basDroit!=null) {
+                pointEnCours.setVoisinBasDroit(basDroit);
+                basDroit.setVoisinHautGauche(pointEnCours);
+                voisinsPriorises.add(basDroit);
+            }
+        } else {
+            voisinsPriorises.add(pointEnCours.getVoisinBasDroit());
+        }
+        //diag bas gauche
+        if(pointEnCours.getVoisinBasGauche()==null) {
+            PointPathFinding basGauche = trouverPoint(pointEnCours, -PASVOISIN, -PASVOISIN, visites);
+            if(basGauche!=null) {
+                pointEnCours.setVoisinBasGauche(basGauche);
+                basGauche.setVoisinHautDroit(pointEnCours);
+                voisinsPriorises.add(basGauche);
+            }
+        } else {
+            voisinsPriorises.add(pointEnCours.getVoisinBasGauche());
+        }
+        
         return voisinsPriorises;
     }
     
