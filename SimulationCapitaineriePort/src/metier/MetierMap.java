@@ -8,7 +8,6 @@ package metier;
 
 import accesAuDonnees.ADMap;
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,7 +15,6 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 import modele.Forme;
-import modele.Navire;
 import modele.Quai;
 import modele.Terminal;
 import modele.enumeration.TypeMarchandise;
@@ -85,7 +83,7 @@ public class MetierMap {
                 forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
             } else if(type.equals(TypeShape.QUAI.name())) {
                 c = QUAICOLOR;
-                fill = true;
+                fill = false;
                 forme = new Quai(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
             } else if(type.equals(TypeShape.TERMINAL.name())) {
                 c = TERMINALCOLOR;
@@ -123,7 +121,7 @@ public class MetierMap {
             if(littoral!=null) {
                 _littoraux.add(forme);
             }
-            //if(forme.getId()==71155277) {
+            //if(forme.getId()!=238953919) {
                 _coordonneesDessin.add(forme);
             //}
             
@@ -179,13 +177,11 @@ public class MetierMap {
         Forme selectionnee = null;
         for(Forme forme:_coordonneesDessin) {
             if(forme.getPath().contains(p)) {
+                
                 if(selectionnee == null) {
-                selectionnee = forme;
+                    selectionnee = forme;
                 } else {
-                    if(forme instanceof Quai ||
-                        forme instanceof Terminal ||
-                        forme instanceof Navire ||
-                        forme.getTypeForme().name().equals(TypeShape.NATURAL.name())) {
+                    if(forme.getPriorite()>selectionnee.getPriorite()) {
                         selectionnee = forme;
                     }
                 }

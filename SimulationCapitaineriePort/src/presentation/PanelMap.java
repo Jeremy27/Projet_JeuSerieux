@@ -9,7 +9,6 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -17,8 +16,6 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 import metier.DeplacementBateaux;
 import metier.MetierMap;
@@ -68,7 +65,7 @@ public class PanelMap extends JPanel{
     
     private final PanelInfoForme _panelInfoForme;
     
-    private Navire[] _navires;
+    private ArrayList<Navire> _navires = new ArrayList<>();
     
     private String _infosMouseOver="";
     private String _coordonneesMouseOver="";
@@ -184,16 +181,17 @@ public class PanelMap extends JPanel{
             g2.setColor(couleur);
             if(path!=null) {
                 boolean fill = forme.isFill();
-                if(fill) {
-                    if(_typeMarchandiseNavire != null && forme instanceof Quai) {
-                        Quai q = (Quai) forme;
-                        if(q.prendEnCharge(_typeMarchandiseNavire)) {
-                            g2.setColor(COULEUR_QUAI_DISPONIBLE);
-                        }
+                if(_typeMarchandiseNavire != null && forme instanceof Terminal) {
+                    Terminal t = (Terminal) forme;
+                    if(t.prendEnCharge(_typeMarchandiseNavire)) {
+                        g2.setColor(COULEUR_QUAI_DISPONIBLE);
                     }
-                    
+                }
+                if(fill) {
+                    if(forme instanceof Navire && _navireSelectionne==forme) {
+                        g2.setColor(Color.blue);
+                    }
                     g2.fill(path);
-                    
                 } else {
                     g2.draw(path);
                 }
@@ -224,11 +222,9 @@ public class PanelMap extends JPanel{
         }
     }
     
-    public void setNavires(Navire[] navires) {
-        _navires = navires;
-        for(Navire n:_navires) {
-            _metier.ajoutForme(n);
-        }
+    public void ajoutNavire(Navire navire) {
+        _navires.add(navire);
+        _metier.ajoutForme(navire);
     }
     
     public void augmenterZoom() {
@@ -335,6 +331,7 @@ public class PanelMap extends JPanel{
                 Insets insets = getInsets();
                 double h = getHeight() - insets.top - insets.bottom;
                 Forme forme = _metier.getForme(e.getPoint());
+                System.out.println(forme);
                 if(forme!=null) {
                     if(_navireSelectionne!=null) {
                         
@@ -351,21 +348,24 @@ public class PanelMap extends JPanel{
 //                            }
 //                        });
                         t.start();
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(PanelMap.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+//                        try {
+//                            Thread.sleep(10);
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(PanelMap.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
                         //resultat = DeplacementBateaux.deplacer(_navireSelectionne, new Point2D.Double(_pointClick.getX()/_coefX+_mapGauche, (h-_pointClick.getY())/_coefY+_mapHaut), _metier.getCoordonneesDessin(), _coefX, _coefY);
 //                        for(PointPathFinding p:resultat) {
 //                            
 //                        }
                         
                     }
-                    _navireSelectionne = null;
+                    //_navireSelectionne = null;
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
                         _navireSelectionne = n;
+                        _panelInfoForme.setInformations(n.getDonneesFormates());
+                        _panelInfoForme.setNomPanel("Navire");
+                        _panelInfoForme.majInformations();
                         setTypeColorer(n.getTypeMachandise());
                     } else  {
                         setTypeColorer(null);

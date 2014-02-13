@@ -16,7 +16,6 @@ import modele.enumeration.TypeShape;
  * @author jeremy
  */
 public class Terminal extends Forme {
-    
     private int _longueur;
     private ArrayList<TypeMarchandise> _typeChargement;
     
@@ -64,5 +63,9 @@ public class Terminal extends Forme {
         
                 
         return tabInfo;
+    }
+    @Override
+    public int getPriorite() {
+        return 2;
     }
 }
