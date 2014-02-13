@@ -7,5 +7,6 @@ public enum TypeShape {
     TERMINAL,
     QUAI,
     NAVIRE,
+    FORET,
     NULL
 }
