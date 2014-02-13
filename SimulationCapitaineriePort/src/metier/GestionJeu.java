@@ -7,8 +7,14 @@
 package metier;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import modele.Instance;
 import modele.Navire;
 import modele.Partie;
@@ -40,6 +46,47 @@ public class GestionJeu extends Thread {
     
     public void setInstance(Instance instance) {
         _instance = instance;
+    }
+    
+    public void setPartie(Map<String, String> map) {
+        
+    }
+    
+    public JsonArray genererJson() {
+        JsonArrayBuilder tableauJson = Json.createArrayBuilder();
+        
+        tableauJson.add(getPartieJson());
+        tableauJson.add(getInstanceJson());
+        tableauJson.add(getQuaisJson());
+        
+        return tableauJson.build();
+    }
+    
+    private JsonObject getPartieJson() {
+        JsonObjectBuilder objetJson = Json.createObjectBuilder();
+        
+        objetJson.add("pseudo", Partie._pseudo);
+        objetJson.add("tempsCourant", Partie._tempsCourant);
+        objetJson.add("nbRetards", Partie._nbRetards);
+        objetJson.add("difficulte", Partie._difficulte.name());
+        
+        return objetJson.build();
+    }
+    
+    private JsonObject getInstanceJson() {
+        JsonObjectBuilder objetJson     = Json.createObjectBuilder();
+        JsonArrayBuilder tableauJson    = Json.createArrayBuilder();
+        //objetJson.add(null, BigDecimal.ZERO)
+        
+        return objetJson.build();
+    }
+    
+    private JsonObject getQuaisJson() {
+        JsonObjectBuilder objetJson = Json.createObjectBuilder();
+        
+        //objetJson.add(null, BigDecimal.ZERO)
+        
+        return objetJson.build();
     }
     
     private void majNaviresArrives(ArrayList<Navire> naviresArrives) {
