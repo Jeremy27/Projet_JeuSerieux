@@ -7,11 +7,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -71,12 +73,15 @@ public class PanelMap extends JPanel{
     private String _coordonneesMouseOver="";
     private Navire _navireSelectionne=null;
     
+    private PanelNavires _naviresArrives;
+    
     ArrayList<PointPathFinding> resultat = new ArrayList<>();
     
-    public PanelMap(PanelInfoForme panelInfo) {
+    public PanelMap(PanelInfoForme panelInfo, PanelNavires naviresArrives) {
         _metier = new MetierMap(this, panelInfo);
         _metier.construireFormes();
         _panelInfoForme = panelInfo;
+        _naviresArrives = naviresArrives;
     }
     
     public void lierMapRealite() {
@@ -174,10 +179,20 @@ public class PanelMap extends JPanel{
         m.put("gauche", _mapGauche);
         m.put("droite", _mapDroite);
         //trie les formes puis les paint
+        mergeNavires();
         for(Forme forme:_metier.getCoordonneesDessin()) {
             Color couleur = forme.getCouleur();
-            
             Path2D path = forme.getPath(m);
+            
+            if(forme instanceof Navire) {
+                couleur = Color.red;
+//                Rectangle bounds = path.getBounds();
+//                AffineTransform transform = new AffineTransform();
+//                System.out.println(bounds.getLocation());
+//                transform.rotate(Math.toRadians(-30), bounds.width / 2.0 + bounds.x, bounds.height / 2.0 + bounds.y);
+//                System.out.println(path.getBounds().getLocation());
+//                path = new Path2D.Double(path.createTransformedShape(transform));
+            }
             g2.setColor(couleur);
             if(path!=null) {
                 boolean fill = forme.isFill();
@@ -188,9 +203,9 @@ public class PanelMap extends JPanel{
                     }
                 }
                 if(fill) {
-                    if(forme instanceof Navire && _navireSelectionne==forme) {
-                        g2.setColor(Color.blue);
-                    }
+//                    if(forme instanceof Navire && _navireSelectionne==forme) {
+//                        g2.setColor(Color.blue);
+//                    }
                     g2.fill(path);
                 } else {
                     g2.draw(path);
@@ -199,14 +214,19 @@ public class PanelMap extends JPanel{
         }
         
         g2.setColor(Color.RED);
-        for(Navire navire:_navires) {
-            
-            Path2D p = navire.getPath(m);
-            if(p!=null) {
-                g2.fill(p);
-            }
-            
-        }
+        
+//        for(Navire navire:_navires) {
+//            
+//            Path2D path = navire.getPath(m);
+//            if(path!=null) {
+//                Rectangle bounds = path.getBounds();
+//                AffineTransform transform = new AffineTransform();
+//
+//                transform.rotate(Math.toRadians(30), bounds.width / 2.0, bounds.height / 2.0);
+//                path = new Path2D.Double(path.createTransformedShape(transform));
+//                g2.fill(path);
+//            }
+//        }
         
         g2.setFont(new Font("SansSerif", Font.BOLD, 10));
         g2.drawString(_infosMouseOver, 50, (int)(h-30));
@@ -218,6 +238,19 @@ public class PanelMap extends JPanel{
                 g2.setFont(new Font("SansSerif", Font.BOLD, (int)(5*_zoomEtat)));
                 g2.drawString(cpt+"", (float)((p.getPoint().getX()-_mapGauche)*_coefX), (float)(h-((p.getPoint().getY()-_mapHaut)*_coefY)));
                 cpt++;
+            }
+        }
+    }
+    
+    public void mergeNavires() {
+        for(Navire n:_naviresArrives.getNavires()) {
+            if(!_navires.contains(n)) {
+                if(n.getPosition()==null) {
+                    n.setPosition(new Point2D.Double(-1, -1));
+                    n.constructionNavire();
+                }
+                _navires.add(n);
+                _metier.ajoutForme(n);
             }
         }
     }
@@ -315,7 +348,7 @@ public class PanelMap extends JPanel{
                 Insets insets = getInsets();
                 double h = getHeight() - insets.top - insets.bottom;
                 _pointClick = e.getPoint();
-                
+                System.out.println((_pointClick.getX()/_coefX+_mapGauche) + ", " + ((h-_pointClick.getY())/_coefY+_mapHaut));
             }
         });
     }
@@ -362,14 +395,10 @@ public class PanelMap extends JPanel{
                     //_navireSelectionne = null;
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
-                        _navireSelectionne = n;
-                        _panelInfoForme.setInformations(n.getDonneesFormates());
-                        _panelInfoForme.setNomPanel("Navire");
-                        _panelInfoForme.majInformations();
-                        setTypeColorer(n.getTypeMachandise());
+                        setNavireSelectionne(n);
                     } else  {
                         setTypeColorer(null);
-                        _navireSelectionne = null;
+//                        _navireSelectionne = null;
                         if(forme instanceof Quai) {
                             
                             Quai q = (Quai) forme;
@@ -407,7 +436,20 @@ public class PanelMap extends JPanel{
         });
     }
     
+    public void setNavireSelectionne(Navire n) {
+        _navireSelectionne = n;
+        _panelInfoForme.setInformations(n.getDonneesFormates());
+        _panelInfoForme.setNomPanel("Navire");
+        _panelInfoForme.majInformations();
+        setTypeColorer(n.getTypeMachandise());
+    }
+    
     public void remiseAZero() {
         // virer les navires sur la map
+        _navires = new ArrayList<>();
+        _navireSelectionne = null;
+        _typeMarchandiseNavire = null;
+        _metier.enleverNavires();
+        refresh();
     }
 }

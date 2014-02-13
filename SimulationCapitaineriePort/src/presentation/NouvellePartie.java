@@ -163,7 +163,7 @@ public class NouvellePartie extends JDialog {
     void demarrerNouvellePartie() {
         arretPartieEnCours();
         
-        GestionJeu gestionJeu = new GestionJeu(_ihm._naviresArrives, _ihm._naviresArrivant, _ihm._infoJeu, _ihm._partie);
+        GestionJeu gestionJeu = new GestionJeu(_ihm._naviresArrives, _ihm._naviresArrivant, _ihm._infoJeu, _ihm._partie, _ihm._map);
         
         Partie nouvellePartie = new Partie((TypeDifficulte)_jcbDifficulte.getSelectedItem(), getPseudo());
         

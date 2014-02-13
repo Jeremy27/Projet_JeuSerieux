@@ -23,6 +23,7 @@ import modele.enumeration.TypeMessage;
 import modele.enumeration.TypeNavire;
 import presentation.FenetreScores;
 import presentation.PanelInfoJeu;
+import presentation.PanelMap;
 import presentation.PanelNavires;
 import presentation.PanelPartie;
 
@@ -36,12 +37,14 @@ public class GestionJeu extends Thread {
     private PanelNavires _naviresArrivant;
     private PanelInfoJeu _infoJeu;
     private PanelPartie  _partie;
+    private PanelMap _map;
     
-    public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu infoJeu, PanelPartie partie) {
+    public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu infoJeu, PanelPartie partie, PanelMap map) {
         _naviresArrives     = naviresArrives;
         _naviresArrivant    = naviresArrivant;
         _infoJeu            = infoJeu;
         _partie             = partie;
+        _map                = map;
     }
     
     public void setInstance(Instance instance) {

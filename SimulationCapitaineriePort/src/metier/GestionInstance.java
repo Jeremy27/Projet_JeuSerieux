@@ -45,8 +45,8 @@ public class GestionInstance {
         ParamsNavire params = new ParamsNavire();
         
         params.setNom("Navire "+numNavire);
-        params.setLargeur(getLargeurAleatoire());
         params.setLongueur(getLongueurAleatoire());
+        params.setLargeur(params.getLongueur()/3);
         params.setTempsPriseEnCharge(getTempsPriseEnChargeAleatoire());
         params.setTypeMarchandise(getTypeMarchandiseAleatoire());
         params.setTypeNavire(getTypeNavireAleatoire());
@@ -55,11 +55,11 @@ public class GestionInstance {
     }
     
     public double getLargeurAleatoire() {
-        return _random.nextDouble();
+        return _random.nextDouble()/400;
     }
     
     public double getLongueurAleatoire() {
-        return _random.nextDouble();
+        return _random.nextDouble()/100;
     }
     
     public int getTempsPriseEnChargeAleatoire() {
