@@ -27,6 +27,7 @@ public class Navire extends Forme {
     private Point2D _position;
     private int _heurePriseEnCharge;
     private double _angle;
+    private boolean _assigneQuai;
 
     public Navire(ParamsNavire params) {
         super(params.getNom());
@@ -40,6 +41,7 @@ public class Navire extends Forme {
         _typeForme = TypeShape.NAVIRE;
         _fill = true;
         _angle = 0;
+        _assigneQuai = false;
     }
 
     public void constructionNavire() {

@@ -49,7 +49,7 @@ public class DeplacementBateaux extends Thread{
         double y = _bateau.getPosition().getY();
         
         //PointPathFinding pointEnCours = new PointPathFinding(bateau.getPosition(), 0);
-        PointPathFinding depart = new PointPathFinding(new Point2D.Double(x, y), 0);
+        PointPathFinding depart = new PointPathFinding(x, y, 0);
         PointPathFinding pointEnCours = depart;
         ArrayList<PointPathFinding> pile = new ArrayList<>();
         ArrayList<PointPathFinding> pointsVisites = new ArrayList<>();
@@ -93,8 +93,8 @@ public class DeplacementBateaux extends Thread{
             //return chemin;
             for(int i=chemin.size()-1;i>=0;i--) {
                 PointPathFinding p = chemin.get(i);
-                _bateau.setAngle(getAngle(_bateau.getPosition(), p.getPoint()));
-                _bateau.setPosition(p.getPoint());
+                _bateau.setAngle(getAngle(_bateau.getPosition(), p));
+                _bateau.setPosition(p);
                 _bateau.constructionNavire();
                 
                 _map.refresh();
@@ -118,9 +118,9 @@ public class DeplacementBateaux extends Thread{
     public static PointPathFinding trierVoisins(PointPathFinding pointEnCours, Point2D destination) {
         PointPathFinding min = pointEnCours;
         for(PointPathFinding p:pointEnCours.getVoisins()) {
-                if(p.getCout()<min.getCout()) {
-                    min = p;
-                }
+            if(p.getCout()<min.getCout()) {
+                min = p;
+            }
         }
         if(min==pointEnCours) {
             return null;
@@ -130,16 +130,16 @@ public class DeplacementBateaux extends Thread{
     }
     
     public PointPathFinding trouverPoint(PointPathFinding point, double diffX, double diffY, ArrayList<PointPathFinding> visites) {
-        double x = point.getPoint().getX();
-        double y = point.getPoint().getY();
+        double x = point.getX();
+        double y = point.getY();
         int cout = point.getCout();
         PointPathFinding trouve = getPointExistant(x+diffX, y+diffY, visites);
         if(trouve==null) {
-            trouve = new PointPathFinding(new Point2D.Double(x+diffX, y+diffY), cout+1);
-            if(deplacementPossible(trouve.getPoint())) {
-                if(trouve.getPoint().getX()>=0.09 && trouve.getPoint().getX()<=0.1900875 &&
-                    trouve.getPoint().getY()>=49.448 && trouve.getPoint().getY()<=49.488) {
-                    trouve.setDistance(trouve.getPoint().distance(_destination));
+            trouve = new PointPathFinding(x+diffX, y+diffY, cout+1);
+            if(deplacementPossible(trouve)) {
+                if(trouve.getX()>=0.09 && trouve.getX()<=0.1900875 &&
+                    trouve.getY()>=49.448 && trouve.getY()<=49.488) {
+                    trouve.setDistance(trouve.distance(_destination));
                     trouve.setCout(cout+1);
                 } else {
                     return null;
@@ -148,7 +148,7 @@ public class DeplacementBateaux extends Thread{
                 return null;
             }
         } else {
-            trouve.setDistance(trouve.getPoint().distance(_destination));
+            trouve.setDistance(trouve.distance(_destination));
             if(trouve.getCout()+1<point.getCout()) {
                 trouve.setCout(point.getCout()+1);
             }
@@ -256,14 +256,14 @@ public class DeplacementBateaux extends Thread{
         return voisinsPriorises;
     }
     
-    public static boolean arrayContient(ArrayList<PointPathFinding> pointsVisites, PointPathFinding pointEnCours) {
-        for(PointPathFinding p:pointsVisites) {
-            if(p.getPoint().equals(pointEnCours.getPoint())) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public static boolean arrayContient(ArrayList<PointPathFinding> pointsVisites, PointPathFinding pointEnCours) {
+//        for(PointPathFinding p:pointsVisites) {
+//            if(p.equals(pointEnCours)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     
     public boolean deplacementPossible(Point2D point) {
         Path2D p = _bateau.boundingsPosition(point);
@@ -287,7 +287,7 @@ public class DeplacementBateaux extends Thread{
     
     private PointPathFinding getPointExistant(double x, double y, ArrayList<PointPathFinding> arr) {
         for(PointPathFinding p:arr) {
-            if(p.getPoint().getX()==x && p.getPoint().getY()==y) {
+            if(p.getX()==x && p.getY()==y) {
                 return p;
             }
         }

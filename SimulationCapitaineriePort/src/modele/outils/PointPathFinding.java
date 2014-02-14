@@ -14,8 +14,7 @@ import metier.DeplacementBateaux;
  *
  * @author brokep
  */
-public class PointPathFinding implements Comparable<PointPathFinding>{
-    private Point2D _point;
+public class PointPathFinding extends Point2D.Double implements Comparable<PointPathFinding>{
     private int _cout;
     private double _distance;
     private PointPathFinding _voisinGauche;
@@ -28,8 +27,9 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     private PointPathFinding _voisinHautDroit;
     private final ArrayList<PointPathFinding> _voisins = new ArrayList<>();
     
-    public PointPathFinding(Point2D p, int cout) {
-        _point = p;
+    public PointPathFinding(double x, double y, int cout) {
+        this.x = x;
+        this.y = y;
         _cout = cout;
     }
 
@@ -40,21 +40,6 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     public double getDistance() {
         return _distance;
     }
-
-    /**
-     * @return the _point
-     */
-    public Point2D getPoint() {
-        return _point;
-    }
-
-    /**
-     * @param _point the _point to set
-     */
-    public void setPoint(Point2D _point) {
-        this._point = _point;
-    }
-
     /**
      * @return the _cout
      */
@@ -100,8 +85,8 @@ public class PointPathFinding implements Comparable<PointPathFinding>{
     
     public boolean egal(Point2D p) {
         //
-        double x = Math.abs(p.getX()-_point.getX());
-        double y = Math.abs(p.getY()-_point.getY());
+        double x = Math.abs(p.getX()-this.x);
+        double y = Math.abs(p.getY()-this.y);
         //
         return x<=DeplacementBateaux.PASVOISIN && y <=DeplacementBateaux.PASVOISIN;
     }

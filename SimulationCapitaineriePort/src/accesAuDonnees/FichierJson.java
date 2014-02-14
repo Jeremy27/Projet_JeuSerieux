@@ -14,9 +14,10 @@ public class FichierJson {
     public JsonArray getJson() {
         Fichier f = new Fichier(_nomFichier);
         String contenu = f.lire();
-        JsonReader jr = Json.createReader(new StringReader(contenu));
-        JsonArray ja = jr.readArray();
-        jr.close();
+        JsonArray ja;
+        try (JsonReader jr = Json.createReader(new StringReader(contenu))) {
+            ja = jr.readArray();
+        }
         return ja;
     }
     

@@ -31,6 +31,7 @@ import modele.outils.PointPathFinding;
 public class PanelMap extends JPanel{
     private static final double ZOOMMIN = 1.0;
     private static final double ZOOMMAX = 10.0;
+    private static final double COEF_DEPLACEMENT = 0.0001;
     
     private final Color COULEUR_QUAI_DISPONIBLE = new Color(255, 0, 0);
     
@@ -236,7 +237,7 @@ public class PanelMap extends JPanel{
         if(resultat!=null) {
             for(PointPathFinding p:resultat) {
                 g2.setFont(new Font("SansSerif", Font.BOLD, (int)(5*_zoomEtat)));
-                g2.drawString(cpt+"", (float)((p.getPoint().getX()-_mapGauche)*_coefX), (float)(h-((p.getPoint().getY()-_mapHaut)*_coefY)));
+                g2.drawString(cpt+"", (float)((p.getX()-_mapGauche)*_coefX), (float)(h-((p.getY()-_mapHaut)*_coefY)));
                 cpt++;
             }
         }
@@ -277,7 +278,7 @@ public class PanelMap extends JPanel{
     public void dragCurseur(double directionX, double directionY) {
         Insets insets = getInsets();
         double h = getHeight() - insets.top - insets.bottom;
-        _coordCurseurModif.setLocation(_coordCurseurModif.getX()+(0.0001*directionX/_zoomEtat), _coordCurseurModif.getY()+(0.0001*directionY/_zoomEtat));
+        _coordCurseurModif.setLocation(_coordCurseurModif.getX()+(COEF_DEPLACEMENT*directionX/_zoomEtat), _coordCurseurModif.getY()+(COEF_DEPLACEMENT*directionY/_zoomEtat));
         refresh();
     }
     
