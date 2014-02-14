@@ -68,10 +68,6 @@ public class TableauScores extends JTable {
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int ligne, int colonne) {
         Component c = super.prepareRenderer(renderer, ligne, colonne);
-        System.out.println("====Score important====");
-        System.out.println(_scoreImportant);
-        System.out.println("====A comparer avec====");
-        System.out.println(_modele.getScore(ligne));
         
         if(getSelectedRow() == ligne) {
             c.setBackground(PanelPerso.COULEUR_BACKGROUND_TITRE);

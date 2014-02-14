@@ -111,10 +111,4 @@ public class FenetreScores extends JDialog {
         revalidate();
         repaint();
     }
-    
-    public static void main(String [] args) {
-        FenetreScores test = new FenetreScores(null);
-        
-        test.remplirTableaux();
-    }
 }
