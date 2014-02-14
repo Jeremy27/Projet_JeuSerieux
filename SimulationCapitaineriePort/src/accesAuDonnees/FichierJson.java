@@ -5,12 +5,21 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonReader;
 
+/**
+ * Cette classe lit un fichier json et retourne son contenu sous forme de JsonArray
+ * @author gary
+ */
 public class FichierJson {
-    private String _nomFichier;
+    private final String _nomFichier;
     public FichierJson(String nomFichier) {
         _nomFichier = nomFichier;
     }
     
+    /**
+     * Cette fonction lit un fichier json et retourne son contenu sous forme de JsonArray
+     * @return le contenu sous forme d'array
+     * @see javax.json.JsonArray
+     */
     public JsonArray getJson() {
         Fichier f = new Fichier(_nomFichier);
         String contenu = f.lire();
@@ -20,9 +29,4 @@ public class FichierJson {
         }
         return ja;
     }
-    
-//    public static void main(String[] args) {
-//        FichierJson fj = new FichierJson("C:\\Users\\brokep\\Downloads\\osm2json-master\\data\\map.json");
-//        
-//    }
 }

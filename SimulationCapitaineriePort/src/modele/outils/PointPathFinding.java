@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package modele.outils;
 
 import java.awt.geom.Point2D;
@@ -11,8 +5,9 @@ import java.util.ArrayList;
 import metier.DeplacementBateaux;
 
 /**
- *
- * @author brokep
+ * Cette classe est utilisée pour le pathfinding
+ * @see java.awt.geom.Point2D.Double
+ * @author gary
  */
 public class PointPathFinding extends Point2D.Double implements Comparable<PointPathFinding>{
     private int _cout;
@@ -53,13 +48,6 @@ public class PointPathFinding extends Point2D.Double implements Comparable<Point
     public void setCout(int _cout) {
         this._cout = _cout;
     }
-//    
-//    public boolean estVoisin(PointPathFinding p) {
-//        double diffX = _point.getX() - p._point.getX(); //différence des axes X
-//        double diffY = _point.getY() - p._point.getY(); //différence des axes Y
-//        
-//        return Math.round((Math.abs(diffY)+Math.abs(diffX))*10000)/10000.0==DeplacementBateaux.PASVOISIN;
-//    }
     
     
     
@@ -83,6 +71,12 @@ public class PointPathFinding extends Point2D.Double implements Comparable<Point
         }
     }
     
+    /**
+     * Teste si le point en paramètre est équivalent à l'objet en cours
+     * @param p point dont l'équivalence avec l'objet courant est à tester
+     * @return true si la distance entre les deux points est inférieure au pas de pathfinding (0.0008)
+     * @see metier.DeplacementBateaux
+     */
     public boolean egal(Point2D p) {
         //
         double x = Math.abs(p.getX()-this.x);
@@ -91,6 +85,9 @@ public class PointPathFinding extends Point2D.Double implements Comparable<Point
         return x<=DeplacementBateaux.PASVOISIN && y <=DeplacementBateaux.PASVOISIN;
     }
     
+    /**
+     * Met à jour les coûts du PointPathFinding courant selon le coût de ses voisins si nécessaire
+     */
     public void majCouts() {
         int min = _cout;
         for(PointPathFinding voisin:_voisins) {

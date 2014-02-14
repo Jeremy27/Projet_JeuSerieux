@@ -12,6 +12,10 @@ import modele.enumeration.TypeShape;
 import modele.outils.PointPathFinding;
 import presentation.PanelMap;
 
+/**
+ * Cette classe permet de calculer le déplacement d'un point de départ à un point d'arrivée sur la carte
+ * @author gary
+ */
 public class DeplacementBateaux extends Thread{
     public static Point2D DEPART_DEFAUT = new Point2D.Double(0.09364530542986425, 49.45562308998302);
     public static Point2D SORTIE_DEFAUT = new Point2D.Double(0.09794155825791855, 49.448762308998305);
@@ -38,6 +42,10 @@ public class DeplacementBateaux extends Thread{
         deplacer();
     }
     
+    /**
+     * Cette fonction déplace un navire vers un point d'arrivée en utilisant l'algorithme a*
+     * @return Les points parcourus pour trouver le chemin
+     */
     public ArrayList<PointPathFinding> deplacer() {
         System.out.println("Déplacement... " + _bateau);
         if(_bateau.getPosition().getX()==-1 && _bateau.getPosition().getY()==-1) {
@@ -82,7 +90,7 @@ public class DeplacementBateaux extends Thread{
             ArrayList<PointPathFinding> chemin = new ArrayList<>();
             chemin.add(pointEnCours);
             while(!pointEnCours.egal(_bateau.getPosition())) {
-                pointEnCours = trierVoisins(pointEnCours, _destination);
+                pointEnCours = trierVoisins(pointEnCours);
                 if(pointEnCours==null) {
                     System.out.println("NULL");
                     break;
@@ -109,13 +117,24 @@ public class DeplacementBateaux extends Thread{
         return pointsVisites;
     }
     
+    /**
+     * Cette fonction retourne l'angle entre deux points par rapport à l'axe x
+     * @param depart premier point de calcul de l'angle
+     * @param arrivee second point de calcul de l'angle
+     * @return l'angle entre les deux points en degré
+     */
     public double getAngle(Point2D depart, Point2D arrivee) {
         double deltaX = arrivee.getX()-depart.getX();
         double deltaY = arrivee.getY()-depart.getY();
         return (Math.atan2(deltaY, deltaX) * 180 / Math.PI)*-1.0;
     }
     
-    public static PointPathFinding trierVoisins(PointPathFinding pointEnCours, Point2D destination) {
+    /**
+     * Cette fonction sert à retrouver le prochain voisin du meilleur chemin trouvé
+     * @param pointEnCours point courant
+     * @return le voisin du meilleur chemin
+     */
+    public PointPathFinding trierVoisins(PointPathFinding pointEnCours) {
         PointPathFinding min = pointEnCours;
         for(PointPathFinding p:pointEnCours.getVoisins()) {
             if(p.getCout()<min.getCout()) {
@@ -129,6 +148,15 @@ public class DeplacementBateaux extends Thread{
         }
     }
     
+    /**
+     * Cette fonction retrouve un point existant à partir de ses coordonnées
+     * Si il n'existe pas, elle le créé
+     * @param point point courant
+     * @param diffX différence de l'axe x du point recherché par rapport au point courant
+     * @param diffY différence de l'axe y du point recherché par rapport au point courant
+     * @param visites points créés précédement durant la recherche de chemin
+     * @return Le point trouvé ou créé
+     */
     public PointPathFinding trouverPoint(PointPathFinding point, double diffX, double diffY, ArrayList<PointPathFinding> visites) {
         double x = point.getX();
         double y = point.getY();
@@ -157,6 +185,13 @@ public class DeplacementBateaux extends Thread{
         return trouve;
     }
     
+    /**
+     * Cette fonction retourne un treeset classant les voisins du point en cours selon leur qualité par rapport au point de destination
+     * @see java.util.TreeSet
+     * @param pointEnCours point courant
+     * @param visites points créés précédement durant la recherche de chemin
+     * @return un treeset triant les voisins du point courant selon leur qualité
+     */
     public TreeSet<PointPathFinding> trierVoisins(PointPathFinding pointEnCours, ArrayList<PointPathFinding> visites) {
         TreeSet<PointPathFinding> voisinsPriorises = new TreeSet<>();
         
@@ -256,15 +291,11 @@ public class DeplacementBateaux extends Thread{
         return voisinsPriorises;
     }
     
-//    public static boolean arrayContient(ArrayList<PointPathFinding> pointsVisites, PointPathFinding pointEnCours) {
-//        for(PointPathFinding p:pointsVisites) {
-//            if(p.equals(pointEnCours)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-    
+    /**
+     * Cette fonction vérifie si le déplacement du navire sur le point en paramètre est possible
+     * @param point point de déplacement à tester
+     * @return vrai si le déplacement et possible, faux sinon
+     */
     public boolean deplacementPossible(Point2D point) {
         Path2D p = _bateau.boundingsPosition(point);
         boolean dansEau = false;
@@ -285,6 +316,13 @@ public class DeplacementBateaux extends Thread{
         return dansEau && !dansShape;
     }
     
+    /**
+     * Cette fonction vérifie si un point existe déjà dans les points créés précédement durant la recherche de chemin
+     * @param x position x du point recherché
+     * @param y position y du point recherché
+     * @param arr liste des points créés précédement durant la recherche de chemin
+     * @return null si le point n'existe pas déjà, sinon retourne ce point
+     */
     private PointPathFinding getPointExistant(double x, double y, ArrayList<PointPathFinding> arr) {
         for(PointPathFinding p:arr) {
             if(p.getX()==x && p.getY()==y) {
@@ -293,6 +331,18 @@ public class DeplacementBateaux extends Thread{
         }
         return null;
     }
+    
+    /*
+        #### Partie utilisée pour générer l'océan
+    */
+//    public static boolean arrayContient(ArrayList<PointPathFinding> pointsVisites, PointPathFinding pointEnCours) {
+//        for(PointPathFinding p:pointsVisites) {
+//            if(p.equals(pointEnCours)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     
 //    public static boolean deplacementPossible(Point2D p, ArrayList<Forme> formes) {
 //        //boolean boolPossible = true;

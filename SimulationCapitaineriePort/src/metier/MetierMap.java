@@ -24,12 +24,11 @@ import presentation.PanelInfoForme;
 import presentation.PanelMap;
 
 /**
- *
- * @author brokep
+ * Cette classe gère la création des Forme à partir du fichier json des formes de la carte
+ * Elle stocke ensuite ces formes et gère leur fonctionnement
+ * @author gary
  */
 public class MetierMap {
-    
-    
     
     private final ArrayList<Forme> _coordonneesDessin;
     private final ArrayList<Forme> _littoraux;
@@ -52,18 +51,35 @@ public class MetierMap {
         
     }
     
+    /**
+     * Cette fonction lance la création des formes à partir du JsonArray
+     * @see javax.json.JsonArray
+     */
     public void construireFormes() {
         makePath2D(_accesDonneesMap.getContenu());
     }
 
+    /**
+     * Cette fonction retourne la liste des formes affichées sur la carte
+     * @return la liste des formes affichées sur la carte
+     */
     public ArrayList<Forme> getCoordonneesDessin() {
         return _coordonneesDessin;
     }
     
+    /**
+     * Cette fonction retourne la liste des formes présentes sur les littoraux de la carte
+     * @return la liste des formes présentes sur les littoraux de la carte
+     */
     public ArrayList<Forme> getCoordonneesLittoraux() {
         return _littoraux;
     }
     
+    /**
+     * Cette fonction créé, à partir des données Json de la carte, les objets Forme correspondants
+     * @see javax.json.JsonArray
+     * @param ja un array d'objets Json contenant toutes les formes de la carte
+     */
     public void makePath2D(JsonArray ja) {
         for(Object obj:ja.toArray()) {
             //variables indispensables
@@ -122,49 +138,24 @@ public class MetierMap {
             if(littoral!=null) {
                 _littoraux.add(forme);
             }
-            //if(forme.getId()!=238953919) {
+            
             _coordonneesDessin.add(forme);
-            //}
             
         }
         
-        
-//        Forme forme = new Forme("CONNARD", true, Color.BLUE, 564641653, TypeShape.BUILDING);
-//        
-//        forme.ajoutCoordonnee(new Point2D.Double(0.1065890219049898, 49.46740831623104));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.10933301555274476, 49.466411450617876));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.10696957576854706, 49.46519175622059));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.1044258736279275, 49.46634108363342));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.09195284219457013, 49.48870730050934));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.10627368495475113, 49.48329490662139));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.13374366515837105, 49.47849235993209));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.1399927601809955, 49.47506196943973));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.16850425622171944, 49.478873514431235));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.18087225678733032, 49.48764006791171));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.191027036199095, 49.486953989813244));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.1894647624434389, 49.480779286926996));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.20144219457013574, 49.47849235993209));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.20196295248868779, 49.469573344651955));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.17553448812217193, 49.449753310696096));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.1001547794117647, 49.45249762308998));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.09104151583710407, 49.483980984719864));
-//        forme.ajoutCoordonnee(new Point2D.Double(0.09130189479638008, 49.488554838709675));
-//        forme.makePathOriginale();
-//        _coordonneesDessin.add(forme);
-//        int cpt=0;
-//        for(Forme f:_coordonneesDessin) {
-//            if(forme.getPathOriginal().intersects(f.getPathOriginal().getBounds2D())) {
-//                
-//                cpt++;
-//            }
-//        }
-        
     }
     
+    /**
+     * Cette fonction ajoute une forme à la carte
+     * @param f la forme à ajouter
+     */
     public void ajoutForme(Forme f) {
         _coordonneesDessin.add(f);
     }
     
+    /**
+     * Cette fonction vide la liste des formes de tous les Navires
+     */
     public void enleverNavires() {
         ArrayList<Navire> navires = new ArrayList<>();
         for(Forme f:_coordonneesDessin) {
@@ -179,6 +170,12 @@ public class MetierMap {
         }
     }
     
+    /**
+     * Cette fonction retrouve une forme à partir de son nom
+     * @see modele.Forme
+     * @param nom nom de la forme à rechercher
+     * @return la forme si elle est trouvée, null sinon
+     */
     public Forme getForme(String nom) {
         for(Forme forme:_coordonneesDessin) {
             if(forme.getNom().equals(nom)) {
@@ -188,6 +185,17 @@ public class MetierMap {
         return null;
     }
     
+    /**
+     * Cette fonction tente de trouver la forme contenant le point en paramètre
+     * Elle utilise un système de priorité dans le cas où plusieurs formes contiennent ce point
+     * Navire > Quai, Terminal > Forme
+     * @see modele.Forme
+     * @see modele.Terminal
+     * @see modele.Quai
+     * @see modele.Navire
+     * @param p le point que la forme recherchée doit contenir
+     * @return la Forme trouvée, sinon null
+     */
     public Forme getForme(Point2D p) {
         Forme selectionnee = null;
         for(Forme forme:_coordonneesDessin) {
@@ -205,6 +213,9 @@ public class MetierMap {
         return selectionnee;
     }
     
+    /**
+     * Lie les quais aux terminaux comme ils le sont en réalité sur le port du Havre
+     */
     public void lierQuaisTerminaux() {
         Quai quaiAmeriques = (Quai)getForme("Quai des Amériques");
         Terminal terminalAtlantique = (Terminal)getForme("Terminal de l'Atlantique");

@@ -36,6 +36,11 @@ public class Quai extends Forme{
         _typeForme      = TypeShape.QUAI;
     }
     
+    /**
+     * Cette fonction retourne les informations relatives au Quai pour l'affichage dans un PanelInfoForme
+     * @see presentation.PanelInfoForme
+     * @return les informations formatées
+     */
     public ArrayList<String> getDonneesFormates() {
         ArrayList<String> tabInfo = new ArrayList<>();
         
@@ -86,6 +91,11 @@ public class Quai extends Forme{
         return _naviresAQuai.remove(indiceNavire);
     }
     
+    /**
+     * Cette fonction détermine si le quai prend en charge le type de marchandise en paramètre
+     * @param type le type de marchandise à tester
+     * @return true si le Quai prend en charge ce type de marchandise
+     */
     public boolean prendEnCharge(TypeMarchandise type) {
         for(Terminal terminal:_terminaux) {
             if(terminal.prendEnCharge(type)) {
