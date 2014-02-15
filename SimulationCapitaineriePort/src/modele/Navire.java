@@ -1,6 +1,5 @@
 package modele;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
@@ -27,6 +26,7 @@ public class Navire extends Forme {
     private Point2D _position;
     private int _heurePriseEnCharge;
     private double _angle;
+    private boolean _assigneQuai;
 
     public Navire(ParamsNavire params) {
         super(params.getNom());
@@ -40,8 +40,12 @@ public class Navire extends Forme {
         _typeForme = TypeShape.NAVIRE;
         _fill = true;
         _angle = 0;
+        _assigneQuai = false;
     }
 
+    /**
+     * Cette fonction construit la bounding box du navire
+     */
     public void constructionNavire() {
         _coordonnees = new ArrayList<>();
         double moitieLongueur = _longueur * 0.50;
@@ -66,10 +70,21 @@ public class Navire extends Forme {
         makePathOriginale();
     }
     
+    /**
+     * Cette fonction retourne le point de tête du navire
+     * @return le point de tête du navire
+     */
     public Point2D getTete() {
         return _coordonnees.get(2);
     }
 
+    /**
+     * Construit une Path2D avec comme position du bateau le point en paramètre, ceci afin de tester si
+     * le bateau peut se déplacer à cet endroit dans le pathfinding
+     * @see metier.DeplacementBateaux
+     * @param p nouveau point du bateau
+     * @return la Path2D correspondant à la nouvelle position
+     */
     public Path2D boundingsPosition(Point2D p) {
         double moitieLongueur = _longueur * 0.50;
         double moitielargeur = getLargeur() * 0.50;
@@ -91,12 +106,15 @@ public class Navire extends Forme {
         //arrière droit
         path.lineTo(x - moitieLongueur, bas);
         return path;
-//        Rectangle bounds = path.getBounds();
-//        AffineTransform transform = new AffineTransform();
-//        transform.rotate(Math.toRadians(_angle), bounds.width / 2.0 + bounds.x, bounds.height / 2.0 + bounds.y);
-//        return new Path2D.Double(path.createTransformedShape(transform));
     }
     
+    /**
+     * Construit la path par rapport aux données actuelles de l'application
+     * Prend en compte l'angle de rotation du navire
+     * @see java.awt.geom.Path2D
+     * @param map contient les informations indispensable au calcul de la path
+     * @return la path2D construite
+     */
     @Override
     public Path2D getPath(HashMap<String, Double> map) {
         Path2D path = super.getPath(map);
@@ -162,6 +180,11 @@ public class Navire extends Forme {
         this._heurePriseEnCharge = _heurePriseEnCharge;
     }
 
+    /**
+     * Cette fonction retourne les informations relatives au navire pour affichage dans un PanelInfoForme
+     * @see presentation.PanelInfoForme
+     * @return Les informations relatives au navire
+     */
     public ArrayList<String> getDonneesFormates() {
         ArrayList<String> tabInfo = new ArrayList<>();
 

@@ -17,7 +17,7 @@ import modele.enumeration.TypeShape;
  */
 public class Terminal extends Forme {
     private int _longueur;
-    private ArrayList<TypeMarchandise> _typeChargement;
+    private final ArrayList<TypeMarchandise> _typeChargement;
     
     public Terminal(String nom, int longueur) {
         super(nom);
@@ -43,6 +43,11 @@ public class Terminal extends Forme {
         return _typeChargement;
     }
     
+    /**
+     * Cette fonction détermine si le terminal prend en charge le type de marchandise en paramètre
+     * @param type le type de marchandise à tester
+     * @return true si le Terminal prend en charge ce type de marchandise
+     */
     public boolean prendEnCharge(TypeMarchandise type) {
         for(TypeMarchandise t:_typeChargement) {
             if(type==t) {
@@ -52,6 +57,11 @@ public class Terminal extends Forme {
         return false;
     }
     
+    /**
+     * Cette fonction retourne les informations relatives au Terminal pour l'affichage dans un PanelInfoForme
+     * @see presentation.PanelInfoForme
+     * @return les informations formatées
+     */
     public ArrayList<String> getDonneesFormates() {
         ArrayList<String> tabInfo = new ArrayList<>();
         

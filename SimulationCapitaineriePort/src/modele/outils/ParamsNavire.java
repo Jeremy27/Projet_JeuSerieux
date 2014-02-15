@@ -1,10 +1,13 @@
 package modele.outils;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import modele.enumeration.TypeMarchandise;
 import modele.enumeration.TypeNavire;
-
+/**
+ * Cette classe stocke les informations à transmettre en paramètre d'un Navire pour le créer
+ * @see modele.Navire
+ * @author gary
+ */
 public class ParamsNavire {
     private String _nom;
     private TypeNavire _typeNavire;
