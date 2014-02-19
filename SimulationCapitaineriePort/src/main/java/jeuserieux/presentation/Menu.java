@@ -1,10 +1,14 @@
 package jeuserieux.presentation;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -40,6 +44,8 @@ public class Menu extends JMenuBar {
         add(_menuFichier);
         add(_menuPartie);
         add(_menuAide);
+        
+        desactiverJMenuItemNonGere();
     }
     
     private void initComposants() {
@@ -60,6 +66,18 @@ public class Menu extends JMenuBar {
         _aideDidacticiel    = new JMenuItem("Didacticiel");
         _aideDocumentation  = new JMenuItem("Documentation");
         _aideAPropos        = new JMenuItem("A propos");
+        
+        _partieNouvelle.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,InputEvent.CTRL_MASK));
+        _partieScores.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,InputEvent.CTRL_MASK));
+        _partieAide.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,InputEvent.CTRL_MASK));
+        _partieResoudre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,InputEvent.CTRL_MASK));
+        _fichierFermer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,InputEvent.CTRL_MASK));
+        _fichierPreference.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,InputEvent.CTRL_MASK));
+        _fichierSauvegarder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,InputEvent.CTRL_MASK));
+        _fichierCharger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,InputEvent.CTRL_MASK));
+        _aideDidacticiel.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,InputEvent.CTRL_MASK));
+        _aideAPropos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,InputEvent.CTRL_MASK));
+        _aideDocumentation.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,InputEvent.CTRL_MASK));
         
         _menuFichier.add(_fichierSauvegarder);
         _menuFichier.add(_fichierCharger);
@@ -85,6 +103,8 @@ public class Menu extends JMenuBar {
             }
         });
         
+        
+        
         _partieScores.addActionListener(new ActionListener() {
 
             @Override
@@ -92,5 +112,26 @@ public class Menu extends JMenuBar {
                 FenetreScores fenetreScores = new FenetreScores(null);
             }
         });
+        
+        _fichierFermer.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                System.exit(0);
+            }
+        });
+    }
+    
+    private void desactiverJMenuItemNonGere() {
+        
+        for(Component composant : _menuFichier.getComponents()) {
+//            JMenu menu = (JMenu)composant;
+//            for(Component item : menu.getMenuComponents()) {
+//                System.out.println(item.toString());
+                if(composant.getComponentListeners().length == 0) {
+                    composant.setEnabled(false);
+                }
+            }
+        }
     }
 }
