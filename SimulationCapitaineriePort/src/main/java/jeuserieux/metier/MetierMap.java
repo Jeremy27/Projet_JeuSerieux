@@ -1,6 +1,7 @@
 package jeuserieux.metier;
 
 import java.awt.Color;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
@@ -89,6 +90,7 @@ public class MetierMap {
      * @param ja un array d'objets Json contenant toutes les formes de la carte
      */
     public void makePath2D(JsonArray ja) {
+        int cptLit = 0;
         for(Object obj:ja.toArray()) {
             //variables indispensables
             boolean fill = false;
@@ -136,7 +138,12 @@ public class MetierMap {
                     c = AUTRECOLOR;
                     forme = new Forme(nom, fill, c, id, TypeShape.NULL);
                 }
-                getFormes().add(forme);
+                if(id!=71155274 &&
+                    id!=71155277 &&
+                    id!=71155274) {
+                    _formes.add(forme);
+                }
+                
             }
                 
             
@@ -151,12 +158,49 @@ public class MetierMap {
             forme.makePathOriginale();
             if(littoral!=null) {
                 _littoraux.add(forme);
+                cptLit++;
             }
-            _coordonneesDessin.add(forme);
+            if(id!=71155274 &&
+                    id!=71155277 &&
+                    id!=71155274) {
+                _coordonneesDessin.add(forme);
+            }
+            
         }
-        
+        System.out.println(cptLit);
+        System.out.println(_littoraux.size());
         creerZonesArrimage();
         
+        
+        Path2D path = new Path2D.Double();
+        path.moveTo(0.10725173301781737, 49.46735522592592); 
+        path.lineTo(0.1090459702115813, 49.46651958703703); 
+        path.lineTo(0.10716629315144767, 49.46522247592592); 
+        path.lineTo(0.10494485662583519, 49.465995753703695); 
+//        path.moveTo(0.09692062917594654, 49.492450999999996);
+//        path.lineTo(0.10358493875278396, 49.48534183333333);
+//        path.lineTo(0.11422220211581291, 49.4877365);
+//        path.lineTo(0.12152731069042316, 49.48062733333333);
+//        path.lineTo(0.13716280623608018, 49.4783075);
+//        path.lineTo(0.1419047188195991, 49.473742666666666);
+//        path.lineTo(0.18035265868596884, 49.48758683333333);
+//        path.lineTo(0.19073360244988863, 49.487961);
+//        path.lineTo(0.20495934020044543, 49.48579083333333);
+//        path.lineTo(0.20495934020044543, 49.46147);
+//        path.lineTo(0.20495934020044543, 49.44829933333333);
+//        path.lineTo(0.09064079899777283, 49.44829933333333);
+//        path.lineTo(0.09038447939866369, 49.449646333333334);
+//        path.lineTo(0.09025631959910912, 49.450843666666664);
+//        path.lineTo(0.09, 49.49260066666667);
+//        path.lineTo(0.09679246937639198, 49.492376166666666);
+        path.closePath();
+        
+        for(Forme f:_coordonneesDessin) {
+            if(path.contains(f.getPathOriginal().getBounds2D()) ||
+                path.intersects(f.getPathOriginal().getBounds2D())) {
+                System.out.println(f.getId() + " nom: " + f.getNom());
+            }
+        }
     }
     
     public void creerZonesArrimage() {
@@ -185,15 +229,15 @@ public class MetierMap {
         _coordonneesDessin.add(zoneArrimage);
         
         zoneArrimage = new Forme("zone arrimage quai porte Océane", false, Color.RED, 897965451, TypeShape.NATURAL);
-        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1631397518294623, 49.45781998809524));
-        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.15343622414890232, 49.45916698809524));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1533669892419663, 49.45886191865079));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1628366196706967, 49.45739654365079));
         zoneArrimage.makePathOriginale();
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
         
         zoneArrimage = new Forme("zone arrimage quai de France", false, Color.RED, 897965451, TypeShape.NATURAL);
-        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.16339607142857143, 49.457862750000004));
-        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1783724594336621, 49.45574603571429));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.16322109906936041, 49.45732171031745));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1780555958678014, 49.45531991865079));
         zoneArrimage.makePathOriginale();
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
@@ -392,5 +436,12 @@ public class MetierMap {
         System.out.println(taille);
         System.out.println(taille*coef);
         
+    }
+
+    /**
+     * @return the _littoraux
+     */
+    public ArrayForme getLittoraux() {
+        return _littoraux;
     }
 }

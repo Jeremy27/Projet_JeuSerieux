@@ -7,7 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -16,7 +17,6 @@ import java.awt.event.MouseWheelListener;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
-import java.awt.font.TransformAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
@@ -33,7 +33,6 @@ import jeuserieux.modele.Navire;
 import jeuserieux.modele.Quai;
 import jeuserieux.modele.Terminal;
 import jeuserieux.modele.enumeration.TypeMarchandise;
-import jeuserieux.modele.enumeration.TypeShape;
 import jeuserieux.modele.outils.PointPathFinding;
 
 public class PanelMap extends JPanel{
@@ -77,13 +76,16 @@ public class PanelMap extends JPanel{
     private String _coordonneesMouseOver="";
     private Navire _navireSelectionne=null;
     private final PanelNavires _naviresArrives;
-    ArrayList<PointPathFinding> resultat = new ArrayList<>();
+//    DeplacementBateaux resultat;
+    
+    ArrayList<Point2D> _clics;
     
     public PanelMap(PanelInfoForme panelInfo, PanelNavires naviresArrives) {
         _metier = new MetierMap(this, panelInfo);
         _metier.construireFormes();
         _panelInfoForme = panelInfo;
         _naviresArrives = naviresArrives;
+        _clics = new ArrayList<>();
     }
     
     /**
@@ -216,6 +218,19 @@ public class PanelMap extends JPanel{
                 } else {
                     g2.draw(path);
                 }
+                if(forme.getNom().equals("Quai du Havre")) {
+                    Quai q = (Quai)forme;
+                    
+                    Point2D p = q.getZoneArrimage().getCentre();
+                    double x = p.getX();
+                    double y = p.getY();
+                    x = x-_mapGauche;
+                    y = y-_mapHaut;
+                    //vérifie si le point est à dessiner
+                    x = (x*_coefX);
+                    y = h - (y*_coefY);
+                    g2.drawRect((int)x, (int)y, 10, 10);
+                }
 //                if(forme.getTypeForme() == TypeShape.NATURAL ||
 //                   forme.getTypeForme() == TypeShape.TERMINAL ||
 //                   forme.getTypeForme() == TypeShape.QUAI) {
@@ -251,13 +266,8 @@ public class PanelMap extends JPanel{
                 x = (x*_coefX);
                 y = h - (y*_coefY);
                 
-                
-                //transform.rotate(Math.toRadians(30));
-                //transform.translate(100, 0);
-                
                 AttributedString nom = new AttributedString(forme.getNom());
                 nom.addAttribute(TextAttribute.FONT, fontInfos);
-                //nom.addAttribute(TextAttribute.TRANSFORM, new TransformAttribute(transform));
                 
                 AttributedCharacterIterator paragraph = nom.getIterator();
                 int paragraphStart = paragraph.getBeginIndex();
@@ -288,13 +298,17 @@ public class PanelMap extends JPanel{
         g2.drawString(_coordonneesMouseOver, (int)(w-300), (int)(h-10));
         
         int cpt = 0;
-        if(resultat!=null) {
-            for(PointPathFinding p:resultat) {
-                g2.setFont(new Font("SansSerif", Font.BOLD, (int)(5*_zoomEtat)));
-                g2.drawString(cpt+"", (float)((p.getX()-_mapGauche)*_coefX), (float)(h-((p.getY()-_mapHaut)*_coefY)));
-                cpt++;
-            }
-        }
+//        if(resultat!=null) {
+//            for(PointPathFinding p:resultat.getResultat()) {
+//                g2.setFont(new Font("SansSerif", Font.BOLD, (int)(5*_zoomEtat)));
+//                g2.drawString(cpt+"", (float)((p.getX()-_mapGauche)*_coefX), (float)(h-((p.getY()-_mapHaut)*_coefY)));
+//                cpt++;
+//            }
+//        }
+        
+//        for(Point2D p:_clics) {
+//            g2.drawRect((int)p.getX(), (int)p.getY(), 3, 3);
+//        }
     }
     /**
      * fusionne les _navire et les navires connus de _naviresArrives
@@ -342,6 +356,8 @@ public class PanelMap extends JPanel{
         }
     }
     
+    
+    
     /**
      * calcule le déplacement de la zone visible sur la carte
      * @param directionX déplacement sur l'axe x
@@ -376,6 +392,13 @@ public class PanelMap extends JPanel{
      * -> zoom/dézoom
      */
     private void wheel() {
+        this.addComponentListener(new ComponentAdapter() {
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+                refresh();
+            }
+        });
         this.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
@@ -417,7 +440,9 @@ public class PanelMap extends JPanel{
                 _coordonneesMouseOver = (_pointClick.getX()/_coefX+_mapGauche) + ", " + ((h-_pointClick.getY())/_coefY+_mapHaut);
                 Forme forme = _metier.getForme(_pointClick);
                 
-                if(forme != null) {
+                if(forme instanceof Terminal ||
+                        forme instanceof Quai ||
+                        forme instanceof Navire) {
                     setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     _infosMouseOver = forme.toString();
                 } else {
@@ -441,17 +466,21 @@ public class PanelMap extends JPanel{
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                _clics.add(e.getPoint());
                 Insets insets = getInsets();
                 double h = getHeight() - insets.top - insets.bottom;
                 System.out.println((_pointClick.getX()/_coefX+_mapGauche) + ", " + ((h-_pointClick.getY())/_coefY+_mapHaut));
                 Forme forme = _metier.getForme(e.getPoint());
                 if(forme!=null) {
                     if(_navireSelectionne!=null) {
+//                        DeplacementBateaux t = new DeplacementBateaux(_navireSelectionne, new Point2D.Double(_pointClick.getX()/_coefX+_mapGauche, (h-_pointClick.getY())/_coefY+_mapHaut), _metier.getLittoraux(), getThis());
+//                        t.start();
+//                        resultat = t;
                         if(forme instanceof Terminal) {
                             Terminal terminal = (Terminal)forme;
                             Quai q = terminal.getQuai();
 //                            DeplacementBateaux t = new DeplacementBateaux(_navireSelectionne, new Point2D.Double(_pointClick.getX()/_coefX+_mapGauche, (h-_pointClick.getY())/_coefY+_mapHaut), _metier.getCoordonneesDessin(), getThis());
-                            DeplacementBateaux t = new DeplacementBateaux(_navireSelectionne, q, _metier.getCoordonneesDessin(), getThis());
+                            DeplacementBateaux t = new DeplacementBateaux(_navireSelectionne, q, _metier.getLittoraux(), getThis());
                             t.start();
                         } 
                     }

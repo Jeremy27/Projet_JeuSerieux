@@ -25,6 +25,8 @@ public class DeplacementBateaux extends Thread{
     private final Point2D _destination;
     private final ArrayList<Forme> _formes;
     private final PanelMap _map;
+    private ArrayList<PointPathFinding> _resultat;
+    private long _debut;
     
     public DeplacementBateaux(Navire bateau, Quai quai, ArrayList<Forme> formes, PanelMap map) {
         _destination = quai.getZoneArrimage().getCentre();
@@ -32,16 +34,29 @@ public class DeplacementBateaux extends Thread{
         _bateau = bateau;
         _formes = formes;
         _map = map;
+        _resultat = new ArrayList<>();
+    }
+    
+    public DeplacementBateaux(Navire bateau, Point2D destination, ArrayList<Forme> formes, PanelMap map) {
+        _destination = destination;
+        System.out.println("taille: " + formes.size());
+        System.out.println("destination: " + _destination);
+        _bateau = bateau;
+        _formes = formes;
+        _map = map;
+        _resultat = new ArrayList<>();
     }
     
     @Override
     public void run() {
-        try {
-            sleep(10);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(DeplacementBateaux.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            sleep(10);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(DeplacementBateaux.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        _debut = System.currentTimeMillis();
         deplacer();
+        
     }
     
     /**
@@ -99,7 +114,8 @@ public class DeplacementBateaux extends Thread{
                 }
                 chemin.add(pointEnCours);
             }
-            
+            long temps = System.currentTimeMillis()-_debut;
+            System.out.println("temps pour trouver le chemin: " + temps);
             //return chemin;
             for(int i=chemin.size()-1;i>=0;i--) {
                 PointPathFinding p = chemin.get(i);
@@ -116,6 +132,7 @@ public class DeplacementBateaux extends Thread{
             }
             
         }
+        _resultat=pointsVisites;
         return pointsVisites;
     }
     
@@ -197,30 +214,6 @@ public class DeplacementBateaux extends Thread{
     public TreeSet<PointPathFinding> trierVoisins(PointPathFinding pointEnCours, ArrayList<PointPathFinding> visites) {
         TreeSet<PointPathFinding> voisinsPriorises = new TreeSet<>();
         
-        //gauche
-        if(pointEnCours.getVoisinGauche()==null) {
-            PointPathFinding gauche = trouverPoint(pointEnCours, -PASVOISIN, 0, visites);
-            if(gauche!=null) {
-                pointEnCours.setVoisinGauche(gauche);
-                gauche.setVoisinDroit(pointEnCours);
-                voisinsPriorises.add(gauche);
-            }
-        } else {
-            voisinsPriorises.add(pointEnCours.getVoisinGauche());
-        }
-         
-        //droit
-        if(pointEnCours.getVoisinDroit()==null) {
-            PointPathFinding droit = trouverPoint(pointEnCours, PASVOISIN, 0, visites);
-            if(droit!=null) {
-                pointEnCours.setVoisinDroit(droit);
-                droit.setVoisinGauche(pointEnCours);
-                voisinsPriorises.add(droit);
-            }
-        } else {
-            voisinsPriorises.add(pointEnCours.getVoisinDroit());
-        }
-        
         //haut
         if(pointEnCours.getVoisinHaut()==null) {
             PointPathFinding haut = trouverPoint(pointEnCours, 0, PASVOISIN, visites);
@@ -288,6 +281,30 @@ public class DeplacementBateaux extends Thread{
             }
         } else {
             voisinsPriorises.add(pointEnCours.getVoisinBasGauche());
+        }
+        
+        //gauche
+        if(pointEnCours.getVoisinGauche()==null) {
+            PointPathFinding gauche = trouverPoint(pointEnCours, -PASVOISIN, 0, visites);
+            if(gauche!=null) {
+                pointEnCours.setVoisinGauche(gauche);
+                gauche.setVoisinDroit(pointEnCours);
+                voisinsPriorises.add(gauche);
+            }
+        } else {
+            voisinsPriorises.add(pointEnCours.getVoisinGauche());
+        }
+         
+        //droit
+        if(pointEnCours.getVoisinDroit()==null) {
+            PointPathFinding droit = trouverPoint(pointEnCours, PASVOISIN, 0, visites);
+            if(droit!=null) {
+                pointEnCours.setVoisinDroit(droit);
+                droit.setVoisinGauche(pointEnCours);
+                voisinsPriorises.add(droit);
+            }
+        } else {
+            voisinsPriorises.add(pointEnCours.getVoisinDroit());
         }
         
         return voisinsPriorises;
@@ -425,4 +442,11 @@ public class DeplacementBateaux extends Thread{
 //        
 //        return pointsOcean;
 //    }
+
+    /**
+     * @return the _resultat
+     */
+    public ArrayList<PointPathFinding> getResultat() {
+        return _resultat;
+    }
 }
