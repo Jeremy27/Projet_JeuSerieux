@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package jeuserieux.presentation;
 
 import java.awt.BorderLayout;
@@ -175,7 +169,13 @@ public class NouvellePartie extends JDialog {
     
     Instance creerInstance() {
         GestionInstance gInstance = new GestionInstance();
+//        gInstance.genererInstance();
         gInstance.genererAleatoirement();
+        
+        if(null == gInstance.getInstance()) {
+            gInstance.genererAleatoirement();
+        }
+        
         return gInstance.getInstance();
     }
     

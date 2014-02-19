@@ -7,14 +7,13 @@
 package jeuserieux.metier;
 
 import jeuserieux.accesAuDonnees.Fichier;
-import java.io.StringReader;
 import java.util.ArrayList;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
+import jeuserieux.accesAuDonnees.FichierJson;
 import jeuserieux.modele.Score;
 import jeuserieux.modele.enumeration.TypeDifficulte;
 
@@ -24,17 +23,16 @@ import jeuserieux.modele.enumeration.TypeDifficulte;
  */
 public class GestionScores {
     
-    private Fichier _fichierScores;
-    private Score   _score;
+    private FichierJson _fichierScores;
+    private Score       _score;
     
     public GestionScores() {
-        
-        _fichierScores  = new Fichier(Fichier.CHEMIN + "scores");
+        _fichierScores  = new FichierJson(Fichier.CHEMIN + "scores.json");
         initialiserScore();
     }
     
     public GestionScores(String nomFichier) {
-        _fichierScores  = new Fichier(Fichier.CHEMIN + nomFichier);
+        _fichierScores  = new FichierJson(Fichier.CHEMIN + nomFichier);
         initialiserScore();
     }
     
@@ -53,21 +51,9 @@ public class GestionScores {
         return objetJson;
     }
     
-    public JsonArray lireFichierScores() {
-        JsonArray tableauJson = null;
-        
-        String scores = _fichierScores.lire();
-        
-        try (JsonReader jsonReader = Json.createReader(new StringReader(scores))) {
-            tableauJson = jsonReader.readArray();
-        }
-        
-        return tableauJson;
-    }
-    
     public ArrayList<Score> getTableauScores() {
         ArrayList<Score> listeScores    = new ArrayList<>();
-        JsonArray tableauScores         = lireFichierScores();
+        JsonArray tableauScores         = _fichierScores.getJson();
         
         for (Object objet : tableauScores.toArray()) {
             JsonObject jo   = (JsonObject) objet;
@@ -83,23 +69,15 @@ public class GestionScores {
     
     public Score sauvegarderScore() {
         JsonArrayBuilder nouveauTableau = Json.createArrayBuilder();
-        
         JsonObject objetJson            = genererObjetJson();
-        JsonArray tableauJson           = lireFichierScores();
+        JsonArray tableauJson           = _fichierScores.getJson();
         
         for(int i=0; i<tableauJson.size(); i++) {
             nouveauTableau.add(tableauJson.get(i));
         }
         nouveauTableau.add(objetJson);
-        
-        _fichierScores.ecrire(nouveauTableau.build().toString(), false);
+        _fichierScores.ecrire(nouveauTableau.build(), false);
         
         return _score;
-    }
-    
-    public ArrayList<Object[]> recupererScores() {
-        ArrayList<Object[]> listeScores = new ArrayList<>();
-        
-        return listeScores;
     }
 }

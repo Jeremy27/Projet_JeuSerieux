@@ -8,5 +8,7 @@ public enum TypeNavire {
     FERRY,
     RO_RO,
     PORTE_CONTENEURS,
-    PETROLIER
+    PETROLIER,
+    EOLIEN,
+    VRAC_SOLIDE
 }

@@ -87,7 +87,7 @@ public class FenetreScores extends JDialog {
     }
     
     private void remplirTableaux() {
-        GestionScores gScores       = new GestionScores("scores");
+        GestionScores gScores       = new GestionScores();
         ArrayList<Score> tabScores  = gScores.getTableauScores();
         
         for(Score score : tabScores) {

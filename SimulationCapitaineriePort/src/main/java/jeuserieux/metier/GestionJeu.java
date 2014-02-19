@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package jeuserieux.metier;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -37,7 +30,7 @@ public class GestionJeu extends Thread {
     private PanelNavires _naviresArrivant;
     private PanelInfoJeu _infoJeu;
     private PanelPartie  _partie;
-    private PanelMap _map;
+    private PanelMap     _map;
     
     public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu infoJeu, PanelPartie partie, PanelMap map) {
         _naviresArrives     = naviresArrives;
@@ -49,10 +42,6 @@ public class GestionJeu extends Thread {
     
     public void setInstance(Instance instance) {
         _instance = instance;
-    }
-    
-    public void setPartie(Map<String, String> map) {
-        
     }
     
     public JsonArray genererJson() {
@@ -167,10 +156,10 @@ public class GestionJeu extends Thread {
         }
         
         if(!Partie._abandon) {
-            GestionScores gScores = new GestionScores("scores");
+            GestionScores gScores = new GestionScores();
             Score score = gScores.sauvegarderScore();
             
-            FenetreScores fScores = new FenetreScores(score);
+            new FenetreScores(score);
         }
     }
 }

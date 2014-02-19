@@ -32,4 +32,9 @@ public class FichierJson {
         }
         return ja;
     }
+    
+    public void ecrire(JsonArray tabJson, boolean append) {
+        Fichier fichier = new Fichier(_nomFichier);
+        fichier.ecrire(tabJson.toString(), append);
+    }
 }
