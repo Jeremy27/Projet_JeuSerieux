@@ -16,7 +16,9 @@ import java.util.logging.Logger;
  */
 public class Fichier {
     
-    private final File _nomFichier;
+    public static final String  SEPARATEUR = java.nio.file.FileSystems.getDefault().getSeparator();
+    public static final String  CHEMIN = "src" + SEPARATEUR + "main" + SEPARATEUR + "resources" + SEPARATEUR; 
+    private final File          _nomFichier;
     
     public Fichier(String nomFichier) {
         _nomFichier = new File(nomFichier);
