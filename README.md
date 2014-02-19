@@ -1,4 +1,4 @@
-Projet_JeuSerieux
+Projet - Jeu serieux
 =================
 
 Ce dépot a été créé pour que les différents membres du projet puissent travailler ensemble sur les différentes tâches.
@@ -11,14 +11,19 @@ Objectif du projet
 Le but de ce projet, pour nos clients est la création d'un jeu sérieux sur le fonctionnement du port du Havre, plus principalement sur la gestion des arrivés au port et l'assignation de ces navires arrivés vers les quais, l'objectif du jeu sera donc de cumulé le moins de retard possible sur une partie.
 
 
-Documentation
+DocumentationProjet
 =============
 
-Ce dossier contient toute la documentation produite pour le module "Gestion de projet" et c'est donc sur celle-ci que l'on s'est basé pour produire le jeu sérieux
+Ce dossier contient toute la documentation produite lors du module "Gestion de projet" et c'est donc sur celle-ci que l'on s'est basé pour produire le jeu sérieux
+
+SimulationCapitaineriePort
+==========================
+
+Ce dossier contient tout le code produit lors de ce projet
 
 Lancer le jeu (avec Maven)
 =============
 
->mvn compile
-
->mvn exec:java -Dexec.mainClass=jeuserieux.presentation.IHM
+    mvn compile 
+    
+    mvn exec:java -Dexec.mainClass=jeuserieux.presentation.IHM
