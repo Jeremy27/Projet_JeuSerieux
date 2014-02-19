@@ -6,6 +6,7 @@
 
 package jeuserieux.metier;
 
+import java.util.ArrayList;
 import java.util.Random;
 import jeuserieux.modele.Instance;
 import jeuserieux.modele.Navire;
@@ -34,14 +35,21 @@ public class GestionInstance {
         for (int i = 0; i < Partie._tempsFin; i++) {
             nbNavires = _random.nextInt(Partie._nbMaxNavires) + Partie._nbMinNavires;
             for (int j = 0; j < nbNavires; j++) {
-                navire = getNavireAleatoire(numNavire++);
+                navire = genererNavireAleatoire(numNavire++);
                 navire.setDateArrivee(i);
                 _instance.ajouterNavire(navire);
             }
         }
     }
     
-    public Navire getNavireAleatoire(int numNavire) {
+    public ArrayList<Navire> getListeNaviresReels() {
+        ArrayList<Navire> listeNavires = new ArrayList<>();
+        
+        
+        return listeNavires;
+    }
+    
+    public Navire genererNavireAleatoire(int numNavire) {
         ParamsNavire params = new ParamsNavire();
         
         params.setNom("Navire "+numNavire);
