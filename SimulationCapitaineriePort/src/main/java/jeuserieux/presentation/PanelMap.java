@@ -29,6 +29,7 @@ import jeuserieux.modele.outils.PointPathFinding;
 public class PanelMap extends JPanel{
     private static final double ZOOMMIN = 1.0;
     private static final double ZOOMMAX = 10.0;
+    private static final double PAS_ZOOM = 0.5;
     private static final double COEF_DEPLACEMENT = 0.0001;
     
     private final Color COULEUR_QUAI_DISPONIBLE = new Color(255, 0, 0);
@@ -223,7 +224,7 @@ public class PanelMap extends JPanel{
      * fusionne les _navire et les navires connus de _naviresArrives
      * @see presentation.PanelNavires
      */
-    public void mergeNavires() {
+    private void mergeNavires() {
         for(Navire n:_naviresArrives.getNavires()) {
             if(!_navires.contains(n)) {
                 if(n.getPosition()==null) {
@@ -248,9 +249,9 @@ public class PanelMap extends JPanel{
     /**
      * Augmenter le zoom
      */
-    public void augmenterZoom() {
+    private void augmenterZoom() {
         if(_zoomEtat<ZOOMMAX) {
-            _zoomEtat += 0.5;
+            _zoomEtat += PAS_ZOOM;
             refresh();
         }
     }
@@ -258,9 +259,9 @@ public class PanelMap extends JPanel{
     /**
      * Baisse le zoom
      */
-    public void baisserZoom() {
+    private void baisserZoom() {
         if(_zoomEtat>ZOOMMIN) {
-            _zoomEtat -= 0.5;
+            _zoomEtat -= PAS_ZOOM;
             refresh();
         }
     }
@@ -270,7 +271,7 @@ public class PanelMap extends JPanel{
      * @param directionX déplacement sur l'axe x
      * @param directionY déplacement sur l'axe y
      */
-    public void dragCurseur(double directionX, double directionY) {
+    private void dragCurseur(double directionX, double directionY) {
         _coordCurseurModif.setLocation(_coordCurseurModif.getX()+(COEF_DEPLACEMENT*directionX/_zoomEtat), _coordCurseurModif.getY()+(COEF_DEPLACEMENT*directionY/_zoomEtat));
         refresh();
     }
@@ -281,7 +282,7 @@ public class PanelMap extends JPanel{
      * il faut jouer avec les coef pour faire la correspondance
      * @param p le point du curseur
      */
-    public void setCurseur(Point p) {
+    private void setCurseur(Point p) {
         Insets insets = getInsets();
         double w = getWidth() - insets.left - insets.right;
         double h = getHeight() - insets.top - insets.bottom;
@@ -290,7 +291,7 @@ public class PanelMap extends JPanel{
         _coordCurseurModif.setLocation(p.getX()/_coefX+_mapGauche, (h-p.getY())/_coefY+_mapHaut);
     }
     
-    public void setTypeColorer(TypeMarchandise type) {
+    private void setTypeColorer(TypeMarchandise type) {
         _typeMarchandiseNavire = type;
     }
     
@@ -298,7 +299,7 @@ public class PanelMap extends JPanel{
      * Gestion de l'évènement lié à la molette de la souris
      * -> zoom/dézoom
      */
-    public void wheel() {
+    private void wheel() {
         this.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
@@ -322,7 +323,7 @@ public class PanelMap extends JPanel{
      * -> navigation sur la carte
      * 
      */
-    public void move() {
+    private void move() {
         this.addMouseMotionListener(new MouseMotionListener() {
 
             @Override
@@ -352,7 +353,7 @@ public class PanelMap extends JPanel{
         });
     }
     
-    public PanelMap getThis() {
+    private PanelMap getThis() {
         return this;
     }
     
@@ -360,7 +361,7 @@ public class PanelMap extends JPanel{
      * Gère les évènements liés au clic de la souris
      * -> sélection des éléments de la carte
      */
-    public void click() {
+    private void click() {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

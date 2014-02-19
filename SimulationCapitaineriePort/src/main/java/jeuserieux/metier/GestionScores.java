@@ -24,18 +24,17 @@ import jeuserieux.modele.enumeration.TypeDifficulte;
  */
 public class GestionScores {
     
-    private final String separateur = java.nio.file.FileSystems.getDefault().getSeparator();
     private Fichier _fichierScores;
     private Score   _score;
     
     public GestionScores() {
         
-        _fichierScores  = new Fichier("src" + separateur + "main" + separateur + "resources" + separateur + "scores");
+        _fichierScores  = new Fichier(Fichier.CHEMIN + "scores");
         initialiserScore();
     }
     
     public GestionScores(String nomFichier) {
-        _fichierScores  = new Fichier("src" + separateur + "main" + separateur + "resources" + separateur + nomFichier);
+        _fichierScores  = new Fichier(Fichier.CHEMIN + nomFichier);
         initialiserScore();
     }
     
