@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package jeuserieux.metier;
 
-import jeuserieux.accesAuDonnees.ADMap;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -14,6 +7,11 @@ import java.util.Random;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
+import jeuserieux.accesAuDonnees.ADMap;
+import jeuserieux.modele.ArrayForme;
+import jeuserieux.modele.ArrayNavire;
+import jeuserieux.modele.ArrayQuai;
+import jeuserieux.modele.ArrayTerminal;
 import jeuserieux.modele.Forme;
 import jeuserieux.modele.Navire;
 import jeuserieux.modele.Quai;
@@ -30,8 +28,14 @@ import jeuserieux.presentation.PanelMap;
  */
 public class MetierMap {
     
-    private final ArrayList<Forme> _coordonneesDessin;
-    private final ArrayList<Forme> _littoraux;
+    private final ArrayForme _formes;
+    private final ArrayForme _littoraux;
+    private final ArrayForme _coordonneesDessin;
+    
+    private final ArrayNavire _navires;
+    private final ArrayQuai _quais;
+    private final ArrayTerminal _terminaux;
+    
     
     //couleurs des différentes formes
     private static final Color NATURALCOLOR = new Color(181, 208, 208);
@@ -45,8 +49,12 @@ public class MetierMap {
     private final ADMap _accesDonneesMap;
     
     public MetierMap(PanelMap map, PanelInfoForme panelInfo) {
-        _coordonneesDessin = new ArrayList<>();
-        _littoraux = new ArrayList<>();
+        _formes = new ArrayForme();
+        _littoraux = new ArrayForme();
+        _coordonneesDessin = new ArrayForme();
+        _navires = new ArrayNavire();
+        _quais = new ArrayQuai();
+        _terminaux = new ArrayTerminal();
         _accesDonneesMap = new ADMap();
         
     }
@@ -94,37 +102,43 @@ public class MetierMap {
             Forme forme;
 
             //construction de l'objet
-            if(type.equals(TypeShape.NATURAL.name())) {
-                c = NATURALCOLOR;
-                fill = true;
-                forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
-            } else if(type.equals(TypeShape.QUAI.name())) {
+           if(type.equals(TypeShape.QUAI.name())) {
                 c = QUAICOLOR;
                 fill = false;
                 forme = new Quai(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
+                _quais.add((Quai)forme);
             } else if(type.equals(TypeShape.TERMINAL.name())) {
                 c = TERMINALCOLOR;
                 fill = true;
                 forme = new Terminal(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
-            } else if(type.equals(TypeShape.HIGHWAY.name())) {
-                c = ROUTECOLOR;
-                forme = new Forme(nom, fill, c, id, TypeShape.HIGHWAY);
-            } else if(type.equals(TypeShape.BUILDING.name())) {
-                c = BATIMENTCOLOR;
-                fill = true;
-                forme = new Forme(nom, fill, c, id, TypeShape.BUILDING);
-            } else if(type.equals(TypeShape.FORET.name())) {
-                c = FORETCOLOR;
-                fill = true;
-                forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
-            } else if(type.equals("TEST")) {
-                c = new Color(255, 0, 0);
-                fill = false;
-                forme = new Forme(nom, fill, c, id, TypeShape.NULL);
+                _terminaux.add((Terminal)forme);
             } else {
-                c = AUTRECOLOR;
-                forme = new Forme(nom, fill, c, id, TypeShape.NULL);
+                if(type.equals(TypeShape.NATURAL.name())) {
+                    c = NATURALCOLOR;
+                    fill = true;
+                    forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
+                } else if(type.equals(TypeShape.HIGHWAY.name())) {
+                    c = ROUTECOLOR;
+                    forme = new Forme(nom, fill, c, id, TypeShape.HIGHWAY);
+                } else if(type.equals(TypeShape.BUILDING.name())) {
+                    c = BATIMENTCOLOR;
+                    fill = true;
+                    forme = new Forme(nom, fill, c, id, TypeShape.BUILDING);
+                } else if(type.equals(TypeShape.FORET.name())) {
+                    c = FORETCOLOR;
+                    fill = true;
+                    forme = new Forme(nom, fill, c, id, TypeShape.NATURAL);
+                } else if(type.equals("TEST")) {
+                    c = new Color(255, 0, 0);
+                    fill = false;
+                    forme = new Forme(nom, fill, c, id, TypeShape.NULL);
+                } else {
+                    c = AUTRECOLOR;
+                    forme = new Forme(nom, fill, c, id, TypeShape.NULL);
+                }
+                getFormes().add(forme);
             }
+                
             
             //traitement des coordonnées de la forme
             JsonArray nodes = (JsonArray)jo.get("_nodes");
@@ -138,9 +152,7 @@ public class MetierMap {
             if(littoral!=null) {
                 _littoraux.add(forme);
             }
-            
             _coordonneesDessin.add(forme);
-            
         }
         
     }
@@ -150,6 +162,15 @@ public class MetierMap {
      * @param f la forme à ajouter
      */
     public void ajoutForme(Forme f) {
+        if(f instanceof Terminal) {
+            _terminaux.add((Terminal)f);
+        } else if(f instanceof Quai) {
+            _quais.add((Quai)f);
+        } else if (f instanceof Navire) {
+            _navires.add((Navire)f);
+        } else {
+            _formes.add(f);
+        }
         _coordonneesDessin.add(f);
     }
     
@@ -157,17 +178,29 @@ public class MetierMap {
      * Cette fonction vide la liste des formes de tous les Navires
      */
     public void enleverNavires() {
-        ArrayList<Navire> navires = new ArrayList<>();
-        for(Forme f:_coordonneesDessin) {
-            if(f instanceof Navire) {
-                navires.add((Navire)f);
-            }
-        }
+        _coordonneesDessin.removeAll(_navires);
+        _navires.clear();
+    }
+    
+    /**
+     * Lie les quais aux terminaux comme ils le sont en réalité sur le port du Havre
+     */
+    public void lierQuaisTerminaux() {
+        Quai quaiAmeriques = _quais.getQuai("Quai des Amériques");
+        Terminal terminalAtlantique = _terminaux.getTerminal("Terminal de l'Atlantique");
+        quaiAmeriques.ajoutTerminal(terminalAtlantique);
+        terminalAtlantique.ajoutType(TypeMarchandise.CONTENEURS);
         
-        while(!navires.isEmpty()) {
-            _coordonneesDessin.remove(navires.get(0));
-            navires.remove(0);
-        }
+        Quai quaiEurope = _quais.getQuai("Quai de l'Europe");
+        Terminal terminalEurope = _terminaux.getTerminal("Terminal de l'Europe");
+        quaiEurope.ajoutTerminal(terminalEurope);
+        terminalEurope.ajoutType(TypeMarchandise.CONTENEURS);
+        
+        Terminal terminalNormandie = _terminaux.getTerminal("Terminal de Normandie");
+        terminalNormandie.ajoutType(TypeMarchandise.CONTENEURS);
+        
+        Terminal terminalCruise = _terminaux.getTerminal("Cruise Terminal");
+        terminalCruise.ajoutType(TypeMarchandise.PASSAGER);
     }
     
     /**
@@ -177,12 +210,15 @@ public class MetierMap {
      * @return la forme si elle est trouvée, null sinon
      */
     public Forme getForme(String nom) {
-        for(Forme forme:_coordonneesDessin) {
-            if(forme.getNom().equals(nom)) {
-                return forme;
-            }
-        }
-        return null;
+        Forme selectionnee;
+        selectionnee = _navires.getNavire(nom);
+        if(selectionnee!=null) return selectionnee;
+        selectionnee = _quais.getQuai(nom);
+        if(selectionnee!=null) return selectionnee;
+        selectionnee = _terminaux.getTerminal(nom);
+        if(selectionnee!=null) return selectionnee;
+        selectionnee = getFormes().getForme(nom);
+        return selectionnee;
     }
     
     /**
@@ -197,40 +233,42 @@ public class MetierMap {
      * @return la Forme trouvée, sinon null
      */
     public Forme getForme(Point2D p) {
-        Forme selectionnee = null;
-        for(Forme forme:_coordonneesDessin) {
-            if(forme.getPath().contains(p)) {
-                
-                if(selectionnee == null) {
-                    selectionnee = forme;
-                } else {
-                    if(forme.getPriorite()>selectionnee.getPriorite()) {
-                        selectionnee = forme;
-                    }
-                }
-            }    
-        }
+        Forme selectionnee;
+        selectionnee = _navires.getNavire(p);
+        if(selectionnee!=null) return selectionnee;
+        selectionnee = _quais.getQuai(p);
+        if(selectionnee!=null) return selectionnee;
+        selectionnee = _terminaux.getTerminal(p);
+        if(selectionnee!=null) return selectionnee;
+        selectionnee = getFormes().getForme(p);
         return selectionnee;
     }
-    
+
     /**
-     * Lie les quais aux terminaux comme ils le sont en réalité sur le port du Havre
+     * @return the _navires
      */
-    public void lierQuaisTerminaux() {
-        Quai quaiAmeriques = (Quai)getForme("Quai des Amériques");
-        Terminal terminalAtlantique = (Terminal)getForme("Terminal de l'Atlantique");
-        quaiAmeriques.ajoutTerminal(terminalAtlantique);
-        terminalAtlantique.ajoutType(TypeMarchandise.CONTENEURS);
-        
-        Quai quaiEurope = (Quai)getForme("Quai de l'Europe");
-        Terminal terminalEurope = (Terminal)getForme("Terminal de l'Europe");
-        quaiEurope.ajoutTerminal(terminalEurope);
-        terminalEurope.ajoutType(TypeMarchandise.CONTENEURS);
-        
-        Terminal terminalNormandie = (Terminal)getForme("Terminal de Normandie");
-        terminalNormandie.ajoutType(TypeMarchandise.CONTENEURS);
-        
-        Terminal terminalCruise = (Terminal)getForme("Cruise Terminal");
-        terminalCruise.ajoutType(TypeMarchandise.PASSAGER);
+    public ArrayList<Navire> getNavires() {
+        return _navires;
+    }
+
+    /**
+     * @return the _quais
+     */
+    public ArrayList<Quai> getQuais() {
+        return _quais;
+    }
+
+    /**
+     * @return the _terminaux
+     */
+    public ArrayList<Terminal> getTerminaux() {
+        return _terminaux;
+    }
+
+    /**
+     * @return the _formes
+     */
+    public ArrayForme getFormes() {
+        return _formes;
     }
 }

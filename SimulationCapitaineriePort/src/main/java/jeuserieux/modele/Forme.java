@@ -127,7 +127,7 @@ public class Forme {
      * @param map paramètres indispensables aux calculs
      * @return true si la forme est contenu dans la carte affichée dans l'application
      */
-    public boolean contenuDansMap(HashMap<String, Double> map) {
+    private boolean contenuDansMap(HashMap<String, Double> map) {
         double gauche, droite, bas, haut;
         gauche = map.get("gauche");
         droite = map.get("droite");
