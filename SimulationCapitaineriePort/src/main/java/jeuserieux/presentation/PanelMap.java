@@ -29,6 +29,7 @@ import jeuserieux.modele.outils.PointPathFinding;
 public class PanelMap extends JPanel{
     private static final double ZOOMMIN = 1.0;
     private static final double ZOOMMAX = 10.0;
+    private static final double PAS_ZOOM = 0.5;
     private static final double COEF_DEPLACEMENT = 0.0001;
     
     private final Color COULEUR_QUAI_DISPONIBLE = new Color(255, 0, 0);
@@ -250,7 +251,7 @@ public class PanelMap extends JPanel{
      */
     public void augmenterZoom() {
         if(_zoomEtat<ZOOMMAX) {
-            _zoomEtat += 0.5;
+            _zoomEtat += PAS_ZOOM;
             refresh();
         }
     }
@@ -260,7 +261,7 @@ public class PanelMap extends JPanel{
      */
     public void baisserZoom() {
         if(_zoomEtat>ZOOMMIN) {
-            _zoomEtat -= 0.5;
+            _zoomEtat -= PAS_ZOOM;
             refresh();
         }
     }
