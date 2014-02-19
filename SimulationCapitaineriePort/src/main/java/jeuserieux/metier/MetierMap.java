@@ -265,7 +265,7 @@ public class MetierMap {
         quaiEurope.setCoordInfo(new Point2D.Double(0.17552924554565702, 49.48018733333333));
         quaiEurope.setAngleInfo(-55);
         Quai quaiBougainville = _quais.getQuai("Quai de Bougainville");
-        quaiBougainville.setCoordInfo(new Point2D.Double(0.1866762722717149, 49.47093786666666));
+        quaiBougainville.setCoordInfo(new Point2D.Double(0.1882985662583519, 49.470182833333325));
         quaiBougainville.setAngleInfo(70);
         Quai quaiDuHavre = _quais.getQuai("Quai du Havre");
         quaiDuHavre.setCoordInfo(new Point2D.Double(0.14506599387527838, 49.45972388888889));
@@ -278,7 +278,7 @@ public class MetierMap {
         terminalEurope.setCoordInfo(new Point2D.Double(0.1721829275373846, 49.48035014285712));
         terminalEurope.setAngleInfo(-55);
         Terminal terminalOcean = _terminaux.getTerminal("Terminal de l'Océan");
-        terminalOcean.setCoordInfo(new Point2D.Double(0.19052854677060133, 49.46961893333327));
+        terminalOcean.setCoordInfo(new Point2D.Double(0.19246375974387528, 49.46965899999999));
         terminalOcean.setAngleInfo(70);
         Terminal terminalTNMSC = _terminaux.getTerminal("Terminal TNMSC");
         terminalTNMSC.setCoordInfo(new Point2D.Double(0.13443244710467694, 49.46469446666659));
@@ -300,7 +300,7 @@ public class MetierMap {
         manche.setCoordInfo(new Point2D.Double(0.09435743318485523, 49.469477166666664));
         
         Forme darseOcean = _formes.getForme("Darse de l'Océan");
-        darseOcean.setCoordInfo(new Point2D.Double(0.1849664114699332, 49.46783083333333));
+        darseOcean.setCoordInfo(new Point2D.Double(0.1832822188195991, 49.4716084));
         darseOcean.setAngleInfo(70);
     }
     
