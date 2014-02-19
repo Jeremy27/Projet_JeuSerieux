@@ -20,4 +20,5 @@ Lancer le jeu (avec Maven)
 =============
 
 >mvn compile
+
 >mvn exec:java -Dexec.mainClass=jeuserieux.presentation.IHM
