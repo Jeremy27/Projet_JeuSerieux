@@ -16,6 +16,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
+import java.awt.font.TransformAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
@@ -249,25 +250,37 @@ public class PanelMap extends JPanel{
                 //vérifie si le point est à dessiner
                 x = (x*_coefX);
                 y = h - (y*_coefY);
+                
+                
+                //transform.rotate(Math.toRadians(30));
+                //transform.translate(100, 0);
+                
                 AttributedString nom = new AttributedString(forme.getNom());
                 nom.addAttribute(TextAttribute.FONT, fontInfos);
+                //nom.addAttribute(TextAttribute.TRANSFORM, new TransformAttribute(transform));
+                
                 AttributedCharacterIterator paragraph = nom.getIterator();
                 int paragraphStart = paragraph.getBeginIndex();
                 int paragraphEnd = paragraph.getEndIndex();
-                
                 LineBreakMeasurer lineMeasurer = new LineBreakMeasurer(paragraph, g2.getFontRenderContext());
                 lineMeasurer.setPosition(paragraphStart);
                 float drawPosY = 0;
                 while (lineMeasurer.getPosition() < paragraphEnd) {
                     TextLayout layout = lineMeasurer.nextLayout((float)(100*_zoomEtat));
                     drawPosY += layout.getAscent();
+                    
+                    Rectangle2D bounds = layout.getBounds();
+                    AffineTransform transform = new AffineTransform();
+                    transform.rotate(Math.toRadians(forme.getAngleInfo()), x, y);
+                    g2.setTransform(transform);
+                    
                     layout.draw(g2, (float)(x), (float)(y+drawPosY));
                     drawPosY += layout.getDescent() + layout.getLeading();
                 }
             }
         }
         
-        
+        g2.setTransform(new AffineTransform());
         g2.setColor(Color.RED);
         
         g2.setFont(new Font("SansSerif", Font.BOLD, 10));

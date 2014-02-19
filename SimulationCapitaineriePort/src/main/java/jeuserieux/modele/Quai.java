@@ -113,8 +113,4 @@ public class Quai extends Forme{
         }
         return false;
     }
-    @Override
-    public int getPriorite() {
-        return 2;
-    }
 }

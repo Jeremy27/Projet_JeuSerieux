@@ -213,11 +213,6 @@ public class Navire extends Forme {
         return _largeur;
     }
 
-    @Override
-    public int getPriorite() {
-        return 3;
-    }
-
     /**
      * @return the _angle
      */

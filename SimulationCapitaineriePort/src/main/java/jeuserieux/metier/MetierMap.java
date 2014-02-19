@@ -231,16 +231,23 @@ public class MetierMap {
         Quai quaiAmeriques = _quais.getQuai("Quai des Amériques");
         Terminal terminalAtlantique = _terminaux.getTerminal("Terminal de l'Atlantique");
         Forme zoneArrimageAmeriques = _formes.getForme("zone arrimage quai Amériques");
-        
         lierQuaisTerminaux(quaiAmeriques, terminalAtlantique, zoneArrimageAmeriques, TypeMarchandise.CONTENEURS);
-        
         
         Quai quaiEurope = _quais.getQuai("Quai de l'Europe");
         Terminal terminalEurope = _terminaux.getTerminal("Terminal de l'Europe");
         Forme zoneArrimageEurope = _formes.getForme("zone arrimage quai de l'Europe");
         lierQuaisTerminaux(quaiEurope, terminalEurope, zoneArrimageEurope, TypeMarchandise.CONTENEURS);
         
-        
+        Quai quaiDuHavre = _quais.getQuai("Quai du Havre");
+        Terminal terminalTNMSC = _terminaux.getTerminal("Terminal TNMSC");
+        Terminal terminalPorteOceane = _terminaux.getTerminal("Terminal Porte Océane");
+        Terminal terminalDeFrance = _terminaux.getTerminal("Terminal de France");
+        Forme zoneArrimageTNMSC= _formes.getForme("zone arrimage quai TNMSC");
+        Forme zoneArrimagePorteOceane= _formes.getForme("zone arrimage quai porte Océane");
+        Forme zoneArrimageDeFrance= _formes.getForme("zone arrimage quai de France");
+        lierQuaisTerminaux(quaiDuHavre, terminalTNMSC, zoneArrimageTNMSC, TypeMarchandise.CONTENEURS);
+        lierQuaisTerminaux(quaiDuHavre, terminalPorteOceane, zoneArrimagePorteOceane, TypeMarchandise.CONTENEURS);
+        lierQuaisTerminaux(quaiDuHavre, terminalDeFrance, zoneArrimageDeFrance, TypeMarchandise.CONTENEURS);
 //        
 //        Terminal terminalNormandie = _terminaux.getTerminal("Terminal de Normandie");
 //        terminalNormandie.ajoutType(TypeMarchandise.CONTENEURS);
@@ -252,29 +259,49 @@ public class MetierMap {
     public void setPositionInfos() {
         
         Quai quaiAmeriques = _quais.getQuai("Quai des Amériques");
-        quaiAmeriques.setCoordInfo(new Point2D.Double(0.15426597717149212, 49.47305713333333));
+        quaiAmeriques.setCoordInfo(new Point2D.Double(0.1556605373051225, 49.47354311111111));
+        quaiAmeriques.setAngleInfo(-17);
         Quai quaiEurope = _quais.getQuai("Quai de l'Europe");
         quaiEurope.setCoordInfo(new Point2D.Double(0.17552924554565702, 49.48018733333333));
+        quaiEurope.setAngleInfo(-55);
         Quai quaiBougainville = _quais.getQuai("Quai de Bougainville");
         quaiBougainville.setCoordInfo(new Point2D.Double(0.1866762722717149, 49.47093786666666));
+        quaiBougainville.setAngleInfo(70);
+        Quai quaiDuHavre = _quais.getQuai("Quai du Havre");
+        quaiDuHavre.setCoordInfo(new Point2D.Double(0.14506599387527838, 49.45972388888889));
+        quaiDuHavre.setAngleInfo(12);
         
         Terminal terminalAtlantique = _terminaux.getTerminal("Terminal de l'Atlantique");
         terminalAtlantique.setCoordInfo(new Point2D.Double(0.15342374999999994, 49.47570186666662));
+        terminalAtlantique.setAngleInfo(-20);
         Terminal terminalEurope = _terminaux.getTerminal("Terminal de l'Europe");
-        terminalEurope.setCoordInfo(new Point2D.Double(0.17283788975501113, 49.48250716666667));
+        terminalEurope.setCoordInfo(new Point2D.Double(0.1721829275373846, 49.48035014285712));
+        terminalEurope.setAngleInfo(-55);
         Terminal terminalOcean = _terminaux.getTerminal("Terminal de l'Océan");
         terminalOcean.setCoordInfo(new Point2D.Double(0.19052854677060133, 49.46961893333327));
+        terminalOcean.setAngleInfo(70);
         Terminal terminalTNMSC = _terminaux.getTerminal("Terminal TNMSC");
         terminalTNMSC.setCoordInfo(new Point2D.Double(0.13443244710467694, 49.46469446666659));
+        terminalTNMSC.setAngleInfo(13);
         Terminal terminalPorteOceane = _terminaux.getTerminal("Terminal Porte Océane");
         terminalPorteOceane.setCoordInfo(new Point2D.Double(0.15661426781737176, 49.46126613333329));
+        terminalPorteOceane.setAngleInfo(13);
         Terminal terminalDeFrance = _terminaux.getTerminal("Terminal de France");
         terminalDeFrance.setCoordInfo(new Point2D.Double(0.16960646158129156, 49.45916786666662));
+        terminalDeFrance.setAngleInfo(13);
         
         Forme bassinTheoDucrocq = _formes.getForme("Bassin Théophile Ducrocq");
-        bassinTheoDucrocq.setCoordInfo(new Point2D.Double(0.12896057906458797, 49.471422833333335));
+        bassinTheoDucrocq.setCoordInfo(new Point2D.Double(0.12938955615653827, 49.47192213333333));
+        bassinTheoDucrocq.setAngleInfo(13);
         Forme port2000 = _formes.getForme("Port 2000");
         port2000.setCoordInfo(new Point2D.Double(0.12908873886414254, 49.45885083333334));
+        
+        Forme manche = _formes.getForme("Manche");
+        manche.setCoordInfo(new Point2D.Double(0.09435743318485523, 49.469477166666664));
+        
+        Forme darseOcean = _formes.getForme("Darse de l'Océan");
+        darseOcean.setCoordInfo(new Point2D.Double(0.1849664114699332, 49.46783083333333));
+        darseOcean.setAngleInfo(70);
     }
     
     public void lierQuaisTerminaux(Quai q, Terminal t, Forme f, TypeMarchandise tm) {

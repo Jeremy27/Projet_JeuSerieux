@@ -83,8 +83,4 @@ public class Terminal extends Forme {
                 
         return tabInfo;
     }
-    @Override
-    public int getPriorite() {
-        return 2;
-    }
 }
