@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jeuserieux.modele.Forme;
 import jeuserieux.modele.Navire;
+import jeuserieux.modele.Quai;
 import jeuserieux.modele.enumeration.TypeShape;
 import jeuserieux.modele.outils.PointPathFinding;
 import jeuserieux.presentation.PanelMap;
@@ -19,14 +20,15 @@ import jeuserieux.presentation.PanelMap;
 public class DeplacementBateaux extends Thread{
     public static Point2D DEPART_DEFAUT = new Point2D.Double(0.09364530542986425, 49.45562308998302);
     public static Point2D SORTIE_DEFAUT = new Point2D.Double(0.09794155825791855, 49.448762308998305);
-    public static double PASVOISIN = 0.0008;
+    public static double PASVOISIN = 0.0007;
     private final Navire _bateau;
     private final Point2D _destination;
     private final ArrayList<Forme> _formes;
     private final PanelMap _map;
     
-    public DeplacementBateaux(Navire bateau, Point2D destination, ArrayList<Forme> formes, PanelMap map) {
-        _destination = destination;
+    public DeplacementBateaux(Navire bateau, Quai quai, ArrayList<Forme> formes, PanelMap map) {
+        _destination = quai.getZoneArrimage().getCentre();
+        System.out.println("destination: " + _destination);
         _bateau = bateau;
         _formes = formes;
         _map = map;

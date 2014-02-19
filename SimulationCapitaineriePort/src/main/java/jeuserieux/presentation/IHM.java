@@ -95,6 +95,7 @@ public class IHM extends JFrame {
         _map.ajoutNavire(n);
         _map.initEvents();
         _map.lierMapRealite();
+        _map.afficherNoms();
         add(_map, BorderLayout.CENTER);
         
         panelGauche.add(_naviresArrives);

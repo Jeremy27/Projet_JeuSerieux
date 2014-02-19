@@ -8,7 +8,7 @@ import javax.json.JsonArray;
  */
 public class ADMap {
     //fichier source json src/main/resources
-    private final String _nomFichier = Fichier.CHEMIN + "map_filtree_4.json";
+    private final String _nomFichier = Fichier.CHEMIN + "map_filtree_5.json";
     
     /**
      * Cette fonction lit le fichier json de la carte OSM et retourne un array d'objets Json des formes

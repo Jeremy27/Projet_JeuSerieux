@@ -155,6 +155,48 @@ public class MetierMap {
             _coordonneesDessin.add(forme);
         }
         
+        creerZonesArrimage();
+        
+    }
+    
+    public void creerZonesArrimage() {
+        Forme zoneArrimage = new Forme("zone arrimage quai Amériques", false, Color.RED, 897965451, TypeShape.NATURAL);
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.14911433784994924, 49.47094835956716));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.15819687360191256, 49.47513481570752));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.16855239024708898, 49.4759323069356));
+        zoneArrimage.makePathOriginale();
+        _formes.add(zoneArrimage);
+        _coordonneesDessin.add(zoneArrimage);
+        
+        zoneArrimage = new Forme("zone arrimage quai de l'Europe", false, Color.RED, 897965451, TypeShape.NATURAL);
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1751677876763177, 49.47767986430974));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.18312810226429097, 49.484476975420854));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.18355530159613953, 49.48500080875419));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.18425511599851516, 49.4865848087542));
+        zoneArrimage.makePathOriginale();
+        _formes.add(zoneArrimage);
+        _coordonneesDessin.add(zoneArrimage);
+        
+        zoneArrimage = new Forme("zone arrimage quai TNMSC", false, Color.RED, 897965451, TypeShape.NATURAL);
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.12900696070633152, 49.46221298809523));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.14932139755011137, 49.45944784523808));
+        zoneArrimage.makePathOriginale();
+        _formes.add(zoneArrimage);
+        _coordonneesDessin.add(zoneArrimage);
+        
+        zoneArrimage = new Forme("zone arrimage quai porte Océane", false, Color.RED, 897965451, TypeShape.NATURAL);
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1631397518294623, 49.45781998809524));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.15343622414890232, 49.45916698809524));
+        zoneArrimage.makePathOriginale();
+        _formes.add(zoneArrimage);
+        _coordonneesDessin.add(zoneArrimage);
+        
+        zoneArrimage = new Forme("zone arrimage quai de France", false, Color.RED, 897965451, TypeShape.NATURAL);
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.16339607142857143, 49.457862750000004));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1783724594336621, 49.45574603571429));
+        zoneArrimage.makePathOriginale();
+        _formes.add(zoneArrimage);
+        _coordonneesDessin.add(zoneArrimage);
     }
     
     /**
@@ -188,19 +230,58 @@ public class MetierMap {
     public void lierQuaisTerminaux() {
         Quai quaiAmeriques = _quais.getQuai("Quai des Amériques");
         Terminal terminalAtlantique = _terminaux.getTerminal("Terminal de l'Atlantique");
-        quaiAmeriques.ajoutTerminal(terminalAtlantique);
-        terminalAtlantique.ajoutType(TypeMarchandise.CONTENEURS);
+        Forme zoneArrimageAmeriques = _formes.getForme("zone arrimage quai Amériques");
+        
+        lierQuaisTerminaux(quaiAmeriques, terminalAtlantique, zoneArrimageAmeriques, TypeMarchandise.CONTENEURS);
+        
         
         Quai quaiEurope = _quais.getQuai("Quai de l'Europe");
         Terminal terminalEurope = _terminaux.getTerminal("Terminal de l'Europe");
-        quaiEurope.ajoutTerminal(terminalEurope);
-        terminalEurope.ajoutType(TypeMarchandise.CONTENEURS);
+        Forme zoneArrimageEurope = _formes.getForme("zone arrimage quai de l'Europe");
+        lierQuaisTerminaux(quaiEurope, terminalEurope, zoneArrimageEurope, TypeMarchandise.CONTENEURS);
         
-        Terminal terminalNormandie = _terminaux.getTerminal("Terminal de Normandie");
-        terminalNormandie.ajoutType(TypeMarchandise.CONTENEURS);
         
-        Terminal terminalCruise = _terminaux.getTerminal("Cruise Terminal");
-        terminalCruise.ajoutType(TypeMarchandise.PASSAGER);
+//        
+//        Terminal terminalNormandie = _terminaux.getTerminal("Terminal de Normandie");
+//        terminalNormandie.ajoutType(TypeMarchandise.CONTENEURS);
+//        
+//        Terminal terminalCruise = _terminaux.getTerminal("Cruise Terminal");
+//        terminalCruise.ajoutType(TypeMarchandise.PASSAGER);
+    }
+    
+    public void setPositionInfos() {
+        
+        Quai quaiAmeriques = _quais.getQuai("Quai des Amériques");
+        quaiAmeriques.setCoordInfo(new Point2D.Double(0.15426597717149212, 49.47305713333333));
+        Quai quaiEurope = _quais.getQuai("Quai de l'Europe");
+        quaiEurope.setCoordInfo(new Point2D.Double(0.17552924554565702, 49.48018733333333));
+        Quai quaiBougainville = _quais.getQuai("Quai de Bougainville");
+        quaiBougainville.setCoordInfo(new Point2D.Double(0.1866762722717149, 49.47093786666666));
+        
+        Terminal terminalAtlantique = _terminaux.getTerminal("Terminal de l'Atlantique");
+        terminalAtlantique.setCoordInfo(new Point2D.Double(0.15342374999999994, 49.47570186666662));
+        Terminal terminalEurope = _terminaux.getTerminal("Terminal de l'Europe");
+        terminalEurope.setCoordInfo(new Point2D.Double(0.17283788975501113, 49.48250716666667));
+        Terminal terminalOcean = _terminaux.getTerminal("Terminal de l'Océan");
+        terminalOcean.setCoordInfo(new Point2D.Double(0.19052854677060133, 49.46961893333327));
+        Terminal terminalTNMSC = _terminaux.getTerminal("Terminal TNMSC");
+        terminalTNMSC.setCoordInfo(new Point2D.Double(0.13443244710467694, 49.46469446666659));
+        Terminal terminalPorteOceane = _terminaux.getTerminal("Terminal Porte Océane");
+        terminalPorteOceane.setCoordInfo(new Point2D.Double(0.15661426781737176, 49.46126613333329));
+        Terminal terminalDeFrance = _terminaux.getTerminal("Terminal de France");
+        terminalDeFrance.setCoordInfo(new Point2D.Double(0.16960646158129156, 49.45916786666662));
+        
+        Forme bassinTheoDucrocq = _formes.getForme("Bassin Théophile Ducrocq");
+        bassinTheoDucrocq.setCoordInfo(new Point2D.Double(0.12896057906458797, 49.471422833333335));
+        Forme port2000 = _formes.getForme("Port 2000");
+        port2000.setCoordInfo(new Point2D.Double(0.12908873886414254, 49.45885083333334));
+    }
+    
+    public void lierQuaisTerminaux(Quai q, Terminal t, Forme f, TypeMarchandise tm) {
+        q.ajoutTerminal(t);
+        t.ajoutType(tm);
+        t.setQuai(q);
+        q.setZoneArrimage(f);
     }
     
     /**
@@ -270,5 +351,19 @@ public class MetierMap {
      */
     public ArrayForme getFormes() {
         return _formes;
+    }
+    
+    public static void main(String[] args) {
+        double coef = 84208.831372054;
+//        System.out.println("TN " + (coef*0.020701805626342714));
+//        System.out.println("Fr " + (coef*0.015229742251360576));
+//        System.out.println("PO " + (coef*0.009720011094574427));
+        Point2D p = new Point2D.Double(0.10482627572455382, 49.47732164317756);
+        Point2D p2 = new Point2D.Double(0.10386507722789458, 49.47662569317756);
+        //Point2D p3 = new Point2D.Double(0.16854303829939546, 49.47598018333332);
+        double taille = p.distance(p2);
+        System.out.println(taille);
+        System.out.println(taille*coef);
+        
     }
 }

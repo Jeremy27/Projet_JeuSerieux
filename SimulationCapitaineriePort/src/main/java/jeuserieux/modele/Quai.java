@@ -10,6 +10,7 @@ import jeuserieux.modele.enumeration.TypeShape;
  * @author Jérémy & Gary
  */
 public class Quai extends Forme{
+    private Forme _zoneArrimage;
     private ArrayList<Navire> _naviresAQuai;
     private final ArrayList<Terminal> _terminaux;
     private int _longueur;
@@ -20,6 +21,14 @@ public class Quai extends Forme{
         _terminaux      = new ArrayList<>();
         _naviresAQuai   = new ArrayList<>();
         _typeForme      = TypeShape.QUAI;
+    }
+    
+    public void setZoneArrimage(Forme f) {
+        _zoneArrimage = f;
+    }
+    
+    public Forme getZoneArrimage() {
+        return _zoneArrimage;
     }
     
     public Quai(String nom, boolean fill, Color couleur, long id, int longueur) {

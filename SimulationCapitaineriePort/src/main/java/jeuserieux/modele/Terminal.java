@@ -17,6 +17,7 @@ import jeuserieux.modele.enumeration.TypeShape;
  */
 public class Terminal extends Forme {
     private int _longueur;
+    private Quai _quaiLie;
     private final ArrayList<TypeMarchandise> _typeChargement;
     
     public Terminal(String nom, int longueur) {
@@ -33,6 +34,14 @@ public class Terminal extends Forme {
         _longueur = longueur;
         _typeChargement = new ArrayList<>();
         _typeForme = TypeShape.TERMINAL;
+    }
+    
+    public void setQuai(Quai q) {
+        _quaiLie = q;
+    }
+    
+    public Quai getQuai() {
+        return _quaiLie;
     }
     
     public void ajoutType(TypeMarchandise t) {

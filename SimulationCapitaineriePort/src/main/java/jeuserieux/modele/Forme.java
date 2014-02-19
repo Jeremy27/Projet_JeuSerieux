@@ -3,6 +3,7 @@ package jeuserieux.modele;
 import java.awt.Color;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import jeuserieux.modele.enumeration.TypeShape;
@@ -19,15 +20,14 @@ public class Forme {
     protected Color _couleur = Color.GRAY;
     protected long _id;
     protected TypeShape _typeForme;
+    protected Point2D _coordInfo;
+    private double _angleInfo;
     
     @Override
     public String toString() {
         String s = "";
         s += "nom " + _nom;
         s += " id " + _id;
-        if(_typeForme==null) {
-            
-        }
         s += " type " + _typeForme.name();
         return s;
     }
@@ -46,6 +46,19 @@ public class Forme {
         _couleur = couleur;
         _id = id;
         _typeForme = typeForme;
+    }
+    
+    public Point2D getCoordInfo() {
+        return _coordInfo;
+    }
+    
+    public void setCoordInfo(Point2D p) {
+        _coordInfo = p;
+    }
+    
+    public Point2D getCentre() {
+        Rectangle2D r = _pathOriginal.getBounds2D();
+        return new Point2D.Double(r.getCenterX(), r.getCenterY());
     }
 
     /*
@@ -204,5 +217,19 @@ public class Forme {
     
     public int getPriorite() {
         return 1;
+    }
+
+    /**
+     * @return the _angleInfo
+     */
+    public double getAngleInfo() {
+        return _angleInfo;
+    }
+
+    /**
+     * @param _angleInfo the _angleInfo to set
+     */
+    public void setAngleInfo(double _angleInfo) {
+        this._angleInfo = _angleInfo;
     }
 }
