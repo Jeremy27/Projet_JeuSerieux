@@ -41,7 +41,7 @@ public class FenetreScores extends JDialog {
     private ArrayList<String> getTitresAvecDifficulte() {
         ArrayList<String> titres = new ArrayList<>();
         titres.add("Pseudo");
-        titres.add("Nombre de retard");
+        titres.add("Retards (heures)");
         titres.add("Difficulté");
         return titres;
     }

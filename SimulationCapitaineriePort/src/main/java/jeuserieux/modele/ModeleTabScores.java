@@ -22,7 +22,7 @@ public class ModeleTabScores extends AbstractTableModel {
     public ModeleTabScores() {
         this._titres = new ArrayList<>();
         _titres.add("Pseudo");
-        _titres.add("Nombre de retard");
+        _titres.add("Retards (heures)");
         this._scores = new ArrayList<>();
     }
     
