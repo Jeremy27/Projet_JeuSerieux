@@ -65,13 +65,16 @@ public class ModeleTabNavires extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return _navires.get(rowIndex).getNom();
-            case 1:
-                return GestionJeu.getDateFormate(_navires.get(rowIndex).getDateArrivee());
+        Navire navire = _navires.get(rowIndex);
+        if(!navire.estAssigneQuai()) {
+            switch (columnIndex) {
+                case 0:
+                    return navire.getNom();
+                case 1:
+                    return GestionJeu.getDateFormate(navire.getDateArrivee());
+            }
         }
-        return _navires.get(rowIndex);
+        return navire;
     }
 
     public void ajouterNavire(Navire n) {

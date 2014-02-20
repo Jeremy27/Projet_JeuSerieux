@@ -40,6 +40,7 @@ public class FenetreAjoutUtilisateur extends JDialog{
         
         initialiserComposants();
         evenements();
+        
         setLayout(new FlowLayout());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -49,17 +50,23 @@ public class FenetreAjoutUtilisateur extends JDialog{
     private void initialiserComposants() {
         _btnAjouterUtil = new JButton("Inscrire un utilisateur");
         
-        _labNomUtil = new JLabel("Nom: ");
-        _labMailUtil = new JLabel("Mail: ");
-        _labMdpUtil = new JLabel("Mot de passe: ");
+        _labNomUtil = new JLabel("Nom : ");
+        _labMailUtil = new JLabel("Mail : ");
+        _labMdpUtil = new JLabel("Mot de passe : ");
         
         _textNomUtil = new JTextField(15);
         _textMailUtil = new JTextField(15);
         _textMdpUtil = new JPasswordField(15);
         
-        _panelNomUtil = new JPanel(new FlowLayout());
-        _panelMailUtil = new JPanel(new FlowLayout());
-        _panelMdpUtil = new JPanel(new FlowLayout());
+        _panelNomUtil = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        _panelMailUtil = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        _panelMdpUtil = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        _panelMailUtil.setBackground(PanelPerso.COULEUR_PANEL1);
+        _panelNomUtil.setBackground(PanelPerso.COULEUR_PANEL1);
+        _panelMdpUtil.setBackground(PanelPerso.COULEUR_PANEL1);
+        
+        setBackground(PanelPerso.COULEUR_PANEL1);
         
         _panelNomUtil.add(_labNomUtil);
         _panelNomUtil.add(_textNomUtil);
