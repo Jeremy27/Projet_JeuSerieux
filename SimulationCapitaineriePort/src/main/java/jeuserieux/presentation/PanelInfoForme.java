@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -61,7 +62,7 @@ public class PanelInfoForme extends PanelPerso {
             label.setForeground(Color.white);
             panelGrid.add(label);
         }
-        add(panelGrid, BorderLayout.CENTER);
+        add(new JScrollPane(panelGrid), BorderLayout.CENTER);
         this.validate();
     }
     
