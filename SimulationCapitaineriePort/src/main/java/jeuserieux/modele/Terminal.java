@@ -16,7 +16,6 @@ import jeuserieux.modele.enumeration.TypeShape;
  * @author jeremy
  */
 public class Terminal extends Forme {
-    private int _longueur;
     private Quai _quaiLie;
     private final ArrayList<TypeMarchandise> _typeChargement;
     
@@ -26,12 +25,11 @@ public class Terminal extends Forme {
         _typeForme = TypeShape.TERMINAL;
     }
     
-    public Terminal(String nom, boolean fill, Color couleur, long id, int longueur) {
+    public Terminal(String nom, boolean fill, Color couleur, long id) {
         super(nom);
         _fill = fill;
         _couleur = couleur;
         _id = id;
-        _longueur = longueur;
         _typeChargement = new ArrayList<>();
         _typeForme = TypeShape.TERMINAL;
     }
@@ -75,7 +73,6 @@ public class Terminal extends Forme {
         ArrayList<String> tabInfo = new ArrayList<>();
         
         tabInfo.add("Nom : " + _nom);
-        tabInfo.add("Longueur : " + _longueur);
         for(TypeMarchandise t:_typeChargement) {
             tabInfo.add("Type de marchandise: " + t.name());
         }

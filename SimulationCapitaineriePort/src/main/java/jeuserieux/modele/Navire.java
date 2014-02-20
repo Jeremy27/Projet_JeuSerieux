@@ -10,6 +10,7 @@ import jeuserieux.modele.enumeration.TypeMarchandise;
 import jeuserieux.modele.enumeration.TypeNavire;
 import jeuserieux.modele.enumeration.TypeShape;
 import jeuserieux.modele.outils.ParamsNavire;
+import jeuserieux.presentation.PanelMap;
 
 /**
  *
@@ -18,8 +19,10 @@ import jeuserieux.modele.outils.ParamsNavire;
 public class Navire extends Forme {
 
     private TypeMarchandise _typeMachandise;
-    private final double _longueur;
-    private final double _largeur;
+    private final double _longueurGeographique;
+    private final double _largeurGeographique;
+    private final double _longueurMetres;
+    private final double _largeurMetres;
     private int _dateArrivee;
     private int _tempsPriseEnCharge;
     private TypeNavire _typeNavire;
@@ -32,8 +35,10 @@ public class Navire extends Forme {
         super(params.getNom());
         _typeNavire = params.getTypeNavire();
         _typeMachandise = params.getTypeMarchandise();
-        _longueur = params.getLongueur();
-        _largeur = params.getLargeur();
+        _longueurMetres = params.getLongueur();
+        _largeurMetres = params.getLargeur();
+        _longueurGeographique = _longueurMetres/PanelMap.COEF_GEO_METRE;
+        _largeurGeographique = _largeurMetres/PanelMap.COEF_GEO_METRE;
         _dateArrivee = params.getDateArrivee();
         _tempsPriseEnCharge = params.getTempsPriseEnCharge();
         _position = params.getPosition();
@@ -48,11 +53,11 @@ public class Navire extends Forme {
      */
     public void constructionNavire() {
         _coordonnees = new ArrayList<>();
-        double moitieLongueur = _longueur * 0.50;
-        double moitielargeur = getLargeur() * 0.50;
+        double moitieLongueur = _longueurGeographique * 0.50;
+        double moitielargeur = _largeurGeographique * 0.50;
         double x = _position.getX();
         double y = _position.getY();
-        double longueurTete = _longueur * 0.20;
+        double longueurTete = _longueurGeographique * 0.20;
 
         double haut = y - moitielargeur;
         double bas = y + moitielargeur;
@@ -86,11 +91,11 @@ public class Navire extends Forme {
      * @return la Path2D correspondant à la nouvelle position
      */
     public Path2D boundingsPosition(Point2D p) {
-        double moitieLongueur = _longueur * 0.50;
-        double moitielargeur = getLargeur() * 0.50;
+        double moitieLongueur = _longueurGeographique * 0.50;
+        double moitielargeur = _largeurGeographique * 0.50;
         double x = p.getX();
         double y = p.getY();
-        double longueurTete = _longueur * 0.20;
+        double longueurTete = _longueurGeographique * 0.20;
 
         double haut = y - moitielargeur;
         double bas = y + moitielargeur;
@@ -145,7 +150,7 @@ public class Navire extends Forme {
     }
 
     public double getLongueur() {
-        return _longueur;
+        return _longueurGeographique;
     }
 
     public int getDateArrivee() {
@@ -189,7 +194,7 @@ public class Navire extends Forme {
         ArrayList<String> tabInfo = new ArrayList<>();
 
         tabInfo.add("Nom : " + _nom);
-        tabInfo.add("Longueur : " + _longueur);
+        tabInfo.add("Longueur : " + _longueurGeographique);
         tabInfo.add("Date d'arrivée : " + _dateArrivee);
         tabInfo.add("Temps à quai : " + _tempsPriseEnCharge);
         tabInfo.add("Marchandise : " + _typeMachandise.name());
@@ -201,16 +206,16 @@ public class Navire extends Forme {
 
     @Override
     public String toString() {
-        return "Navire{" + "nom" + _nom + "typeMachandise=" + _typeMachandise + ", longueur=" + _longueur + ", dateArrivee="
+        return "Navire{" + "nom" + _nom + "typeMachandise=" + _typeMachandise + ", longueur=" + _longueurGeographique + ", dateArrivee="
                 + _dateArrivee + ", tempsPriseEnCharge=" + _tempsPriseEnCharge + ", typeNavire=" + _typeNavire
                 + ", position[" + _position.getX() + ", " + _position.getY() + "]}";
     }
 
     /**
-     * @return the _largeur
+     * @return the _largeurGeographique
      */
-    public double getLargeur() {
-        return _largeur;
+    public double getLargeurGeographique() {
+        return _largeurGeographique;
     }
 
     /**

@@ -107,12 +107,12 @@ public class MetierMap {
            if(type.equals(TypeShape.QUAI.name())) {
                 c = QUAICOLOR;
                 fill = false;
-                forme = new Quai(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
+                forme = new Quai(nom, fill, c, id);
                 _quais.add((Quai)forme);
             } else if(type.equals(TypeShape.TERMINAL.name())) {
                 c = TERMINALCOLOR;
                 fill = true;
-                forme = new Terminal(nom, fill, c, id, new Random(System.currentTimeMillis()).nextInt(100));
+                forme = new Terminal(nom, fill, c, id);
                 _terminaux.add((Terminal)forme);
             } else {
                 if(type.equals(TypeShape.NATURAL.name())) {
