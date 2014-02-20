@@ -57,8 +57,8 @@ public class IHM extends JFrame {
         ParamsNavire params = new ParamsNavire();
         params.setDateArrivee(10);
         params.setDatePriseEnCharge(11);
-        params.setLargeur(0.00040);
-        params.setLongueur(0.0020);
+        params.setLargeur(25);
+        params.setLongueur(100);
         params.setNom("Navire 1");
         params.setPosition(new Point2D.Double(0.093, 49.486));
         params.setTempsPriseEnCharge(5);

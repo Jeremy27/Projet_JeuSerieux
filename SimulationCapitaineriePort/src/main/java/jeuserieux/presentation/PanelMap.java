@@ -297,7 +297,9 @@ public class PanelMap extends JPanel{
         g2.drawString(_infosMouseOver, 50, (int)(h-30));
         g2.drawString(_coordonneesMouseOver, (int)(w-300), (int)(h-10));
         
-        int cpt = 0;
+        
+        
+//        int cpt = 0;
 //        if(resultat!=null) {
 //            for(PointPathFinding p:resultat.getResultat()) {
 //                g2.setFont(new Font("SansSerif", Font.BOLD, (int)(5*_zoomEtat)));
@@ -309,6 +311,22 @@ public class PanelMap extends JPanel{
 //        for(Point2D p:_clics) {
 //            g2.drawRect((int)p.getX(), (int)p.getY(), 3, 3);
 //        }
+        //affichage de l'échelle sur la carte
+        Point2D debut = new Point2D.Double(0.11986123329621381, 49.44919733333333);
+        double km = 1000/COEF_GEO_METRE;
+        Point2D fin = new Point2D.Double(0.11986123329621381+km, 49.44919733333333);
+        double xD = debut.getX()-_mapGauche;
+        double yD = debut.getY()-_mapHaut;
+        double xF = fin.getX()-_mapGauche;
+        double yF = fin.getY()-_mapHaut;
+        xD = (xD*_coefX);
+        yD = h - (yD*_coefY);
+        xF = (xF*_coefX);
+        yF = h - (yF*_coefY);
+        g2.drawLine((int)xD, (int)yD, (int)xF, (int)yF);
+        g2.drawLine((int)xD, (int)(yD-10), (int)xD, (int)(yD+10));
+        g2.drawLine((int)xF, (int)(yF-10), (int)xF, (int)(yF+10));
+        g2.drawString("1 KM", (float)(xD+((xF-xD)/2.0f)-10), (float)(yF+10));
     }
     /**
      * fusionne les _navire et les navires connus de _naviresArrives
