@@ -64,7 +64,7 @@ public class NouvellePartie extends JDialog {
         _jbCommencer    = new JButton("Commencer");
         _jlInfos        = new JLabel();
         _jlChoix        = new JLabel("Choix liste navires : ");
-        _jcbChoixListeNavires = new JComboBox(new Object[] {"Aléatoire", "Base réelle"});
+        _jcbChoixListeNavires = new JComboBox(new Object[] {"Base réelle", "Aléatoire"});
         
         JPanel panelG       = new JPanel(new GridLayout(4, 2));
         JPanel hautGauche   = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -184,7 +184,7 @@ public class NouvellePartie extends JDialog {
     Instance creerInstance() {
         GestionInstance gInstance = new GestionInstance();
         
-        if(_jcbChoixListeNavires.getSelectedIndex() == 1)
+        if(_jcbChoixListeNavires.getSelectedIndex() == 0)
             gInstance.genererInstance();
         else
             gInstance.genererAleatoirement();
