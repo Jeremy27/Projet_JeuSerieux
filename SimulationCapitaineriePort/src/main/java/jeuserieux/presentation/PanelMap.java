@@ -206,37 +206,43 @@ public class PanelMap extends JPanel{
             }
             g2.setColor(couleur);
             if(path!=null) {
-                boolean fill = forme.isFill();
-                if(_typeMarchandiseNavire != null && forme instanceof Terminal) {
-                    Terminal t = (Terminal) forme;
-                    Quai q = t.getQuai();
-                    System.out.println(t);
-                    System.out.println(q);
-                    if(q!=null) { //terminaux rouliers à gérer
-                        if(q.peutPrendreEnCharge(_navireSelectionne)) {
-                            g2.setColor(COULEUR_QUAI_DISPONIBLE);
+                boolean visible = true;
+                if(forme instanceof Navire) {
+                    Navire n = (Navire)forme;
+                    visible = n.estVisible();
+                }
+                if(visible) {
+                    boolean fill = forme.isFill();
+                    if(_typeMarchandiseNavire != null && forme instanceof Terminal) {
+                        Terminal t = (Terminal) forme;
+                        Quai q = t.getQuai();
+                        if(q!=null) { //terminaux rouliers à gérer
+                            if(q.peutPrendreEnCharge(_navireSelectionne)) {
+                                g2.setColor(COULEUR_QUAI_DISPONIBLE);
+                            }
                         }
+
                     }
-                        
+                    if(fill) {
+                        g2.fill(path);
+                    } else {
+                        g2.draw(path);
+                    }
+                    if(forme.getNom().equals("Quai du Havre")) {
+                        Quai q = (Quai)forme;
+
+                        Point2D p = q.getZoneArrimage().getCentre();
+                        double x = p.getX();
+                        double y = p.getY();
+                        x = x-_mapGauche;
+                        y = y-_mapHaut;
+                        //vérifie si le point est à dessiner
+                        x = (x*_coefX);
+                        y = h - (y*_coefY);
+                        g2.drawRect((int)x, (int)y, 10, 10);
+                    }
                 }
-                if(fill) {
-                    g2.fill(path);
-                } else {
-                    g2.draw(path);
-                }
-                if(forme.getNom().equals("Quai du Havre")) {
-                    Quai q = (Quai)forme;
                     
-                    Point2D p = q.getZoneArrimage().getCentre();
-                    double x = p.getX();
-                    double y = p.getY();
-                    x = x-_mapGauche;
-                    y = y-_mapHaut;
-                    //vérifie si le point est à dessiner
-                    x = (x*_coefX);
-                    y = h - (y*_coefY);
-                    g2.drawRect((int)x, (int)y, 10, 10);
-                }
 //                if(forme.getTypeForme() == TypeShape.NATURAL ||
 //                   forme.getTypeForme() == TypeShape.TERMINAL ||
 //                   forme.getTypeForme() == TypeShape.QUAI) {
