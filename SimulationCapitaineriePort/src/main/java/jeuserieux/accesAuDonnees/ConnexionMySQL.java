@@ -73,7 +73,6 @@ public class ConnexionMySQL {
         Connection con = DriverManager.getConnection(DBurl, "root", "");
         if (con != null) {
             System.out.println("Connection est bien etablie Ã  la base : >> " + nomBase);
-            
             Statement smt = con.createStatement();
             int i = smt.executeUpdate("INSERT INTO `partie`.`" + nomTable + "` VALUES (" + b + ", " + pseudo + "," + mdp + ", " + mail + ");");
             if (i != 0) {

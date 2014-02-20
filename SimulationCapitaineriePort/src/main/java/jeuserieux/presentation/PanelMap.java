@@ -212,9 +212,12 @@ public class PanelMap extends JPanel{
                     Quai q = t.getQuai();
                     System.out.println(t);
                     System.out.println(q);
-                    if(q.peutPrendreEnCharge(_navireSelectionne)) {
-                        g2.setColor(COULEUR_QUAI_DISPONIBLE);
+                    if(q!=null) { //terminaux rouliers à gérer
+                        if(q.peutPrendreEnCharge(_navireSelectionne)) {
+                            g2.setColor(COULEUR_QUAI_DISPONIBLE);
+                        }
                     }
+                        
                 }
                 if(fill) {
                     g2.fill(path);
@@ -552,7 +555,6 @@ public class PanelMap extends JPanel{
         _panelInfoForme.setNomPanel("Navire");
         _panelInfoForme.majInformations();
         setTypeColorer(n.getTypeMachandise());
-            
     }
     
     /**

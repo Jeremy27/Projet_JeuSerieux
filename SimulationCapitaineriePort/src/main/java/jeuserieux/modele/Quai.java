@@ -126,16 +126,23 @@ public class Quai extends Forme{
         //vérifie le type
         if(prendEnCharge(n.getTypeMachandise())) {
             //Vérifie qu'il y a assez de place pour le prendre
-            Collections.sort(_naviresAQuai);
-            int indice = 0;
-            for(Navire navireAQuai:_naviresAQuai) {
-                int position = navireAQuai.getPositionAQuai();
-                if(position-indice>=n.getTempsPriseEnCharge()) {
+            if(_naviresAQuai.isEmpty()) {
+                if(_longueurMetre>=n.getLongueur()) {
                     return true;
                 }
-                indice = position+navireAQuai.getTempsPriseEnCharge();
+            } else {
+                Collections.sort(_naviresAQuai);
+                int indice = 0;
+                for(Navire navireAQuai:_naviresAQuai) {
+                    int position = navireAQuai.getPositionAQuai();
+                    if(position-indice>=n.getTempsPriseEnCharge()) {
+                        return true;
+                    }
+                    indice = position+navireAQuai.getTempsPriseEnCharge();
+                }
+                return false;
             }
-            return false;
+                
         }
         return false;
     }
