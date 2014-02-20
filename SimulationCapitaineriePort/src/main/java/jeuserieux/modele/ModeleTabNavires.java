@@ -82,7 +82,7 @@ public class ModeleTabNavires extends AbstractTableModel {
         fireTableRowsInserted(_navires.size(), _navires.size());
     }
 
-    public void supprimerNavire(int rowIndex) {
+    public synchronized void supprimerNavire(int rowIndex) {
         _navires.remove(rowIndex);
         fireTableRowsDeleted(rowIndex, rowIndex);
     }

@@ -70,6 +70,7 @@ public class DeplacementBateaux extends Thread{
         _destination = SORTIE_DEFAUT;
         _bateau.setVisible(true);
         _map.refresh();
+        _quai.supprimerNavireAQuai(_bateau);
         deplacer();
         _bateau.setVisible(false);
         _map.refresh();
