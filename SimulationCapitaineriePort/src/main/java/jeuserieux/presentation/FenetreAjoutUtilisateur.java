@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package jeuserieux.presentation;
 
 import java.awt.FlowLayout;
@@ -22,7 +16,7 @@ import jeuserieux.accesAuDonnees.ConnexionMySQL;
 
 /**
  *
- * @author kadoc
+ * @author gary
  */
 public class FenetreAjoutUtilisateur extends JDialog{
     public static int ID_UTIL=0;
@@ -92,7 +86,7 @@ public class FenetreAjoutUtilisateur extends JDialog{
                     ConnexionMySQL con = new ConnexionMySQL("partie", "root", "");
                     try {
                         con.connect("partie");
-                        con.insert_Utilisateurs("partie", "utilisateurs", _textMailUtil.getText(), ID_UTIL, new String(_textMdpUtil.getPassword()), _textNomUtil.getText());
+                        con.insert_Utilisateurs("partie", "utilisateurs", _textMailUtil.getText(), ID_UTIL++, new String(_textMdpUtil.getPassword()), _textNomUtil.getText());
                     } catch (ClassNotFoundException | SQLException ex) {
                         Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -100,6 +94,4 @@ public class FenetreAjoutUtilisateur extends JDialog{
             }
         });
     }
-    
-    
 }

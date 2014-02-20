@@ -31,8 +31,9 @@ public class Navire extends Forme implements Comparable<Navire>{
     private Point2D         _position;
     private int             _heurePriseEnCharge;
     private double          _angle;
-    private boolean         _assigneQuai;
+    private boolean         _assigneQuai=false;
     private int             _positionAQuai;
+    private boolean         _visible;
 
     public Navire(ParamsNavire params) {
         super(params.getNom());
@@ -343,5 +344,19 @@ public class Navire extends Forme implements Comparable<Navire>{
         } else {
             return 1;
         }
+    }
+
+    /**
+     * @return the _visible
+     */
+    public boolean estVisible() {
+        return _visible;
+    }
+
+    /**
+     * @param visible the _visible to set
+     */
+    public void setVisible(boolean visible) {
+        this._visible = visible;
     }
 }
