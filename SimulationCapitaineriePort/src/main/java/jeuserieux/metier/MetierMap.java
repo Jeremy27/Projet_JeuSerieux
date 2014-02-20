@@ -207,6 +207,7 @@ public class MetierMap {
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.15819687360191256, 49.47513481570752));
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.16855239024708898, 49.4759323069356));
         zoneArrimage.makePathOriginale();
+        zoneArrimage.setVisible(false);
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
         
@@ -216,6 +217,7 @@ public class MetierMap {
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.18355530159613953, 49.48500080875419));
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.18425511599851516, 49.4865848087542));
         zoneArrimage.makePathOriginale();
+        zoneArrimage.setVisible(false);
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
         
@@ -223,6 +225,7 @@ public class MetierMap {
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.12900696070633152, 49.46221298809523));
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.14932139755011137, 49.45944784523808));
         zoneArrimage.makePathOriginale();
+        zoneArrimage.setVisible(false);
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
         
@@ -230,6 +233,7 @@ public class MetierMap {
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1533669892419663, 49.45886191865079));
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1628366196706967, 49.45739654365079));
         zoneArrimage.makePathOriginale();
+        zoneArrimage.setVisible(false);
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
         
@@ -237,6 +241,7 @@ public class MetierMap {
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.16322109906936041, 49.45732171031745));
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.1780555958678014, 49.45531991865079));
         zoneArrimage.makePathOriginale();
+        zoneArrimage.setVisible(false);
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
         
@@ -244,6 +249,7 @@ public class MetierMap {
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.10583455038975503, 49.480724374074065));
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.11238494014476616, 49.479310855555546));
         zoneArrimage.makePathOriginale();
+        zoneArrimage.setVisible(false);
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
         
@@ -253,6 +259,7 @@ public class MetierMap {
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.18505363108495065, 49.471995047619046));
         zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.19067314667515103, 49.461842761904755));
         zoneArrimage.makePathOriginale();
+        zoneArrimage.setVisible(false);
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
     }
@@ -315,6 +322,12 @@ public class MetierMap {
         Terminal terminalCruise = _terminaux.getTerminal("Cruise Terminal");
         Forme zoneArrimageCruise= _formes.getForme("zone arrimage quai Cruise");
         lierQuaisTerminaux(quaiCruise, terminalCruise, zoneArrimageCruise, TypeMarchandise.PASSAGER);
+        
+        Quai quaiBougainville = _quais.getQuai("Quai de Bougainville");
+        quaiBougainville.setLongueurMetre(1500);
+        Terminal terminalOcean = _terminaux.getTerminal("Terminal de l'Océan");
+        Forme zoneArrimageBougainville = _formes.getForme("zone arrimage quai Bougainville");
+        lierQuaisTerminaux(quaiBougainville, terminalOcean, zoneArrimageBougainville, TypeMarchandise.EOLIEN);
         
 //        
 //        Terminal terminalNormandie = _terminaux.getTerminal("Terminal de Normandie");

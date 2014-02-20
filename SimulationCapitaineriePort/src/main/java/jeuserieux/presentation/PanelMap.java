@@ -208,11 +208,7 @@ public class PanelMap extends JPanel{
             }
             g2.setColor(couleur);
             if(path!=null) {
-                boolean visible = true;
-                if(forme instanceof Navire) {
-                    Navire n = (Navire)forme;
-                    visible = n.estVisible();
-                }
+                boolean visible = forme.estVisible();
                 if(visible) {
                     boolean fill = forme.isFill();
                     if(_typeMarchandiseNavire != null && forme instanceof Terminal) {
@@ -230,19 +226,19 @@ public class PanelMap extends JPanel{
                     } else {
                         g2.draw(path);
                     }
-                    if(forme.getNom().equals("Quai du Havre")) {
-                        Quai q = (Quai)forme;
-
-                        Point2D p = q.getZoneArrimage().getCentre();
-                        double x = p.getX();
-                        double y = p.getY();
-                        x = x-_mapGauche;
-                        y = y-_mapHaut;
-                        //vérifie si le point est à dessiner
-                        x = (x*_coefX);
-                        y = h - (y*_coefY);
-                        g2.drawRect((int)x, (int)y, 10, 10);
-                    }
+//                    if(forme.getNom().equals("Quai du Havre")) {
+//                        Quai q = (Quai)forme;
+//
+//                        Point2D p = q.getZoneArrimage().getCentre();
+//                        double x = p.getX();
+//                        double y = p.getY();
+//                        x = x-_mapGauche;
+//                        y = y-_mapHaut;
+//                        //vérifie si le point est à dessiner
+//                        x = (x*_coefX);
+//                        y = h - (y*_coefY);
+//                        g2.drawRect((int)x, (int)y, 10, 10);
+//                    }
                 }
                     
 //                if(forme.getTypeForme() == TypeShape.NATURAL ||
@@ -371,7 +367,11 @@ public class PanelMap extends JPanel{
     public void supprimerNavire(Navire navire) {
         _navires.remove(navire);
         _metier.supprimerNavire(navire);
-        _naviresArrives.supprimerNavires(WIDTH);
+        //_naviresArrives.supprimerNavires(navire);
+    }
+    
+    public void supprimerNavirePanelArrives(Navire navire) {
+        _naviresArrives.supprimerNavires(navire);
     }
     
     /**

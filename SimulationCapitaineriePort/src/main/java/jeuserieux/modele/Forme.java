@@ -21,6 +21,7 @@ public class Forme {
     protected long _id;
     protected TypeShape _typeForme;
     protected Point2D _coordInfo;
+    protected boolean _visible=true;
     private double _angleInfo;
     private int _tailleBreakInfo=100;
     
@@ -244,5 +245,19 @@ public class Forme {
      */
     public void setTailleBreakInfo(int _tailleBreakInfo) {
         this._tailleBreakInfo = _tailleBreakInfo;
+    }
+
+    /**
+     * @return the _visible
+     */
+    public boolean estVisible() {
+        return _visible;
+    }
+
+    /**
+     * @param _visible the _visible to set
+     */
+    public void setVisible(boolean _visible) {
+        this._visible = _visible;
     }
 }

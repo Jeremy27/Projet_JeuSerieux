@@ -61,29 +61,20 @@ public class IHM extends JFrame {
         String[] titres1 = {"Nom", "Arrivé le"};
         String[] titres2 = {"Nom", "Arrive le"};
         
-        ParamsNavire params = getParamsNavire();
-        Navire n = new Navire(params);
-        params.setDateArrivee(1);
-        params.setNom("Navire 2");
-        
-        n.constructionNavire();
-        
         JPanel panelGauche  = new JPanel(new GridLayout(3, 1));
         JPanel panelDroit   = new JPanel(new GridLayout(2, 1));
         
         _partie             = new PanelPartie();
-        _infoForme          = new PanelInfoForme("Navire", n.getDonneesFormates());
+        _infoForme          = new PanelInfoForme("Sélection", null);
         _naviresArrives     = new PanelNavires("Navires arrivés", titres1, _infoForme);
         _naviresArrivant    = new PanelNavires("Navires arrivant", titres2, _infoForme);
         _infoJeu            = new PanelInfoJeu();
         
         _infoForme.majInformations();
-        _infoJeu.ajoutMessage("test", TypeMessage.NORMAL);
         
         _map = new PanelMap(_infoForme, _naviresArrives);
         _naviresArrives.setMap(_map);
         _naviresArrivant.setMap(_map);
-        _map.ajoutNavire(n);
         _map.initEvents();
         _map.lierMapRealite();
         _map.afficherNoms();

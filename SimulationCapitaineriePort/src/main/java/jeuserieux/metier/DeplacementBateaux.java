@@ -21,7 +21,7 @@ import jeuserieux.presentation.PanelMap;
 public class DeplacementBateaux extends Thread{
     public static Point2D DEPART_DEFAUT = new Point2D.Double(0.09364530542986425, 49.45562308998302);
     public static Point2D SORTIE_DEFAUT = new Point2D.Double(0.09038447939866369, 49.4715725);
-    public static double PASVOISIN = 0.0007;
+    public static double PASVOISIN = 0.0003;
     private final Navire _bateau;
     private Point2D _destination;
     private final ArrayList<Forme> _formes;
@@ -86,6 +86,9 @@ public class DeplacementBateaux extends Thread{
         System.out.println("Déplacement... " + _bateau);
         
         if(_bateau.getPosition().getX()==-1 && _bateau.getPosition().getY()==-1) {
+            _map.supprimerNavirePanelArrives(_bateau);
+            _quai.ajouterNavireAQuai(_bateau);
+            _bateau.setAssigneQuai(true);
             _bateau.setPosition(DEPART_DEFAUT);
             _bateau.setVisible(true);
             _map.refresh();
@@ -124,10 +127,6 @@ public class DeplacementBateaux extends Thread{
         }
         
         if(pointEnCours.egal(_destination)) {
-            if(_quai!=null) {
-                _bateau.setAssigneQuai(true);
-                _quai.ajouterNavireAQuai(_bateau);
-            }
             //on a trouvé
             ArrayList<PointPathFinding> chemin = new ArrayList<>();
             chemin.add(pointEnCours);
@@ -150,7 +149,7 @@ public class DeplacementBateaux extends Thread{
                 
                 _map.refresh();
                 try {
-                    Thread.sleep(30);
+                    Thread.sleep(22);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(DeplacementBateaux.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -353,6 +352,8 @@ public class DeplacementBateaux extends Thread{
                 } else {
                     if(forme.getTypeForme()!=TypeShape.HIGHWAY) {
                         dansShape = true;
+                    } else {
+                        dansEau = true;
                     }
                 }
             }

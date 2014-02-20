@@ -70,14 +70,15 @@ public class Terminal extends Forme {
      * @return les informations formatées
      */
     public ArrayList<String> getDonneesFormates() {
-        ArrayList<String> tabInfo = new ArrayList<>();
-        
-        tabInfo.add("Nom : " + _nom);
-        for(TypeMarchandise t:_typeChargement) {
-            tabInfo.add("<html>Type de marchandise:<br />" + t.name() + "</html>");
-        }
-        
-                
-        return tabInfo;
+        return _quaiLie.getDonneesFormates();
+//        ArrayList<String> tabInfo = new ArrayList<>();
+//        
+//        tabInfo.add("Nom : " + _nom);
+//        for(TypeMarchandise t:_typeChargement) {
+//            tabInfo.add("<html>Type de marchandise:<br />" + t.name() + "</html>");
+//        }
+//        
+//                
+//        return tabInfo;
     }
 }

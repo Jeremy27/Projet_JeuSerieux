@@ -58,13 +58,22 @@ public class Quai extends Forme{
         tabInfo.add("Nom : " + _nom);
         tabInfo.add("Longueur : " + getLongueurMetre());
         tabInfo.add("Nb Navires : " + getNbNavireAQuai());
+        tabInfo.add("Place restante : " + getPlaceRestante());
         for(Terminal t:_terminaux) {
             for(TypeMarchandise type:t.getTypesChargement()) {
-                tabInfo.add("Type : " + type.name());
+                tabInfo.add("<html>"+ t.getNom() +"<br />Type :" + type.name() + "</html>");
             }
         }
                 
         return tabInfo;
+    }
+    
+    public double getPlaceRestante() {
+        double longueurTotale = 0;
+        for(Navire navireAQuai:_naviresAQuai) {
+            longueurTotale+=navireAQuai.getLongueurMetre();
+        }
+        return _longueurMetre-longueurTotale;
     }
     
     public void ajoutTerminal(Terminal t) {
@@ -96,6 +105,7 @@ public class Quai extends Forme{
     }
     
     public boolean supprimerNavireAQuai(Navire navire) {
+        System.out.println(_naviresAQuai.size());
         return _naviresAQuai.remove(navire);
     }
     

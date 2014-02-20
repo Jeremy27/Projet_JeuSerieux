@@ -50,18 +50,6 @@ public class Fichier {
      * @return retourne le contenu du fichier
      */
     public String lire() {
-        
-//        BufferedReader in = new BufferedReader(
-//		   new InputStreamReader(
-//                      new FileInputStream(fileDir), "UTF8"));
-// 
-//		String str;
-// 
-//		while ((str = in.readLine()) != null) {
-//		    System.out.println(str);
-//		}
-// 
-//                in.close();
         try {
             StringBuilder sb = new StringBuilder();
             

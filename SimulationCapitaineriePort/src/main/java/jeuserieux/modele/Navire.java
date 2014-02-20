@@ -33,10 +33,10 @@ public class Navire extends Forme implements Comparable<Navire>{
     private double          _angle;
     private boolean         _assigneQuai=false;
     private int             _positionAQuai;
-    private boolean         _visible=false;
 
     public Navire(ParamsNavire params) {
         super(params.getNom());
+        _visible = false;
         _typeNavire = params.getTypeNavire();
         _typeMachandise = params.getTypeMarchandise();
         _longueurMetres = params.getLongueur();
@@ -54,6 +54,7 @@ public class Navire extends Forme implements Comparable<Navire>{
     
     public Navire(Navire n) {
         super(n.getNom());
+        _visible = false;
         _typeNavire = n._typeNavire;
         _typeMachandise = n._typeMachandise;
         _longueurMetres = n._longueurMetres;
@@ -365,19 +366,5 @@ public class Navire extends Forme implements Comparable<Navire>{
         } else {
             return 1;
         }
-    }
-
-    /**
-     * @return the _visible
-     */
-    public boolean estVisible() {
-        return _visible;
-    }
-
-    /**
-     * @param visible the _visible to set
-     */
-    public void setVisible(boolean visible) {
-        this._visible = visible;
     }
 }
