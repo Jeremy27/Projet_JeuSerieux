@@ -170,7 +170,6 @@ public class NouvellePartie extends JDialog {
     Instance creerInstance() {
         GestionInstance gInstance = new GestionInstance();
         gInstance.genererInstance();
-        gInstance.genererAleatoirement();
         
         if(null == gInstance.getInstance()) {
             gInstance.genererAleatoirement();
