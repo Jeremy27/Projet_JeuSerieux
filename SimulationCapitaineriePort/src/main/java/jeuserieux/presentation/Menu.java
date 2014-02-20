@@ -109,7 +109,7 @@ public class Menu extends JMenuBar {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                FenetreScores fenetreScores = new FenetreScores(null);
+                new FenetreScores(null);
             }
         });
         
@@ -120,10 +120,19 @@ public class Menu extends JMenuBar {
                 System.exit(0);
             }
         });
+        
+        _aideDocumentation.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                new FenetreDocumentation();
+            }
+        });
     }
     
     private void desactiverJMenuItemNonGere() {
-        _menuAide.setEnabled(false);
+        _aideAPropos.setEnabled(false);
+        _aideDidacticiel.setEnabled(false);
         _partieAide.setEnabled(false);
         _partieResoudre.setEnabled(false);
         _fichierCharger.setEnabled(false);

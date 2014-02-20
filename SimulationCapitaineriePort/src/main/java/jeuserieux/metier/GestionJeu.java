@@ -71,7 +71,7 @@ public class GestionJeu extends Thread {
                     _infoJeu.ajoutMessage(navire.getNom() + "  " + navire.getType(), TypeMessage.NORMAL);
                 }
             }
-            _infoJeu.ajoutMessage("Navires arrivés le " + Partie._tempsCourant + " : ", TypeMessage.IMPORTANT);
+            _infoJeu.ajoutMessage("Navires arrivés le " + getDateFormate(Partie._tempsCourant) + " : ", TypeMessage.IMPORTANT);
         }
     }
     
