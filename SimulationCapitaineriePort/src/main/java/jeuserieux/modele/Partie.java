@@ -17,7 +17,7 @@ public class Partie {
     public static String            _pseudo;
     public static TypeDifficulte    _difficulte   = TypeDifficulte.FACILE;
     public static int               _tempsCourant = 0;
-    public static int               _tempsFin     = 100;
+    public static int               _tempsFin     = 96;
     public static int               _nbRetards;
     public static int               _nbMaxNavires;
     public static int               _nbMinNavires;
@@ -29,7 +29,7 @@ public class Partie {
         _pseudo         = pseudo;
         _abandon        = false;
         _tempsCourant   = 0;
-        _tempsFin       = 2;
+        _tempsFin       = 96;
         initialiserDifficulte();
     }
     
@@ -56,7 +56,7 @@ public class Partie {
     private void initialiserNormal() {
         _nbMaxNavires   = 6;
         _nbMinNavires   = 1;
-        _tempsTour      = 30000;
+        _tempsTour      = 3000;
     }
     
     private void initialiserDifficile() {

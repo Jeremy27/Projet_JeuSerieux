@@ -110,7 +110,6 @@ public class GestionJeu extends Thread {
             
             if(compteur%Partie._tempsTour == 0) {
                 incrementerTemps(compteur);
-                
                 naviresArrives = _instance.getNavires(Partie._tempsCourant);
                 
                 majNaviresArrives(naviresArrives);

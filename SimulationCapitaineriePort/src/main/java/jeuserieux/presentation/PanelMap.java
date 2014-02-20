@@ -197,7 +197,9 @@ public class PanelMap extends JPanel{
         m.put("droite", _mapDroite);
         //trie les formes puis les paint
         mergeNavires();
-        for(Forme forme:_metier.getCoordonneesDessin()) {
+        ArrayList<Forme> array = new ArrayList<>();
+        array.addAll(_metier.getCoordonneesDessin());
+        for(Forme forme:array) {
             Color couleur = forme.getCouleur();
             Path2D path = forme.getPath(m);
             
@@ -266,7 +268,7 @@ public class PanelMap extends JPanel{
         }
         Font fontInfos = new Font("SansSerif", Font.BOLD, (int)(9*_zoomEtat));
         g2.setColor(Color.GRAY);
-        for(Forme forme:_metier.getCoordonneesDessin()) {
+        for(Forme forme:array) {
             Point2D p = forme.getCoordInfo();
             if(p!=null) {
                 
@@ -364,6 +366,12 @@ public class PanelMap extends JPanel{
     public void ajoutNavire(Navire navire) {
         _navires.add(navire);
         _metier.ajoutForme(navire);
+    }
+    
+    public void supprimerNavire(Navire navire) {
+        _navires.remove(navire);
+        _metier.supprimerNavire(navire);
+        _naviresArrives.supprimerNavires(WIDTH);
     }
     
     /**

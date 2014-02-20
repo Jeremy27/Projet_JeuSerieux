@@ -87,6 +87,12 @@ public class ModeleTabNavires extends AbstractTableModel {
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
     
+    public void supprimerNavire(Navire n) {
+        int indice = _navires.indexOf(n);
+        _navires.remove(n);
+        fireTableRowsDeleted(indice, indice);
+    }
+    
     public void supprimerNaviresArrives(int temps) {
         ArrayList<Navire> aSupprimer = new ArrayList<>();
         for(Navire navire : _navires)

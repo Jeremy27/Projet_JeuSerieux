@@ -54,8 +54,8 @@ public class GestionSauvegarde {
                 objetJson.add("typeNavire", navire.getType().name());
                 objetJson.add("typeMarchandise", navire.getTypeMachandise().name());
                 objetJson.add("dateArrivee", navire.getNom());
-                objetJson.add("longueur", navire.getLongueur());
-                objetJson.add("largeur", navire.getLargeur());
+                objetJson.add("longueur", navire.getLongueurMetre());
+                objetJson.add("largeur", navire.getLargeurMetre());
                 objetJson.add("tempsPriseEnCharge", navire.getTempsPriseEnCharge());
                 objetJson.add("nom", navire.getNom());
                 objetJson.add("nom", navire.getNom());
