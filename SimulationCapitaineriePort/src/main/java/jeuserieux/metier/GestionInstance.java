@@ -116,8 +116,12 @@ public class GestionInstance {
     }
     
     private TypeMarchandise getTypeMarchandiseAleatoire() {
-        int indice = _random.nextInt(TypeMarchandise.values().length);
-        return TypeMarchandise.values()[indice];
+        ArrayList<TypeMarchandise> listeNavirePrisEnCharge = new ArrayList<>();
+        listeNavirePrisEnCharge.add(TypeMarchandise.CONTENEURS);
+        listeNavirePrisEnCharge.add(TypeMarchandise.PASSAGER);
+        
+        int indice = _random.nextInt(listeNavirePrisEnCharge.size());
+        return listeNavirePrisEnCharge.get(indice);
     }
     
     private TypeNavire getTypeNavire(TypeMarchandise typeMarchandise) {

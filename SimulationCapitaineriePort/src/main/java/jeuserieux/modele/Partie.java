@@ -29,7 +29,7 @@ public class Partie {
         _pseudo         = pseudo;
         _abandon        = false;
         _tempsCourant   = 0;
-        _tempsFin       = 2;
+        _tempsFin       = 100;
         initialiserDifficulte();
     }
     

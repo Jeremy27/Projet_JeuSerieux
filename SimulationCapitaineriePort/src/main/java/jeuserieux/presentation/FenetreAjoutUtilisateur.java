@@ -35,7 +35,7 @@ public class FenetreAjoutUtilisateur extends JDialog{
     private JButton _btnAjouterUtil;
     
     public FenetreAjoutUtilisateur() {
-        setTitle("Documentation");
+        setTitle("Ajouter un utilisateur");
         setSize(300, 200);
         
         initialiserComposants();
@@ -58,15 +58,13 @@ public class FenetreAjoutUtilisateur extends JDialog{
         _textMailUtil = new JTextField(15);
         _textMdpUtil = new JPasswordField(15);
         
+        _labMailUtil.setOpaque(true);
+        _labMdpUtil.setOpaque(true);
+        _labNomUtil.setOpaque(true);
+        
         _panelNomUtil = new JPanel(new FlowLayout(FlowLayout.LEFT));
         _panelMailUtil = new JPanel(new FlowLayout(FlowLayout.LEFT));
         _panelMdpUtil = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        
-        _panelMailUtil.setBackground(PanelPerso.COULEUR_PANEL1);
-        _panelNomUtil.setBackground(PanelPerso.COULEUR_PANEL1);
-        _panelMdpUtil.setBackground(PanelPerso.COULEUR_PANEL1);
-        
-        setBackground(PanelPerso.COULEUR_PANEL1);
         
         _panelNomUtil.add(_labNomUtil);
         _panelNomUtil.add(_textNomUtil);
