@@ -36,7 +36,6 @@ public class MetierMap {
     private final ArrayQuai _quais;
     private final ArrayTerminal _terminaux;
     
-    
     //couleurs des différentes formes
     private static final Color NATURALCOLOR = new Color(181, 208, 208);
     private static final Color TERMINALCOLOR = new Color(222, 208, 213);
@@ -475,5 +474,10 @@ public class MetierMap {
      */
     public ArrayForme getLittoraux() {
         return _littoraux;
+    }
+    
+    public void supprimerNavire(Navire navire) {
+        _coordonneesDessin.remove(navire);
+        _navires.remove(navire);
     }
 }

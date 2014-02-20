@@ -51,6 +51,23 @@ public class Navire extends Forme implements Comparable<Navire>{
         _angle = 0;
         _assigneQuai = false;
     }
+    
+    public Navire(Navire n) {
+        super(n.getNom());
+        _typeNavire = n._typeNavire;
+        _typeMachandise = n._typeMachandise;
+        _longueurMetres = n._longueurMetres;
+        _largeurMetres = n._largeurMetres;
+        _longueurGeographique = n._longueurGeographique;
+        _largeurGeographique = n._largeurGeographique;
+        _dateArrivee =  n._dateArrivee;
+        _tempsPriseEnCharge = n._tempsPriseEnCharge;
+        _position = n._position;
+        _typeForme = TypeShape.NAVIRE;
+        _fill = n._fill;
+        _angle = n._angle;
+        _assigneQuai = n._assigneQuai;
+    }
 
     /**
      * Cette fonction construit la bounding box du navire
@@ -153,7 +170,7 @@ public class Navire extends Forme implements Comparable<Navire>{
         this._typeMachandise = typeMachandise;
     }
 
-    public double getLongueur() {
+    public double getLongueurGeographique() {
         return _longueurGeographique;
     }
 
@@ -161,7 +178,11 @@ public class Navire extends Forme implements Comparable<Navire>{
         return _dateArrivee;
     }
     
-    public double getLargeur() {
+    public double getLongueurMetre() {
+        return _longueurMetres;
+    }
+    
+    public double getLargeurMetre() {
         return _largeurMetres;
     }
 

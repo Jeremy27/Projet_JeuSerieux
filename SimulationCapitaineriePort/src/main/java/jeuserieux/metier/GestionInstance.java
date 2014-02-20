@@ -50,6 +50,7 @@ public class GestionInstance {
             for (int j = 0; j < nbNavires; j++) {
                 navire = listeNavires.get(_random.nextInt(listeNavires.size()));
                 navire.setDateArrivee(i);
+                navire = new Navire(navire);
                 _instance.ajouterNavire(navire);
             }
         }
@@ -65,8 +66,8 @@ public class GestionInstance {
         
         for (Object objet : tableauNavires.toArray()) {
             JsonObject jo           = (JsonObject) objet;
-            String nom              = jo.getString("nom").toString();
-            TypeMarchandise type    = TypeMarchandise.valueOf(jo.getString("type").toString());
+            String nom              = jo.getString("nom");
+            TypeMarchandise type    = TypeMarchandise.valueOf(jo.getString("type"));
             int longueur            = Integer.parseInt(jo.get("longueur").toString());
             int largeur             = Integer.parseInt(jo.get("largeur").toString());
             

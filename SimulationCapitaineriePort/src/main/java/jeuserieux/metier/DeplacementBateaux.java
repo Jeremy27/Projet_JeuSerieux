@@ -60,10 +60,21 @@ public class DeplacementBateaux extends Thread{
 //        }
         _debut = System.currentTimeMillis();
         deplacer();
-        while(Partie._tempsCourant>=_bateau.getHeurePriseEnCharge()+_bateau.getTempsPriseEnCharge()) {
-            _destination = SORTIE_DEFAUT;
-            deplacer();
+        while(Partie._tempsCourant<_bateau.getHeurePriseEnCharge()+_bateau.getTempsPriseEnCharge()) {
+            try {
+                sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(DeplacementBateaux.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        _destination = SORTIE_DEFAUT;
+        _bateau.setVisible(true);
+        _map.refresh();
+        _quai.supprimerNavireAQuai(_bateau);
+        deplacer();
+        _bateau.setVisible(false);
+        _map.refresh();
+        _map.supprimerNavire(_bateau);
         
     }
     

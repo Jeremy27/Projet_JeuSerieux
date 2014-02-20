@@ -127,20 +127,22 @@ public class Quai extends Forme{
         if(prendEnCharge(n.getTypeMachandise())) {
             //Vérifie qu'il y a assez de place pour le prendre
             if(_naviresAQuai.isEmpty()) {
-                if(_longueurMetre>=n.getLongueur()) {
+                if(_longueurMetre>=n.getLongueurMetre()) {
                     return true;
                 }
             } else {
-                Collections.sort(_naviresAQuai);
-                int indice = 0;
+//                Collections.sort(_naviresAQuai);
+//                int indice = 0;
+                int longueurTotale = 0;
                 for(Navire navireAQuai:_naviresAQuai) {
-                    int position = navireAQuai.getPositionAQuai();
-                    if(position-indice>=n.getTempsPriseEnCharge()) {
-                        return true;
-                    }
-                    indice = position+navireAQuai.getTempsPriseEnCharge();
+                    longueurTotale+=navireAQuai.getLongueurMetre();
+//                    int position = navireAQuai.getPositionAQuai();
+//                    if(position-indice>=n.getTempsPriseEnCharge()) {
+//                        return true;
+//                    }
+//                    indice = position+navireAQuai.getTempsPriseEnCharge();
                 }
-                return false;
+                return longueurTotale<=_longueurMetre;
             }
                 
         }

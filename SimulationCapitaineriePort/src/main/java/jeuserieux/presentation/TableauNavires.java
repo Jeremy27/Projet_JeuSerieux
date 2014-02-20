@@ -74,6 +74,10 @@ public class TableauNavires extends JTable {
         _modele.supprimerNaviresArrives(temps);
     }
     
+    public void supprimerNavireArrives(Navire navire) {
+        _modele.supprimerNavire(navire);
+    }
+    
     public void remiseAZero() {
         _modele.supprimerNavires();
     }
