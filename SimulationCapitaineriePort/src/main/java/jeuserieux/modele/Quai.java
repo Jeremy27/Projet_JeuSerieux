@@ -55,9 +55,10 @@ public class Quai extends Forme{
         
         tabInfo.add("Nom : " + _nom);
         tabInfo.add("Longueur : " + getLongueurMetre());
+        tabInfo.add("Nb Navires : " + getNbNavireAQuai());
         for(Terminal t:_terminaux) {
             for(TypeMarchandise type:t.getTypesChargement()) {
-                tabInfo.add(type.name());
+                tabInfo.add("Type : " + type.name());
             }
         }
                 

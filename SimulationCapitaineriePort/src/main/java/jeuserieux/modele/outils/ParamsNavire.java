@@ -9,15 +9,15 @@ import jeuserieux.modele.enumeration.TypeNavire;
  * @author gary
  */
 public class ParamsNavire {
-    private String _nom;
-    private TypeNavire _typeNavire;
+    private String          _nom;
+    private TypeNavire      _typeNavire;
     private TypeMarchandise _typeMarchandise;
-    private int _dateArrivee;
-    private int _tempsPriseEnCharge;
-    private Point2D _position;
-    private int _datePriseEnCharge;
-    private double _longueur;
-    private double _largeur;
+    private int             _dateArrivee;
+    private int             _tempsPriseEnCharge;
+    private Point2D         _position;
+    private int             _datePriseEnCharge;
+    private double          _longueur;
+    private double          _largeur;
     
     public ParamsNavire() {}
 

@@ -25,7 +25,7 @@ import jeuserieux.presentation.PanelPartie;
  * @author jeremy
  */
 public class GestionJeu extends Thread {
-    private Instance        _instance;
+    public static Instance  _instance;
     private PanelNavires    _naviresArrives;
     private PanelNavires    _naviresArrivant;
     private PanelInfoJeu    _infoJeu;
@@ -43,43 +43,6 @@ public class GestionJeu extends Thread {
     
     public void setInstance(Instance instance) {
         _instance = instance;
-    }
-    
-    public JsonArray genererJson() {
-        JsonArrayBuilder tableauJson = Json.createArrayBuilder();
-        
-        tableauJson.add(getPartieJson());
-        tableauJson.add(getInstanceJson());
-        tableauJson.add(getQuaisJson());
-        
-        return tableauJson.build();
-    }
-    
-    private JsonObject getPartieJson() {
-        JsonObjectBuilder objetJson = Json.createObjectBuilder();
-        
-        objetJson.add("pseudo", Partie._pseudo);
-        objetJson.add("tempsCourant", Partie._tempsCourant);
-        objetJson.add("nbRetards", Partie._nbRetards);
-        objetJson.add("difficulte", Partie._difficulte.name());
-        
-        return objetJson.build();
-    }
-    
-    private JsonObject getInstanceJson() {
-        JsonObjectBuilder objetJson     = Json.createObjectBuilder();
-        JsonArrayBuilder tableauJson    = Json.createArrayBuilder();
-        //objetJson.add(null, BigDecimal.ZERO)
-        
-        return objetJson.build();
-    }
-    
-    private JsonObject getQuaisJson() {
-        JsonObjectBuilder objetJson = Json.createObjectBuilder();
-        
-        //objetJson.add(null, BigDecimal.ZERO)
-        
-        return objetJson.build();
     }
     
     public static String getDateFormate(int temps) {

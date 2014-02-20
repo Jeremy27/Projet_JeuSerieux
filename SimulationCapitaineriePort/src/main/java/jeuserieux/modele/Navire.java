@@ -6,6 +6,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import jeuserieux.metier.GestionJeu;
 import jeuserieux.modele.enumeration.TypeMarchandise;
 import jeuserieux.modele.enumeration.TypeNavire;
@@ -20,17 +21,17 @@ import jeuserieux.presentation.PanelMap;
 public class Navire extends Forme {
 
     private TypeMarchandise _typeMachandise;
-    private final double _longueurGeographique;
-    private final double _largeurGeographique;
-    private final double _longueurMetres;
-    private final double _largeurMetres;
-    private int _dateArrivee;
-    private int _tempsPriseEnCharge;
-    private TypeNavire _typeNavire;
-    private Point2D _position;
-    private int _heurePriseEnCharge;
-    private double _angle;
-    private boolean _assigneQuai;
+    private final double    _longueurGeographique;
+    private final double    _largeurGeographique;
+    private final double    _longueurMetres;
+    private final double    _largeurMetres;
+    private int             _dateArrivee;
+    private int             _tempsPriseEnCharge;
+    private TypeNavire      _typeNavire;
+    private Point2D         _position;
+    private int             _heurePriseEnCharge;
+    private double          _angle;
+    private boolean         _assigneQuai;
 
     public Navire(ParamsNavire params) {
         super(params.getNom());
@@ -157,6 +158,10 @@ public class Navire extends Forme {
     public int getDateArrivee() {
         return _dateArrivee;
     }
+    
+    public double getLargeur() {
+        return _largeurMetres;
+    }
 
     public void setDateArrivee(int dateArrivee) {
         this._dateArrivee = dateArrivee;
@@ -245,6 +250,70 @@ public class Navire extends Forme {
     public void setAssigneQuai(boolean _assigneQuai) {
         this._assigneQuai = _assigneQuai;
     }
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this._typeMachandise);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this._longueurGeographique) ^ (Double.doubleToLongBits(this._longueurGeographique) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this._largeurGeographique) ^ (Double.doubleToLongBits(this._largeurGeographique) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this._longueurMetres) ^ (Double.doubleToLongBits(this._longueurMetres) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this._largeurMetres) ^ (Double.doubleToLongBits(this._largeurMetres) >>> 32));
+        hash = 97 * hash + this._dateArrivee;
+        hash = 97 * hash + this._tempsPriseEnCharge;
+        hash = 97 * hash + Objects.hashCode(this._typeNavire);
+        hash = 97 * hash + Objects.hashCode(this._position);
+        hash = 97 * hash + this._heurePriseEnCharge;
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this._angle) ^ (Double.doubleToLongBits(this._angle) >>> 32));
+        hash = 97 * hash + (this._assigneQuai ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Navire other = (Navire) obj;
+        if (this._typeMachandise != other._typeMachandise) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this._longueurGeographique) != Double.doubleToLongBits(other._longueurGeographique)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this._largeurGeographique) != Double.doubleToLongBits(other._largeurGeographique)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this._longueurMetres) != Double.doubleToLongBits(other._longueurMetres)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this._largeurMetres) != Double.doubleToLongBits(other._largeurMetres)) {
+            return false;
+        }
+        if (this._dateArrivee != other._dateArrivee) {
+            return false;
+        }
+        if (this._tempsPriseEnCharge != other._tempsPriseEnCharge) {
+            return false;
+        }
+        if (this._typeNavire != other._typeNavire) {
+            return false;
+        }
+        if (!Objects.equals(this._position, other._position)) {
+            return false;
+        }
+        if (this._heurePriseEnCharge != other._heurePriseEnCharge) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this._angle) != Double.doubleToLongBits(other._angle)) {
+            return false;
+        }
+        if (this._assigneQuai != other._assigneQuai) {
+            return false;
+        }
+        return true;
+    }
 }

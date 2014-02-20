@@ -25,11 +25,13 @@ public class Forme {
     
     @Override
     public String toString() {
-        String s = "";
-        s += "nom " + _nom;
-        s += " id " + _id;
-        s += " type " + _typeForme.name();
-        return s;
+        StringBuilder s = new StringBuilder("nom ");
+        s.append(_nom);
+        s.append(" id ");
+        s.append(_id);
+        s.append(" type ");
+        s.append(_typeForme.name());
+        return s.toString();
     }
     
     public Forme(String nom) {

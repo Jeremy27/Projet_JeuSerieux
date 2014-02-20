@@ -45,4 +45,7 @@ public class Instance {
         return listeNavire;
     }
     
+    public ArrayList<Navire> getNavires() {
+        return _listeNavires;
+    }
 }
