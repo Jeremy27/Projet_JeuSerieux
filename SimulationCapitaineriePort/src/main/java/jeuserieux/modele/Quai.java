@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import jeuserieux.modele.enumeration.TypeMarchandise;
 import jeuserieux.modele.enumeration.TypeShape;
+import jeuserieux.presentation.PanelMap;
 
 /**
  *
@@ -125,5 +126,6 @@ public class Quai extends Forme{
      */
     public void setLongueurMetre(double longueurMetre) {
         this._longueurMetre = longueurMetre;
+        _longueurGeographique = _longueurMetre/PanelMap.COEF_GEO_METRE;
     }
 }

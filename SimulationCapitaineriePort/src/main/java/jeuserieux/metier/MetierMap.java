@@ -273,16 +273,19 @@ public class MetierMap {
      */
     public void lierQuaisTerminaux() {
         Quai quaiAmeriques = _quais.getQuai("Quai des Amériques");
+        quaiAmeriques.setLongueurMetre(1723);
         Terminal terminalAtlantique = _terminaux.getTerminal("Terminal de l'Atlantique");
         Forme zoneArrimageAmeriques = _formes.getForme("zone arrimage quai Amériques");
         lierQuaisTerminaux(quaiAmeriques, terminalAtlantique, zoneArrimageAmeriques, TypeMarchandise.CONTENEURS);
         
         Quai quaiEurope = _quais.getQuai("Quai de l'Europe");
+        quaiEurope.setLongueurMetre(1012);
         Terminal terminalEurope = _terminaux.getTerminal("Terminal de l'Europe");
         Forme zoneArrimageEurope = _formes.getForme("zone arrimage quai de l'Europe");
         lierQuaisTerminaux(quaiEurope, terminalEurope, zoneArrimageEurope, TypeMarchandise.CONTENEURS);
         
         Quai quaiDuHavre = _quais.getQuai("Quai du Havre");
+        quaiDuHavre.setLongueurMetre(4200);
         Terminal terminalTNMSC = _terminaux.getTerminal("Terminal TNMSC");
         Terminal terminalPorteOceane = _terminaux.getTerminal("Terminal Porte Océane");
         Terminal terminalDeFrance = _terminaux.getTerminal("Terminal de France");

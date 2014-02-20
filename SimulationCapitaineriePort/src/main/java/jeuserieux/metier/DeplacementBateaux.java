@@ -108,6 +108,7 @@ public class DeplacementBateaux extends Thread{
         if(pointEnCours.egal(_destination)) {
             if(_quai!=null) {
                 _bateau.setAssigneQuai(true);
+                _quai.ajouterNavireAQuai(_bateau);
             }
             //on a trouvé
             ArrayList<PointPathFinding> chemin = new ArrayList<>();
