@@ -83,10 +83,7 @@ public class TableauNavires extends JTable {
             _ligneSelectionnee = getSelectedRow();
             Navire n = _modele.getNavire(_ligneSelectionnee);
             _map.setNavireSelectionne(n);
-            
-//            _panelInfo.setNomPanel("Navire");
-//            _panelInfo.setInformations(n.getDonneesFormates());
-//            _panelInfo.majInformations();
+            _map.refresh();
         }
     }
     

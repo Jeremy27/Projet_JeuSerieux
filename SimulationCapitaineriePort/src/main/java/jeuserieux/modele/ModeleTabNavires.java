@@ -74,7 +74,7 @@ public class ModeleTabNavires extends AbstractTableModel {
                     return GestionJeu.getDateFormate(navire.getDateArrivee());
             }
         }
-        return navire;
+        return null;
     }
 
     public void ajouterNavire(Navire n) {
