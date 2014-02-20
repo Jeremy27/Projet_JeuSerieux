@@ -83,8 +83,9 @@ public class GestionInstance {
         params.setLongueur(getLongueurAleatoire());
         params.setLargeur(params.getLongueur()/3);
         params.setTempsPriseEnCharge(getTempsPriseEnChargeAleatoire());
-        params.setTypeMarchandise(getTypeMarchandiseAleatoire());
-        params.setTypeNavire(getTypeNavireAleatoire());
+        TypeMarchandise typeMarchandise = getTypeMarchandiseAleatoire();
+        params.setTypeMarchandise(typeMarchandise);
+        params.setTypeNavire(getTypeNavire(typeMarchandise));
         
         return new Navire(params);
     }
@@ -103,15 +104,15 @@ public class GestionInstance {
     }
     
     private double getLargeurAleatoire() {
-        return _random.nextDouble()/400;
+        return _random.nextInt(55)+5;
     }
     
     private double getLongueurAleatoire() {
-        return _random.nextDouble()/100;
+        return _random.nextInt(330)+30;
     }
     
     private int getTempsPriseEnChargeAleatoire() {
-        return _random.nextInt(10)+1;
+        return _random.nextInt(9)+1;
     }
     
     private TypeMarchandise getTypeMarchandiseAleatoire() {
@@ -119,13 +120,8 @@ public class GestionInstance {
         return TypeMarchandise.values()[indice];
     }
     
-    private TypeNavire getTypeNavireAleatoire() {
-        int indice = _random.nextInt(TypeNavire.values().length);
-        return TypeNavire.values()[indice];
-    }
-    
     private TypeNavire getTypeNavire(TypeMarchandise typeMarchandise) {
-        TypeNavire typeNavire =getTypeNavireAleatoire();
+        TypeNavire typeNavire = TypeNavire.PETROLIER;
         
         if(typeMarchandise.equals(TypeMarchandise.CHARBON)) {
             typeNavire = TypeNavire.VRAC_SOLIDE;

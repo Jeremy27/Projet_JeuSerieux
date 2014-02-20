@@ -123,15 +123,11 @@ public class Menu extends JMenuBar {
     }
     
     private void desactiverJMenuItemNonGere() {
-        
-        for(Component composant : _menuFichier.getComponents()) {
-//            JMenu menu = (JMenu)composant;
-//            for(Component item : menu.getMenuComponents()) {
-//                System.out.println(item.toString());
-                if(composant.getComponentListeners().length == 0) {
-                    composant.setEnabled(false);
-                }
-            }
-        }
+        _menuAide.setEnabled(false);
+        _partieAide.setEnabled(false);
+        _partieResoudre.setEnabled(false);
+        _fichierCharger.setEnabled(false);
+        _fichierPreference.setEnabled(false);
+        _fichierSauvegarder.setEnabled(false);
     }
 }
