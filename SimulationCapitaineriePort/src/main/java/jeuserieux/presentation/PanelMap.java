@@ -538,11 +538,13 @@ public class PanelMap extends JPanel{
      * @param n le navire sélectionné
      */
     public void setNavireSelectionne(Navire n) {
-        _navireSelectionne = n;
-        _panelInfoForme.setInformations(n.getDonneesFormates());
-        _panelInfoForme.setNomPanel("Navire");
-        _panelInfoForme.majInformations();
-        setTypeColorer(n.getTypeMachandise());
+        System.out.println("connard");
+//        _navireSelectionne = n;
+//        _panelInfoForme.setInformations(n.getDonneesFormates());
+//        _panelInfoForme.setNomPanel("Navire");
+//        _panelInfoForme.majInformations();
+//        setTypeColorer(n.getTypeMachandise());
+            
     }
     
     /**

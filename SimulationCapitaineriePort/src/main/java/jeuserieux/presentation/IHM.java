@@ -92,6 +92,7 @@ public class IHM extends JFrame {
         
         _map = new PanelMap(_infoForme, _naviresArrives);
         _naviresArrives.setMap(_map);
+        _naviresArrivant.setMap(_map);
         _map.ajoutNavire(n);
         _map.initEvents();
         _map.lierMapRealite();

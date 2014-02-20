@@ -27,8 +27,10 @@ public class DeplacementBateaux extends Thread{
     private final PanelMap _map;
     private ArrayList<PointPathFinding> _resultat;
     private long _debut;
+    private Quai _quai;
     
     public DeplacementBateaux(Navire bateau, Quai quai, ArrayList<Forme> formes, PanelMap map) {
+        _quai = quai;
         _destination = quai.getZoneArrimage().getCentre();
         System.out.println("destination: " + _destination);
         _bateau = bateau;
@@ -38,6 +40,7 @@ public class DeplacementBateaux extends Thread{
     }
     
     public DeplacementBateaux(Navire bateau, Point2D destination, ArrayList<Forme> formes, PanelMap map) {
+        
         _destination = destination;
         System.out.println("taille: " + formes.size());
         System.out.println("destination: " + _destination);
@@ -103,6 +106,9 @@ public class DeplacementBateaux extends Thread{
         }
         
         if(pointEnCours.egal(_destination)) {
+            if(_quai!=null) {
+                _bateau.setAssigneQuai(true);
+            }
             //on a trouvé
             ArrayList<PointPathFinding> chemin = new ArrayList<>();
             chemin.add(pointEnCours);

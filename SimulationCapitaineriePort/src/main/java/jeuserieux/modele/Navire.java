@@ -231,6 +231,20 @@ public class Navire extends Forme {
     public void setAngle(double _angle) {
         this._angle = _angle;
     }
+
+    /**
+     * @return the _assigneQuai
+     */
+    public boolean estAssigneQuai() {
+        return _assigneQuai;
+    }
+
+    /**
+     * @param _assigneQuai the _assigneQuai to set
+     */
+    public void setAssigneQuai(boolean _assigneQuai) {
+        this._assigneQuai = _assigneQuai;
+    }
     
     
 }
