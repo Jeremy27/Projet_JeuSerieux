@@ -13,11 +13,12 @@ public class Quai extends Forme{
     private Forme _zoneArrimage;
     private ArrayList<Navire> _naviresAQuai;
     private final ArrayList<Terminal> _terminaux;
-    private int _longueur;
+    private double _longueurGeographique;
+    private double _longueurMetre;
     
-    public Quai(String nom, int longueur) {
+    public Quai(String nom, double longueur) {
         super(nom);
-        _longueur       = longueur;
+        _longueurGeographique       = longueur;
         _terminaux      = new ArrayList<>();
         _naviresAQuai   = new ArrayList<>();
         _typeForme      = TypeShape.QUAI;
@@ -31,14 +32,12 @@ public class Quai extends Forme{
         return _zoneArrimage;
     }
     
-    public Quai(String nom, boolean fill, Color couleur, long id, int longueur) {
+    public Quai(String nom, boolean fill, Color couleur, long id) {
         super(nom);
         _nom            = nom;
         _fill           = fill;
         _couleur        = couleur;
-        
         _id             = id;
-        _longueur       = longueur;
         _terminaux      = new ArrayList<>();
         _naviresAQuai   = new ArrayList<>();
         _coordonnees    = new ArrayList<>();
@@ -54,7 +53,7 @@ public class Quai extends Forme{
         ArrayList<String> tabInfo = new ArrayList<>();
         
         tabInfo.add("Nom : " + _nom);
-        tabInfo.add("Longueur : " + _longueur);
+        tabInfo.add("Longueur : " + getLongueurMetre());
         for(Terminal t:_terminaux) {
             for(TypeMarchandise type:t.getTypesChargement()) {
                 tabInfo.add(type.name());
@@ -68,12 +67,12 @@ public class Quai extends Forme{
         _terminaux.add(t);
     }
     
-    public int getLongueur() {
-        return _longueur;
+    public double getLongueurGeographique() {
+        return _longueurGeographique;
     }
 
-    public void setLongueur(int _longueur) {
-        this._longueur = _longueur;
+    public void setLongueurGeographique(int longueur) {
+        this._longueurGeographique = longueur;
     }
     
     public int getNbNavireAQuai() {
@@ -112,5 +111,19 @@ public class Quai extends Forme{
             }
         }
         return false;
+    }
+
+    /**
+     * @return the _longueurMetre
+     */
+    public double getLongueurMetre() {
+        return _longueurMetre;
+    }
+
+    /**
+     * @param longueurMetre the _longueurMetre to set
+     */
+    public void setLongueurMetre(double longueurMetre) {
+        this._longueurMetre = longueurMetre;
     }
 }

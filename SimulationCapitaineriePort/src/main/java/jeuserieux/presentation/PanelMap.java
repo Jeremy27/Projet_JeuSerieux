@@ -33,9 +33,9 @@ import jeuserieux.modele.Navire;
 import jeuserieux.modele.Quai;
 import jeuserieux.modele.Terminal;
 import jeuserieux.modele.enumeration.TypeMarchandise;
-import jeuserieux.modele.outils.PointPathFinding;
 
 public class PanelMap extends JPanel{
+    public static final double COEF_GEO_METRE = 84208.831372054;
     private static final double ZOOMMIN = 1.0;
     private static final double ZOOMMAX = 10.0;
     private static final double PAS_ZOOM = 0.5;
