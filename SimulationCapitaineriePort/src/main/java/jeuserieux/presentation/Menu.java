@@ -1,14 +1,19 @@
 package jeuserieux.presentation;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static javax.swing.JComponent.TOOL_TIP_TEXT_KEY;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+import jeuserieux.accesAuDonnees.ConnexionMySQL;
 
 /**
  *
@@ -35,6 +40,8 @@ public class Menu extends JMenuBar {
     private JMenuItem _aideDidacticiel;
     private JMenuItem _aideDocumentation;
     private JMenuItem _aideAPropos;
+    
+    private JMenuItem _ajoutUtilisateur;
 
     public Menu(IHM ihm) {
         _ihm = ihm;
@@ -62,6 +69,7 @@ public class Menu extends JMenuBar {
         _partieAide     = new JMenuItem("Aide");
         _partieResoudre = new JMenuItem("Résoudre");
         _partieScores   = new JMenuItem("Scores");
+        _ajoutUtilisateur = new JMenuItem("Inscrire un nouvel utilisateur");
         
         _aideDidacticiel    = new JMenuItem("Didacticiel");
         _aideDocumentation  = new JMenuItem("Documentation");
@@ -88,6 +96,7 @@ public class Menu extends JMenuBar {
         _menuPartie.add(_partieAide);
         _menuPartie.add(_partieResoudre);
         _menuPartie.add(_partieScores);
+        _menuPartie.add(_ajoutUtilisateur);
         
         _menuAide.add(_aideDidacticiel);
         _menuAide.add(_aideDocumentation);
@@ -126,6 +135,13 @@ public class Menu extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 new FenetreDocumentation();
+            }
+        });
+        
+        _ajoutUtilisateur.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                new FenetreAjoutUtilisateur();
             }
         });
     }

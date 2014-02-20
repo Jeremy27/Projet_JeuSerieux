@@ -11,7 +11,7 @@ import java.sql.*; // importer toutes les class de JDBC
 
 public class ConnexionMySQL {
 
-    public ConnexionMySQL() {
+    public ConnexionMySQL(String nomBase, String utilisateur, String mdp) {
         System.out.println("Instentiation de La Class JDBC");
 
     }
@@ -65,35 +65,24 @@ public class ConnexionMySQL {
     }
 //_______________________________
 
-    public void insert_Utilisateurs(String Nom_de_la_Base, String Nom_Table, String Mail, int b, String MOtdPass, String Pseudo) throws ClassNotFoundException, SQLException {
+    public void insert_Utilisateurs(String nomBase, String nomTable, String mail, int b, String mdp, String pseudo) throws ClassNotFoundException, SQLException {
         // chargement du pilot
         Class.forName("com.mysql.jdbc.Driver");
         // Etablissement de la connection
-        String DBurl = "jdbc:mysql://localhost/" + Nom_de_la_Base;
+        String DBurl = "jdbc:mysql://localhost/" + nomBase;
         Connection con = DriverManager.getConnection(DBurl, "root", "");
         if (con != null) {
-            System.out.println("Connection est bien etablie Ã  la base : >> " + Nom_de_la_Base);
+            System.out.println("Connection est bien etablie Ã  la base : >> " + nomBase);
+            
+            Statement smt = con.createStatement();
+            int i = smt.executeUpdate("INSERT INTO `partie`.`" + nomTable + "` VALUES (" + b + ", " + pseudo + "," + mdp + ", " + mail + ");");
+            if (i != 0) {
+                System.out.println("Insertion faite dans la table Utilisateurs");
+            } else if (i == 0) {
+                System.out.println("Insertion n'est pas faite dans la table Utilisateurs");
+            }
         }
-
-// CrÃ©ation des rÃ©quete 
-        Statement smt = con.createStatement();
-
-        //insertion
-//int i = smt.executeUpdate("INSERT INTO `partie`.`partie-joueur` VALUES ("+a+", "+b+", "+c+", "+nom_du_joueur+", "+Date+");") ;
-        int i = smt.executeUpdate("INSERT INTO `partie`.`" + Nom_Table + "` VALUES (" + Mail + ", " + b + "," + MOtdPass + ", " + Pseudo + ");");
-  // int int int String String 
-
-  // int int int date int.
-        if (i != 0) {
-            System.out.println("Insertion faite dans la table Utilisateurs");
-        }
-        System.out.println("____________________________");
-        if (i == 0) {
-            System.out.println("Insertion n'est pas faite dans la table Utilisateurs");
-        }
-        System.out.println("____________________________");
     }
-//_______________________________
 
    // Fonction d'affichage du contenue de la base de donées
     public void Afficher_Score(String Nom_de_la_Base) throws ClassNotFoundException, SQLException {

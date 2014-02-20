@@ -74,7 +74,7 @@ public class Terminal extends Forme {
         
         tabInfo.add("Nom : " + _nom);
         for(TypeMarchandise t:_typeChargement) {
-            tabInfo.add("Type de marchandise: " + t.name());
+            tabInfo.add("<html>Type de marchandise:<br />" + t.name() + "</html>");
         }
         
                 

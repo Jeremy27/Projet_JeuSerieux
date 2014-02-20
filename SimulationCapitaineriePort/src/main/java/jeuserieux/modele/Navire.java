@@ -18,7 +18,7 @@ import jeuserieux.presentation.PanelMap;
  *
  * @author Jérémy & Gary
  */
-public class Navire extends Forme {
+public class Navire extends Forme implements Comparable<Navire>{
 
     private TypeMarchandise _typeMachandise;
     private final double    _longueurGeographique;
@@ -32,6 +32,7 @@ public class Navire extends Forme {
     private int             _heurePriseEnCharge;
     private double          _angle;
     private boolean         _assigneQuai;
+    private int             _positionAQuai;
 
     public Navire(ParamsNavire params) {
         super(params.getNom());
@@ -317,5 +318,30 @@ public class Navire extends Forme {
             return false;
         }
         return this._assigneQuai == other._assigneQuai;
+    }
+
+    /**
+     * @return the _positionAQuai
+     */
+    public int getPositionAQuai() {
+        return _positionAQuai;
+    }
+
+    /**
+     * @param positionAQuai the _positionAQuai to set
+     */
+    public void setPositionAQuai(int positionAQuai) {
+        this._positionAQuai = positionAQuai;
+    }
+
+    @Override
+    public int compareTo(Navire t) {
+        if(_positionAQuai<t.getPositionAQuai()) {
+            return -1;
+        } else if(_positionAQuai==t.getPositionAQuai()) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }

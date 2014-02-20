@@ -22,6 +22,7 @@ public class Forme {
     protected TypeShape _typeForme;
     protected Point2D _coordInfo;
     private double _angleInfo;
+    private int _tailleBreakInfo=100;
     
     @Override
     public String toString() {
@@ -229,5 +230,19 @@ public class Forme {
      */
     public void setAngleInfo(double _angleInfo) {
         this._angleInfo = _angleInfo;
+    }
+
+    /**
+     * @return the _tailleBreakInfo
+     */
+    public int getTailleBreakInfo() {
+        return _tailleBreakInfo;
+    }
+
+    /**
+     * @param _tailleBreakInfo the _tailleBreakInfo to set
+     */
+    public void setTailleBreakInfo(int _tailleBreakInfo) {
+        this._tailleBreakInfo = _tailleBreakInfo;
     }
 }

@@ -2,6 +2,7 @@ package jeuserieux.modele;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import jeuserieux.modele.enumeration.TypeMarchandise;
 import jeuserieux.modele.enumeration.TypeShape;
 import jeuserieux.presentation.PanelMap;
@@ -22,6 +23,7 @@ public class Quai extends Forme{
         _longueurGeographique       = longueur;
         _terminaux      = new ArrayList<>();
         _naviresAQuai   = new ArrayList<>();
+        
         _typeForme      = TypeShape.QUAI;
     }
     
@@ -113,6 +115,40 @@ public class Quai extends Forme{
             }
         }
         return false;
+    }
+    
+    /**
+     * Cette fonction vérifie si le navire peut être pris en charge par le quai courant
+     * @param n le navire voulant entrer dans le quai
+     * @return true si il peut le prendre en charge
+     */
+    public boolean peutPrendreEnCharge(Navire n) {
+        //vérifie le type
+        if(prendEnCharge(n.getTypeMachandise())) {
+            //Vérifie qu'il y a assez de place pour le prendre
+            Collections.sort(_naviresAQuai);
+            int indice = 0;
+            for(Navire navireAQuai:_naviresAQuai) {
+                int position = navireAQuai.getPositionAQuai();
+                if(position-indice>=n.getTempsPriseEnCharge()) {
+                    return true;
+                }
+                indice = position+navireAQuai.getTempsPriseEnCharge();
+            }
+            return false;
+        }
+        return false;
+    }
+    
+    /**
+     * Cette fonction fait partir un navire du quai
+     * @param n Navire à faire partir du quai
+     */
+    public void enleverNavire(Navire n) {
+        _naviresAQuai.remove(n);
+        n.setPositionAQuai(-1);
+        n.setAssigneQuai(false);
+        n.setHeurePriseEnCharge(-1);
     }
 
     /**

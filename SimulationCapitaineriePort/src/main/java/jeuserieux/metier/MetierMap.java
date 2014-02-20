@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
@@ -241,6 +240,22 @@ public class MetierMap {
         zoneArrimage.makePathOriginale();
         _formes.add(zoneArrimage);
         _coordonneesDessin.add(zoneArrimage);
+        
+        zoneArrimage = new Forme("zone arrimage quai Cruise", false, Color.RED, 897965451, TypeShape.NATURAL);
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.10583455038975503, 49.480724374074065));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.11238494014476616, 49.479310855555546));
+        zoneArrimage.makePathOriginale();
+        _formes.add(zoneArrimage);
+        _coordonneesDessin.add(zoneArrimage);
+        
+//        0.18505363108495065, 49.471995047619046
+//0.19067314667515103, 49.461842761904755
+        zoneArrimage = new Forme("zone arrimage quai Bougainville", false, Color.RED, 897965451, TypeShape.NATURAL);
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.18505363108495065, 49.471995047619046));
+        zoneArrimage.ajoutCoordonnee(new Point2D.Double(0.19067314667515103, 49.461842761904755));
+        zoneArrimage.makePathOriginale();
+        _formes.add(zoneArrimage);
+        _coordonneesDessin.add(zoneArrimage);
     }
     
     /**
@@ -295,6 +310,13 @@ public class MetierMap {
         lierQuaisTerminaux(quaiDuHavre, terminalTNMSC, zoneArrimageTNMSC, TypeMarchandise.CONTENEURS);
         lierQuaisTerminaux(quaiDuHavre, terminalPorteOceane, zoneArrimagePorteOceane, TypeMarchandise.CONTENEURS);
         lierQuaisTerminaux(quaiDuHavre, terminalDeFrance, zoneArrimageDeFrance, TypeMarchandise.CONTENEURS);
+        
+        Quai quaiCruise = _quais.getQuai("quai Cruise");
+        quaiCruise.setLongueurMetre(578);
+        Terminal terminalCruise = _terminaux.getTerminal("Cruise Terminal");
+        Forme zoneArrimageCruise= _formes.getForme("zone arrimage quai Cruise");
+        lierQuaisTerminaux(quaiCruise, terminalCruise, zoneArrimageCruise, TypeMarchandise.PASSAGER);
+        
 //        
 //        Terminal terminalNormandie = _terminaux.getTerminal("Terminal de Normandie");
 //        terminalNormandie.ajoutType(TypeMarchandise.CONTENEURS);
@@ -308,6 +330,7 @@ public class MetierMap {
         Quai quaiAmeriques = _quais.getQuai("Quai des Amériques");
         quaiAmeriques.setCoordInfo(new Point2D.Double(0.1556605373051225, 49.47354311111111));
         quaiAmeriques.setAngleInfo(-17);
+        
         Quai quaiEurope = _quais.getQuai("Quai de l'Europe");
         quaiEurope.setCoordInfo(new Point2D.Double(0.17552924554565702, 49.48018733333333));
         quaiEurope.setAngleInfo(-55);
@@ -336,6 +359,10 @@ public class MetierMap {
         Terminal terminalDeFrance = _terminaux.getTerminal("Terminal de France");
         terminalDeFrance.setCoordInfo(new Point2D.Double(0.16960646158129156, 49.45916786666662));
         terminalDeFrance.setAngleInfo(13);
+        Terminal terminalCruise = _terminaux.getTerminal("Cruise Terminal");
+        terminalCruise.setCoordInfo(new Point2D.Double(0.10696256495916852, 49.481605777777794));
+        terminalCruise.setAngleInfo(20);
+        terminalCruise.setTailleBreakInfo(60);
         
         Forme bassinTheoDucrocq = _formes.getForme("Bassin Théophile Ducrocq");
         bassinTheoDucrocq.setCoordInfo(new Point2D.Double(0.12938955615653827, 49.47192213333333));
@@ -432,8 +459,10 @@ public class MetierMap {
 //        System.out.println("TN " + (coef*0.020701805626342714));
 //        System.out.println("Fr " + (coef*0.015229742251360576));
 //        System.out.println("PO " + (coef*0.009720011094574427));
-        Point2D p = new Point2D.Double(0.10482627572455382, 49.47732164317756);
-        Point2D p2 = new Point2D.Double(0.10386507722789458, 49.47662569317756);
+//        0.10591441989753062, 49.48112897697371
+//0.11262999339418986, 49.47968469364037
+        Point2D p = new Point2D.Double(0.10591441989753062, 49.48112897697371);
+        Point2D p2 = new Point2D.Double(0.11262999339418986, 49.47968469364037);
         //Point2D p3 = new Point2D.Double(0.16854303829939546, 49.47598018333332);
         double taille = p.distance(p2);
         System.out.println(taille);

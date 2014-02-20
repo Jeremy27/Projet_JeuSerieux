@@ -209,7 +209,10 @@ public class PanelMap extends JPanel{
                 boolean fill = forme.isFill();
                 if(_typeMarchandiseNavire != null && forme instanceof Terminal) {
                     Terminal t = (Terminal) forme;
-                    if(t.prendEnCharge(_typeMarchandiseNavire)) {
+                    Quai q = t.getQuai();
+                    System.out.println(t);
+                    System.out.println(q);
+                    if(q.peutPrendreEnCharge(_navireSelectionne)) {
                         g2.setColor(COULEUR_QUAI_DISPONIBLE);
                     }
                 }
@@ -276,7 +279,7 @@ public class PanelMap extends JPanel{
                 lineMeasurer.setPosition(paragraphStart);
                 float drawPosY = 0;
                 while (lineMeasurer.getPosition() < paragraphEnd) {
-                    TextLayout layout = lineMeasurer.nextLayout((float)(100*_zoomEtat));
+                    TextLayout layout = lineMeasurer.nextLayout((float)(forme.getTailleBreakInfo()*_zoomEtat));
                     drawPosY += layout.getAscent();
                     
                     Rectangle2D bounds = layout.getBounds();
@@ -497,9 +500,12 @@ public class PanelMap extends JPanel{
                         if(forme instanceof Terminal) {
                             Terminal terminal = (Terminal)forme;
                             Quai q = terminal.getQuai();
+                            if(q.peutPrendreEnCharge(_navireSelectionne)) {
+                                DeplacementBateaux t = new DeplacementBateaux(_navireSelectionne, q, _metier.getLittoraux(), getThis());
+                                t.start();
+                            }
 //                            DeplacementBateaux t = new DeplacementBateaux(_navireSelectionne, new Point2D.Double(_pointClick.getX()/_coefX+_mapGauche, (h-_pointClick.getY())/_coefY+_mapHaut), _metier.getCoordonneesDessin(), getThis());
-                            DeplacementBateaux t = new DeplacementBateaux(_navireSelectionne, q, _metier.getLittoraux(), getThis());
-                            t.start();
+                                
                         } 
                     }
                     if(forme instanceof Navire) {
