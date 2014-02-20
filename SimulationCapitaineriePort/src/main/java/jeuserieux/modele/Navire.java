@@ -231,10 +231,10 @@ public class Navire extends Forme {
     }
 
     /**
-     * @param _angle the _angle to set
+     * @param angle the _angle to set
      */
-    public void setAngle(double _angle) {
-        this._angle = _angle;
+    public void setAngle(double angle) {
+        this._angle = angle;
     }
 
     /**
@@ -245,10 +245,15 @@ public class Navire extends Forme {
     }
 
     /**
-     * @param _assigneQuai the _assigneQuai to set
+     * @param assigneQuai the _assigneQuai to set
      */
-    public void setAssigneQuai(boolean _assigneQuai) {
-        this._assigneQuai = _assigneQuai;
+    public void setAssigneQuai(boolean assigneQuai) {
+        _assigneQuai = assigneQuai;
+        if(_assigneQuai) {
+            _heurePriseEnCharge = Partie._tempsCourant;
+        } else {
+            _heurePriseEnCharge = -1;
+        }
     }
 
     @Override
@@ -311,9 +316,6 @@ public class Navire extends Forme {
         if (Double.doubleToLongBits(this._angle) != Double.doubleToLongBits(other._angle)) {
             return false;
         }
-        if (this._assigneQuai != other._assigneQuai) {
-            return false;
-        }
-        return true;
+        return this._assigneQuai == other._assigneQuai;
     }
 }
