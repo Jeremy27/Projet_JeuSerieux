@@ -6,6 +6,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import jeuserieux.metier.GestionJeu;
 import jeuserieux.modele.enumeration.TypeMarchandise;
 import jeuserieux.modele.enumeration.TypeNavire;
 import jeuserieux.modele.enumeration.TypeShape;
@@ -194,12 +195,11 @@ public class Navire extends Forme {
         ArrayList<String> tabInfo = new ArrayList<>();
 
         tabInfo.add("Nom : " + _nom);
-        tabInfo.add("Longueur : " + _longueurGeographique);
-        tabInfo.add("Date d'arrivée : " + _dateArrivee);
+        tabInfo.add("Longueur : " + Math.round(_longueurMetres));
+        tabInfo.add("Largeur : " + Math.round(_largeurMetres));
+        tabInfo.add("Date d'arrivée : " + GestionJeu.getDateFormate(_dateArrivee));
         tabInfo.add("Temps à quai : " + _tempsPriseEnCharge);
         tabInfo.add("Marchandise : " + _typeMachandise.name());
-        tabInfo.add("Type : " + _typeNavire.name());
-//        tabInfo.add("Coordonnées : [" + _position.getX() + ", " + _position.getY() + ']');
 
         return tabInfo;
     }

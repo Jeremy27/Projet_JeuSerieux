@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jeuserieux.metier.GestionJeu;
 import jeuserieux.modele.Partie;
 
 /**
@@ -14,10 +15,8 @@ import jeuserieux.modele.Partie;
  */
 public class PanelPartie extends PanelPerso {
     
-    private JLabel _jlTempsRestant;
+    private JLabel _jlTempsCourant;
     private JLabel _jlNbRetard;
-    
-    private JButton _jbValider;
 
     public PanelPartie() {
         super("Partie en cours");
@@ -27,23 +26,21 @@ public class PanelPartie extends PanelPerso {
     private void initialisationComposants() {
         JPanel panelGrid = new JPanel(new GridLayout(3, 1));
         
-        JPanel panelFlow1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JPanel panelFlow2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel panelFlow1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel panelFlow2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel panelFlow3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelFlow1.setBackground(COULEUR_PANEL1);
         panelFlow2.setBackground(COULEUR_PANEL1);
         panelFlow3.setBackground(COULEUR_PANEL1);
         
-        _jlTempsRestant = new JLabel("Temps : " + Partie._tempsCourant);
-        _jlNbRetard     = new JLabel("Retard cumulé : " + Partie._nbRetards);
-        _jbValider      = new JButton("Valider");
+        _jlTempsCourant = new JLabel(getTempCourant());
+        _jlNbRetard     = new JLabel(getRetards());
         
         _jlNbRetard.setForeground(COULEUR_ECRITURE);
-        _jlTempsRestant.setForeground(COULEUR_ECRITURE);
+        _jlTempsCourant.setForeground(COULEUR_ECRITURE);
         
-        panelFlow1.add(_jlTempsRestant);
+        panelFlow1.add(_jlTempsCourant);
         panelFlow2.add(_jlNbRetard);
-        panelFlow3.add(_jbValider);
         
         panelGrid.add(panelFlow1);
         panelGrid.add(panelFlow2);
@@ -52,9 +49,21 @@ public class PanelPartie extends PanelPerso {
         add(panelGrid, BorderLayout.CENTER);
     }
     
+    private String getTempCourant() {
+        return GestionJeu.getDateFormate(Partie._tempsCourant);
+    }
+    
+    private String getRetards() {
+        StringBuilder retards = new StringBuilder("Retards cumulé : ");
+        retards.append(Partie._nbRetards);
+        retards.append("h");
+        
+        return retards.toString();
+    }
+    
     public void actualiser() {
-        _jlTempsRestant.setText("Temps : " + Partie._tempsCourant);
-        _jlNbRetard.setText("Retard cumulé : " + Partie._nbRetards);
+        _jlTempsCourant.setText(getTempCourant());
+        _jlNbRetard.setText(getRetards());
         this.revalidate();
     }
     

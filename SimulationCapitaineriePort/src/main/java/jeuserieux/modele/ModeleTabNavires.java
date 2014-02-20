@@ -7,6 +7,7 @@ package jeuserieux.modele;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+import jeuserieux.metier.GestionJeu;
 
 /**
  *
@@ -68,7 +69,7 @@ public class ModeleTabNavires extends AbstractTableModel {
             case 0:
                 return _navires.get(rowIndex).getNom();
             case 1:
-                return _navires.get(rowIndex).getDateArrivee();
+                return GestionJeu.getDateFormate(_navires.get(rowIndex).getDateArrivee());
         }
         return _navires.get(rowIndex);
     }

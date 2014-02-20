@@ -556,4 +556,8 @@ public class PanelMap extends JPanel{
         _metier.enleverNavires();
         refresh();
     }
+    
+    public MetierMap getMetierMap() {
+        return _metier;
+    }
 }

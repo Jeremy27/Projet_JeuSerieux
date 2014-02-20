@@ -25,12 +25,13 @@ import jeuserieux.presentation.PanelPartie;
  * @author jeremy
  */
 public class GestionJeu extends Thread {
-    private Instance     _instance;
-    private PanelNavires _naviresArrives;
-    private PanelNavires _naviresArrivant;
-    private PanelInfoJeu _infoJeu;
-    private PanelPartie  _partie;
-    private PanelMap     _map;
+    private Instance        _instance;
+    private PanelNavires    _naviresArrives;
+    private PanelNavires    _naviresArrivant;
+    private PanelInfoJeu    _infoJeu;
+    private PanelPartie     _partie;
+    private PanelMap        _map;
+    private final static String[]  _tabJour = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
     
     public GestionJeu(PanelNavires naviresArrives, PanelNavires naviresArrivant, PanelInfoJeu infoJeu, PanelPartie partie, PanelMap map) {
         _naviresArrives     = naviresArrives;
@@ -80,6 +81,19 @@ public class GestionJeu extends Thread {
         
         return objetJson.build();
     }
+    
+    public static String getDateFormate(int temps) {
+        int jour    = temps/24;
+        int heure   = temps%24;
+        StringBuilder date = new StringBuilder(_tabJour[jour]);
+        date.append(", ");
+        if(heure < 10)
+            date.append("0");
+        date.append(heure);
+        date.append("h");
+        
+        return date.toString();
+    } 
     
     private void majNaviresArrives(ArrayList<Navire> naviresArrives) {
         _naviresArrives.ajouterNavires(naviresArrives);
