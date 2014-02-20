@@ -504,7 +504,9 @@ public class PanelMap extends JPanel{
                     }
                     if(forme instanceof Navire) {
                         Navire n = (Navire) forme;
-                        setNavireSelectionne(n);
+                        if(!n.estAssigneQuai()) {
+                            setNavireSelectionne(n);
+                        }
                     } else  {
                         setTypeColorer(null);
                         if(forme instanceof Quai) {
@@ -525,6 +527,7 @@ public class PanelMap extends JPanel{
 //                                }
 //                            }
                         }
+                        _navireSelectionne = null;
                     }
                     
                     refresh();
@@ -543,6 +546,7 @@ public class PanelMap extends JPanel{
         _panelInfoForme.setNomPanel("Navire");
         _panelInfoForme.majInformations();
         setTypeColorer(n.getTypeMachandise());
+            
     }
     
     /**

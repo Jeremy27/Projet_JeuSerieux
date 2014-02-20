@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -82,9 +83,10 @@ public class TableauNavires extends JTable {
             _ligneSelectionnee = getSelectedRow();
             Navire n = _modele.getNavire(_ligneSelectionnee);
             _map.setNavireSelectionne(n);
-            _panelInfo.setNomPanel("Navire");
-            _panelInfo.setInformations(n.getDonneesFormates());
-            _panelInfo.majInformations();
+            
+//            _panelInfo.setNomPanel("Navire");
+//            _panelInfo.setInformations(n.getDonneesFormates());
+//            _panelInfo.majInformations();
         }
     }
     
