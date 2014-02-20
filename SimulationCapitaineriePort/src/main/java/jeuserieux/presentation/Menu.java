@@ -4,16 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import static java.awt.image.ImageObserver.WIDTH;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static javax.swing.JComponent.TOOL_TIP_TEXT_KEY;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import jeuserieux.accesAuDonnees.ConnexionMySQL;
 
 /**
  *
@@ -69,7 +63,7 @@ public class Menu extends JMenuBar {
         _partieAide     = new JMenuItem("Aide");
         _partieResoudre = new JMenuItem("Résoudre");
         _partieScores   = new JMenuItem("Scores");
-        _ajoutUtilisateur = new JMenuItem("Inscrire un nouvel utilisateur");
+        _ajoutUtilisateur = new JMenuItem("Nouvel utilisateur...");
         
         _aideDidacticiel    = new JMenuItem("Didacticiel");
         _aideDocumentation  = new JMenuItem("Documentation");
@@ -86,6 +80,7 @@ public class Menu extends JMenuBar {
         _aideDidacticiel.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,InputEvent.CTRL_MASK));
         _aideAPropos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,InputEvent.CTRL_MASK));
         _aideDocumentation.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,InputEvent.CTRL_MASK));
+        _ajoutUtilisateur.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U,InputEvent.CTRL_MASK));
         
         _menuFichier.add(_fichierSauvegarder);
         _menuFichier.add(_fichierCharger);
@@ -111,8 +106,6 @@ public class Menu extends JMenuBar {
                 NouvellePartie nouvellePartie = new NouvellePartie(_ihm);
             }
         });
-        
-        
         
         _partieScores.addActionListener(new ActionListener() {
 

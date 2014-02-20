@@ -82,7 +82,7 @@ public class FenetreAjoutUtilisateur extends JDialog{
         this.add(_btnAjouterUtil);
     }
     
-    public void evenements() {
+    private void evenements() {
         _btnAjouterUtil.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
