@@ -37,6 +37,8 @@ public class NouvellePartie extends JDialog {
     private JComboBox   _jcbDifficulte;
     private JButton     _jbAnnuler;
     private JButton     _jbCommencer;
+    private JComboBox   _jcbChoixListeNavires;
+    private JLabel      _jlChoix;
 
     public NouvellePartie(IHM ihm) {
         setTitle("Nouvelle partie ...");
@@ -61,12 +63,17 @@ public class NouvellePartie extends JDialog {
         _jbAnnuler      = new JButton("Annuler");
         _jbCommencer    = new JButton("Commencer");
         _jlInfos        = new JLabel();
+        _jlChoix        = new JLabel("Choix liste navires : ");
+        _jcbChoixListeNavires = new JComboBox(new Object[] {"Aléatoire", "Base réelle"});
         
-        JPanel panelG       = new JPanel(new GridLayout(3, 2));
+        JPanel panelG       = new JPanel(new GridLayout(4, 2));
         JPanel hautGauche   = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JPanel hautDroit    = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel centreGauche = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JPanel centreDroit  = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel pComboBox    = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel plComboBox   = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
         JPanel basGauche    = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JPanel basDroit     = new JPanel(new FlowLayout(FlowLayout.LEFT));
         
@@ -82,6 +89,9 @@ public class NouvellePartie extends JDialog {
         _jlInfos.setBackground(PanelPerso.COULEUR_PANEL1);
         _jlInfos.setForeground(PanelPerso.COULEUR_ECRITURE);
         _jlInfos.setOpaque(true);
+        _jlChoix.setForeground(PanelPerso.COULEUR_ECRITURE);
+        pComboBox.setBackground(PanelPerso.COULEUR_PANEL1);
+        plComboBox.setBackground(PanelPerso.COULEUR_PANEL1);
         
         hautGauche.add(_jlPseudo);
         hautDroit.add(_jtfPseuso);
@@ -89,11 +99,15 @@ public class NouvellePartie extends JDialog {
         centreDroit.add(_jcbDifficulte);
         basGauche.add(_jbAnnuler);
         basDroit.add(_jbCommencer);
+        pComboBox.add(_jcbChoixListeNavires);
+        plComboBox.add(_jlChoix);
         
         panelG.add(hautGauche);
         panelG.add(hautDroit);
         panelG.add(centreGauche);
         panelG.add(centreDroit);
+        panelG.add(plComboBox);
+        panelG.add(pComboBox);
         panelG.add(basGauche);
         panelG.add(basDroit);
         
@@ -169,7 +183,11 @@ public class NouvellePartie extends JDialog {
     
     Instance creerInstance() {
         GestionInstance gInstance = new GestionInstance();
-        gInstance.genererInstance();
+        
+        if(_jcbChoixListeNavires.getSelectedIndex() == 1)
+            gInstance.genererInstance();
+        else
+            gInstance.genererAleatoirement();
         
         if(null == gInstance.getInstance()) {
             gInstance.genererAleatoirement();
