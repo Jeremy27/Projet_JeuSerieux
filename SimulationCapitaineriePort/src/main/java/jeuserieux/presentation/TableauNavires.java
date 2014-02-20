@@ -83,12 +83,12 @@ public class TableauNavires extends JTable {
     }
     
     private void majPanelNavire() {
-        if(_ligneSelectionnee != getSelectedRow()) {
+        //if(_ligneSelectionnee != getSelectedRow()) {
             _ligneSelectionnee = getSelectedRow();
             Navire n = _modele.getNavire(_ligneSelectionnee);
             _map.setNavireSelectionne(n);
             _map.refresh();
-        }
+       // }
     }
     
     private void initialiserEvent() {

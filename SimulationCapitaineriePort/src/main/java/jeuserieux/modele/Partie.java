@@ -50,13 +50,13 @@ public class Partie {
     private void initialiserFacile() {
         _nbMaxNavires   = 4;
         _nbMinNavires   = 0;
-        _tempsTour      = 30000;
+        _tempsTour      = 5000;
     }
     
     private void initialiserNormal() {
         _nbMaxNavires   = 6;
         _nbMinNavires   = 1;
-        _tempsTour      = 3000;
+        _tempsTour      = 15000;
     }
     
     private void initialiserDifficile() {
