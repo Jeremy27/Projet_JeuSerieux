@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jeuserieux.modele.Forme;
 import jeuserieux.modele.Navire;
+import jeuserieux.modele.Partie;
 import jeuserieux.modele.Quai;
 import jeuserieux.modele.enumeration.TypeShape;
 import jeuserieux.modele.outils.PointPathFinding;
@@ -19,10 +20,10 @@ import jeuserieux.presentation.PanelMap;
  */
 public class DeplacementBateaux extends Thread{
     public static Point2D DEPART_DEFAUT = new Point2D.Double(0.09364530542986425, 49.45562308998302);
-    public static Point2D SORTIE_DEFAUT = new Point2D.Double(0.09794155825791855, 49.448762308998305);
+    public static Point2D SORTIE_DEFAUT = new Point2D.Double(0.09038447939866369, 49.4715725);
     public static double PASVOISIN = 0.0007;
     private final Navire _bateau;
-    private final Point2D _destination;
+    private Point2D _destination;
     private final ArrayList<Forme> _formes;
     private final PanelMap _map;
     private ArrayList<PointPathFinding> _resultat;
@@ -59,6 +60,10 @@ public class DeplacementBateaux extends Thread{
 //        }
         _debut = System.currentTimeMillis();
         deplacer();
+        while(Partie._tempsCourant>=_bateau.getHeurePriseEnCharge()+_bateau.getTempsPriseEnCharge()) {
+            _destination = SORTIE_DEFAUT;
+            deplacer();
+        }
         
     }
     
@@ -68,8 +73,10 @@ public class DeplacementBateaux extends Thread{
      */
     public ArrayList<PointPathFinding> deplacer() {
         System.out.println("Déplacement... " + _bateau);
+        
         if(_bateau.getPosition().getX()==-1 && _bateau.getPosition().getY()==-1) {
             _bateau.setPosition(DEPART_DEFAUT);
+            _bateau.setVisible(true);
             _map.refresh();
         }
         
@@ -137,7 +144,7 @@ public class DeplacementBateaux extends Thread{
                     Logger.getLogger(DeplacementBateaux.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
+            _bateau.setVisible(false);
         }
         _resultat=pointsVisites;
         return pointsVisites;

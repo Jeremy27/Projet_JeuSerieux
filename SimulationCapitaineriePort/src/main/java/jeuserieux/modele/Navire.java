@@ -33,7 +33,7 @@ public class Navire extends Forme implements Comparable<Navire>{
     private double          _angle;
     private boolean         _assigneQuai=false;
     private int             _positionAQuai;
-    private boolean         _visible;
+    private boolean         _visible=false;
 
     public Navire(ParamsNavire params) {
         super(params.getNom());
